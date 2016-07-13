@@ -1,20 +1,6 @@
-# Polymer App Toolbox - Drawer Template
+# Shuvayatra Web App
 
-This template is a starting point for building apps using a drawer-based
-layout.  The layout is provided by `app-layout` elements.
-
-This template, along with the `polymer-cli` toolchain, also demonstrates use
-of the "PRPL pattern" This pattern allows fast first delivery and interaction with
-the content at the initial route requested by the user, along with fast subsequent
-navigation by pre-caching the remaining components required by the app and
-progressively loading them on-demand as the user navigates through the app.
-
-The PRPL pattern, in a nutshell:
-
-* **Push** components required for the initial route
-* **Render** initial route ASAP
-* **Pre-cache** components for remaining routes
-* **Lazy-load** and progressively upgrade next routes on-demand
+Build using Polymer with Polymer toolbox.
 
 ### Setup
 
@@ -24,17 +10,12 @@ Install [polymer-cli](https://github.com/Polymer/polymer-cli):
 
     npm install -g polymer-cli
 
-##### Initialize project from template
-
-    mkdir my-app
-    cd my-app
-    polymer init app-drawer-template
-
 ### Start the development server
 
 This command serves the app at `http://localhost:8080` and provides basic URL
 routing for the app:
-
+    
+    cd to path-to/web-app
     polymer serve
 
 
