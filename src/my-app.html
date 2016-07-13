@@ -1,0 +1,157 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+
+
+<dom-module id="my-app">
+
+  <template>
+
+    <style>
+
+      :host {
+        display: block;
+        --app-primary-color: #00BBD5;
+        --app-secondary-color: black;
+      }
+
+      app-header {
+        background-color: var(--app-primary-color);
+        color: #fff;
+      }
+      app-header paper-icon-button {
+        --paper-icon-button-ink-color: white;
+      }
+
+      app-toolbar a {
+        display: inline-block;
+        margin-left:16px;
+        line-height: 40px;
+        text-decoration: none;
+        color: #FFFFFF;
+        float: right;
+      }
+
+      app-toolbar iron-icon{
+        width: 32px;
+        height: 32px;
+      }
+      iron-selector{
+        display: block;
+        width: 100%;
+      }
+      #logo-title{
+        float: left;
+        line-height: 40px;
+        margin-left: 0;
+      }
+      #logo-title span{
+        display: inline-block;
+      }
+      #logo-icon{
+        margin-right: 0.5em;
+        vertical-align:middle;
+      }
+      @media only screen  and (min-width : 1024px) {
+          app-toolbar,iron-pages{
+            max-width: 800px;
+            margin: 0 auto;
+          }
+      }
+    </style>
+
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+
+    <app-drawer-layout fullbleed>
+      <!-- Main content -->
+      <app-header-layout has-scrolling-region>
+
+        <app-header condenses reveals effects="waterfall">
+          <app-toolbar>
+            <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
+              <a id="logo-title" name="home" href="/">
+                <iron-image id="logo-icon" src="../images/logo-square.png" preload sizing="cover" height="32" width="32"></iron-image>
+              </a>
+              <a name="profile" href="/profile"><iron-icon icon="icons:account-circle"></iron-icon></a>
+              <a name="journey" href="/question"><iron-icon icon="icons:question-answer"></iron-icon></a>
+              <a name="journey" href="/journey"><iron-icon icon="maps:flight"></iron-icon></a>
+              <a name="destination" href="/destination"><iron-icon icon="maps:place"></iron-icon></a>
+            </iron-selector>
+          </app-toolbar>
+        </app-header>
+
+        <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+          <my-home name="home"></my-home>
+          <my-journey name="journey"></my-journey>
+          <my-destination name="destination"></my-destination>
+          <my-question name="question"></my-question>
+          <my-profile name="profile"></my-profile>
+        </iron-pages>
+
+      </app-header-layout>
+
+    </app-drawer-layout>
+
+  </template>
+
+  <script>
+
+    Polymer({
+
+      is: 'my-app',
+
+      properties: {
+
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged'
+        },
+
+      },
+
+      observers: [
+        '_routePageChanged(routeData.page)'
+      ],
+
+      _routePageChanged: function(page) {
+        this.page = page || 'home';
+      },
+
+      _pageChanged: function(page) {
+        // load page import on demand.
+        this.importHref(
+          this.resolveUrl('my-' + page + '.html'), null, null, true);
+      }
+
+    });
+
+  </script>
+
+</dom-module>
