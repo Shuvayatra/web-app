@@ -1,0 +1,125 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/iron-input/iron-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+
+<link rel="import" href="shuvayatra-audio-card.html">
+<link rel="import" href="shuvayatra-video-card.html">
+<link rel="import" href="shuvayatra-text-card.html">
+
+<dom-module id="shuvayatra-feed">
+<template>
+    <style>
+        :host {
+            display: block;
+            height: 100%;
+        }
+
+        .loadingIndicator{
+            text-align: center;
+        }
+
+    </style>
+
+    <!-- <paper-input placeholder="Search" is="iron-input" type="search" bind-value="{{searchText}}"></paper-input>
+
+    <paper-dropdown-menu horizontal-align="left" noink no-label-float="true" selected-item="{{selectedFilter}}">
+        <paper-listbox class="dropdown-content" selected="0">
+            <template is="dom-repeat" items="{{filters}}" as="item">
+                <paper-item value="{{item.id}}">{{item.title}}</paper-item>
+            </template>
+        </paper-listbox>
+    </paper-dropdown-menu> -->
+    
+    <iron-ajax auto
+        url="{{feedUrl}}" 
+        method="GET"
+        params="{{queryParams}}"
+        last-response="{{data}}"
+        loading="{{isLoading}}">
+    </iron-ajax>
+
+    <iron-list items="[[data]]" as="item">
+        <template>
+            <div><a href="{{_generateUrl(item)}}">
+                <template is="dom-if" if="{{_checkIfTypeAudio(item.type)}}">
+                    <shuvayatra-audio-card class="post-card" post="{{item}}"></shuvayatra-audio-card>
+                </template>
+
+                <template is="dom-if" if="{{_checkIfTypeVideo(item.type)}}">
+                    <shuvayatra-video-card class="post-card" post="{{item}}"></shuvayatra-video-card>
+                </template>
+                
+                <template is="dom-if" if="{{_checkIfTypeText(item.type)}}">
+                    <shuvayatra-text-card class="post-card" post="{{item}}"></shuvayatra-text-card>
+                </template>
+            </a></div>
+        </template>
+    </iron-list>
+
+    <div class="loadingIndicator">
+        <paper-spinner active="{{isLoading}}"></paper-spinner>
+    </div>
+</template>
+<script>
+
+    Polymer({
+        is: 'shuvayatra-feed',
+
+        properties: {
+            feedUrl:{
+                type: String
+            },
+
+            filters:{
+                type: Array
+            },
+
+            selectedFilter:{
+                type:Object,
+                observer: '_filterChanged'
+            },
+
+            queryParams: {
+                type: Object,
+                value: {}
+            },
+
+            searchText:{
+                type: String
+            },
+        },
+
+        _filterChanged: function(value, oldValue) {
+            if(value != null){
+                console.log('filter value changed to: ' + value.value);
+            }
+        },
+
+        _generateUrl: function(post){
+            if(post != null){
+                return "/"+post.type+"/"+post.id;
+            }
+        },
+
+        _checkIfTypeAudio: function(type){
+            return (type === "audio");
+        },
+
+        _checkIfTypeVideo: function(type){
+            return (type === "video");
+        },
+
+        _checkIfTypeText: function(type){
+            return (type === "text");
+        },
+
+    });
+</script>
+</dom-module>
+

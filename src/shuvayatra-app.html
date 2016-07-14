@@ -24,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 
 
-<dom-module id="my-app">
+<dom-module id="shuvayatra-app">
 
   <template>
 
@@ -39,7 +39,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app-header {
         background-color: var(--app-primary-color);
         color: #fff;
+        display: block;
       }
+      
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
@@ -73,6 +75,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         margin-right: 0.5em;
         vertical-align:middle;
       }
+
+      iron-pages{
+        height: 100%;
+      }
       @media only screen  and (min-width : 1024px) {
           app-toolbar,iron-pages{
             max-width: 800px;
@@ -91,27 +97,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-drawer-layout fullbleed>
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
-
-        <app-header condenses reveals effects="waterfall">
+        <template is="dom-if" if="{{showMainHeader}}">
+        <app-header condenses condenses effects="waterfall" fixed>
           <app-toolbar>
             <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
               <a id="logo-title" name="home" href="/">
                 <iron-image id="logo-icon" src="../images/logo-square.png" preload sizing="cover" height="32" width="32"></iron-image>
               </a>
               <a name="profile" href="/profile"><iron-icon icon="icons:account-circle"></iron-icon></a>
-              <a name="journey" href="/question"><iron-icon icon="icons:question-answer"></iron-icon></a>
+              <a name="question" href="/question"><iron-icon icon="icons:question-answer"></iron-icon></a>
               <a name="journey" href="/journey"><iron-icon icon="maps:flight"></iron-icon></a>
               <a name="destination" href="/destination"><iron-icon icon="maps:place"></iron-icon></a>
             </iron-selector>
           </app-toolbar>
         </app-header>
+        </template>
+        <template is="dom-if" if="{{!showMainHeader}}">
+          <app-header role="navigation" id="header" effects="waterfall" condenses fixed>
+              <app-toolbar>
+                  <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button></a>
+                  <label></label>
+              </app-toolbar>
+          </app-header>
+        </template>
 
         <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
-          <my-home name="home"></my-home>
-          <my-journey name="journey"></my-journey>
-          <my-destination name="destination"></my-destination>
-          <my-question name="question"></my-question>
-          <my-profile name="profile"></my-profile>
+          <shuvayatra-home name="home"></shuvayatra-home>
+          <shuvayatra-journey name="journey"></shuvayatra-journey>
+          <shuvayatra-destination name="destination"></shuvayatra-destination>
+          <shuvayatra-question name="question"></shuvayatra-question>
+          <shuvayatra-profile name="profile"></shuvayatra-profile>
         </iron-pages>
 
       </app-header-layout>
@@ -124,7 +139,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
 
-      is: 'my-app',
+      is: 'shuvayatra-app',
 
       properties: {
 
@@ -134,20 +149,45 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           observer: '_pageChanged'
         },
 
+        showMainHeader: {
+          type: Boolean
+        }
       },
 
       observers: [
         '_routePageChanged(routeData.page)'
       ],
 
+      _getVisibility: function(container){
+        if(container === 'main'){
+          if(this.showMainHeader){
+            return "visible";
+          }else{
+            return "invisible";
+          }
+        }else{
+          if(!this.showMainHeader){
+            return "visible";
+          }else{
+            return "invisible";
+          }
+        }
+      },
+
+      _goBack: function () {
+        window.history.back();
+      },
+
       _routePageChanged: function(page) {
         this.page = page || 'home';
+        
+        this.showMainHeader = !(this.page === 'audio' || this.page === 'video' || this.page === 'text');
       },
 
       _pageChanged: function(page) {
         // load page import on demand.
         this.importHref(
-          this.resolveUrl('my-' + page + '.html'), null, null, true);
+          this.resolveUrl('shuvayatra-' + page + '.html'), null, null, true);
       }
 
     });

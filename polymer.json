@@ -1,9 +1,10 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/my-app.html",
+  "shell": "src/shuvayatra-app.html",
   "fragments": [
-    "src/my-view1.html",
-    "src/my-view2.html",
-    "src/my-view3.html"
+    "src/shuvayatra-home.html",
+    "src/shuvayatra-journey.html",
+    "src/shuvayatra-question.html",
+    "src/shuvayatra-profile.html"
   ]
 }

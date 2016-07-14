@@ -1,0 +1,59 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="shuvayatra-feed.html">
+
+<dom-module id="shuvayatra-home">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+        padding: 20px 10px;
+      }
+    </style>
+
+    <shuvayatra-feed filters="{{filters}}" feed-url="http://api.shuvayatra.org/api/posts"></shuvayatra-feed>
+
+  </template>
+
+  <script>
+
+    Polymer({
+
+      is: 'shuvayatra-home',
+
+      properties:{
+        filters:{
+          type: Array,
+          value: []
+        },
+
+      },
+
+      ready: function(){
+        this.filters = [
+            {title: "All", id:-1},
+            {title: "My Favourites", id: 1},
+            {title: "Articles", id: 2},
+            {title: "Audio", id: 3},
+            {title: "Video", id: 4},
+            {title: "News", id: 5}
+          ];
+      },
+
+    });
+
+  </script>
+
+</dom-module>
