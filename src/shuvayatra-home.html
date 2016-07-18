@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html">
 
 <link rel="import" href="shuvayatra-feed.html">
 
@@ -22,8 +23,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 20px 10px;
       }
     </style>
-
-    <shuvayatra-feed filters="{{filters}}" feed-url="http://api.shuvayatra.org/api/posts"></shuvayatra-feed>
+    <!-- "http://api.shuvayatra.org/api/posts" -->
+    <shuvayatra-feed scroll-target="{{scrollTarget}}" filters="{{filters}}" feed-url="http://192.168.1.59:8081/api/posts"></shuvayatra-feed>
 
   </template>
 
@@ -32,6 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
 
       is: 'shuvayatra-home',
+      behaviors:[Polymer.IronScrollTargetBehavior],
 
       properties:{
         filters:{
@@ -43,12 +45,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       ready: function(){
         this.filters = [
-            {title: "All", id:-1},
-            {title: "My Favourites", id: 1},
-            {title: "Articles", id: 2},
-            {title: "Audio", id: 3},
-            {title: "Video", id: 4},
-            {title: "News", id: 5}
+            {title: "All", value: "all"},
+            {title: "My Favourites", value: "favourites"},
+            {title: "Articles", value: "article"},
+            {title: "Audio", value: "audio"},
+            {title: "Video", value: "video"}
           ];
       },
 

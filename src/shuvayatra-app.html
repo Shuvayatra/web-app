@@ -22,6 +22,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html">
 
 
 <dom-module id="shuvayatra-app">
@@ -122,7 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </template>
 
         <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
-          <shuvayatra-home name="home"></shuvayatra-home>
+          <shuvayatra-home name="home" scroll-target="{{scrollTarget}}"></shuvayatra-home>
           <shuvayatra-journey name="journey"></shuvayatra-journey>
           <shuvayatra-destination name="destination"></shuvayatra-destination>
           <shuvayatra-question name="question"></shuvayatra-question>
@@ -140,6 +141,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
 
       is: 'shuvayatra-app',
+      behaviors:[Polymer.IronScrollTargetBehavior],
 
       properties: {
 

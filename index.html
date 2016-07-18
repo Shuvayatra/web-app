@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <!doctype html>
-<html lang="en">
+<html lang="en" id="html">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
@@ -85,12 +85,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       }
     </script>
+
+    <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+
     <link rel="import" href="/src/shuvayatra-app.html">
   <link rel="stylesheet" type="text/css" href="/css/main.css">
 </head>
 <body>
 
-  <shuvayatra-app></shuvayatra-app>
+  <shuvayatra-app scroll-target="html"></shuvayatra-app>
+  <!-- <template is="dom-bind" id="app">
+   <iron-ajax id="ajax"
+        auto
+        url="http://192.168.1.59:8081/api/posts" 
+        method="GET"
+        last-response="{{data}}"
+        loading="{{isLoading}}"
+        on-response="_didRespond">
+    </iron-ajax>
 
+    <iron-list id="list" items="[]" as="item">
+        <template>
+            <div>{{item.title}}</div>
+        </template>
+    </iron-list>
+
+    <div class="loadingIndicator">
+        <paper-spinner active="{{isLoading}}"></paper-spinner>
+    </div>
+
+    <iron-scroll-threshold id="scrollThreshold"
+        lower-threshold="200"
+        on-lower-threshold="_loadMoreData">
+    </iron-scroll-threshold>
+    </template> -->
 </body>
 </html>

@@ -1,12 +1,14 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
 <link rel="import" href="../bower_components/iron-input/iron-input.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<!-- <link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html"> -->
 
 <link rel="import" href="shuvayatra-audio-card.html">
 <link rel="import" href="shuvayatra-video-card.html">
@@ -17,7 +19,6 @@
     <style>
         :host {
             display: block;
-            height: 100%;
         }
 
         .loadingIndicator{
@@ -31,21 +32,24 @@
     <paper-dropdown-menu horizontal-align="left" noink no-label-float="true" selected-item="{{selectedFilter}}">
         <paper-listbox class="dropdown-content" selected="0">
             <template is="dom-repeat" items="{{filters}}" as="item">
-                <paper-item value="{{item.id}}">{{item.title}}</paper-item>
+                <paper-item value="{{item.value}}">{{item.title}}</paper-item>
             </template>
         </paper-listbox>
     </paper-dropdown-menu> -->
-    
-    <iron-ajax auto
+
+    <iron-ajax id="ajax"
+        auto
         url="{{feedUrl}}" 
         method="GET"
         params="{{queryParams}}"
         last-response="{{data}}"
-        loading="{{isLoading}}">
+        loading="{{isLoading}}"
+        on-response="_didRespond">
     </iron-ajax>
 
-    <iron-list items="[[data]]" as="item">
-        <template>
+    <!-- <iron-list id="list" items="[]" as="item"> -->
+    <template id="list" is="dom-repeat" items="[]">
+        <!-- <template> -->
             <div><a href="{{_generateUrl(item)}}">
                 <template is="dom-if" if="{{_checkIfTypeAudio(item.type)}}">
                     <shuvayatra-audio-card class="post-card" post="{{item}}"></shuvayatra-audio-card>
@@ -64,15 +68,25 @@
 
     <div class="loadingIndicator">
         <paper-spinner active="{{isLoading}}"></paper-spinner>
+        <template is="dom-if" if="{{!isLoading}}">
+        <label on-click="_loadMoreData">Load More</label>
+    </template>
     </div>
+
+    <iron-scroll-threshold id="scrollThreshold"
+        lower-threshold="500"
+        on-lower-threshold="_loadMoreData"
+        scroll-target="{{scrollTarget}}">
+    </iron-scroll-threshold>
 </template>
 <script>
 
     Polymer({
         is: 'shuvayatra-feed',
+        behaviors:[Polymer.IronScrollTargetBehavior],
 
         properties: {
-            feedUrl:{
+            feedUrl:{ 
                 type: String
             },
 
@@ -85,14 +99,46 @@
                 observer: '_filterChanged'
             },
 
+            currentPage:{
+                type: Number,
+                value: 1
+            },
+
             queryParams: {
                 type: Object,
-                value: {}
+                value: {
+                    page: 1
+                }
             },
 
             searchText:{
                 type: String
             },
+        },
+
+        ready: function(){
+            console.log(this.scrollTarget);
+            //this.$.scrollThreshold.scrollTarget = this.scrollTarget;
+        },
+
+        _loadMoreData: function() {
+            if(this.queryParams.page){
+                this.queryParams.page = this.currentPage + 1;
+                this.$.ajax.generateRequest();
+            }
+            console.log('page: ' + this.queryParams.page);
+        },
+
+        _didRespond: function(e) {
+            var posts = e.detail.response.data;
+            var parent = this.$;
+
+            this.currentPage = e.detail.response.current_page;
+            posts.forEach(function(post) {
+                parent.list.push('items', post);
+            });
+            // Clear the lower threshold so we can load more data when the user scrolls down again.
+            parent.scrollThreshold.clearTriggers();
         },
 
         _filterChanged: function(value, oldValue) {
@@ -103,7 +149,7 @@
 
         _generateUrl: function(post){
             if(post != null){
-                return "/"+post.type+"/"+post.id;
+                return "/post/" + post.id;
             }
         },
 
@@ -118,8 +164,8 @@
         _checkIfTypeText: function(type){
             return (type === "text");
         },
-
     });
+
 </script>
 </dom-module>
 

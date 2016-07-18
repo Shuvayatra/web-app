@@ -16,6 +16,7 @@ This command serves the app at `http://localhost:8080` and provides basic URL
 routing for the app:
     
     cd to path-to/web-app
+    bower install
     polymer serve
 
 
