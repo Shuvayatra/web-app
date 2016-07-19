@@ -1,17 +1,46 @@
-[
-  {
-    "id": 48,
-    "title": "Malaysia",
-    "featured_image": "http://192.168.1.59:8081/uploads/category/download-1.jpg"
-  },
-  {
-    "id": 49,
-    "title": "Saudi Arabia",
-    "featured_image": "http://192.168.1.59:8081/uploads/category/download-2.jpg"
-  },
-  {
-    "id": 50,
-    "title": "Quatar",
-    "featured_image": "http://192.168.1.59:8081/uploads/category/download-3.jpg"
-  }
-]
+{
+  "destination": [
+    {
+      "id": 48,
+      "title": "Malaysia",
+      "featured_image": "http://192.168.1.59:8081/uploads/category/download-1.jpg"
+    },
+    {
+      "id": 49,
+      "title": "Saudi Arabia",
+      "featured_image": "http://192.168.1.59:8081/uploads/category/download-2.jpg"
+    },
+    {
+      "id": 50,
+      "title": "Quatar",
+      "featured_image": "http://192.168.1.59:8081/uploads/category/download-3.jpg"
+    }
+  ],
+
+  "journey":[
+    {
+      "id": 5,
+      "title": "आप्रवासनको सोचमा",
+      "featured_image": "http://192.168.1.59:8081/uploads/category/images-1.jpg",
+      "icon": "http://192.168.1.59:8081/uploads/category/passport.png"
+    },
+    {
+      "id": 6,
+      "title": "अभिमुखिकरण प्रमाणपत्र",
+      "featured_image": "http://192.168.1.59:8081/uploads/category/images-1.jpg",
+      "icon": "http://192.168.1.59:8081/uploads/category/passport.png"
+    },
+    {
+      "id": 7,
+      "title": "एम.आर.पी.",
+      "featured_image": "http://192.168.1.59:8081/uploads/category/images-1.jpg",
+      "icon": "http://192.168.1.59:8081/uploads/category/passport.png"
+    },
+    {
+      "id": 8,
+      "title": "स्वास्थ्य प्रमाणपत्र र बिमा",
+      "featured_image": "http://192.168.1.59:8081/uploads/category/images-1.jpg",
+      "icon": "http://192.168.1.59:8081/uploads/category/passport.png"
+    }
+  ]
+}

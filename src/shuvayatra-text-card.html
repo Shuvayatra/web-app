@@ -64,6 +64,7 @@
         }
     </style>
 
+    <a href="{{_generateUrl(post)}}">
     <paper-card elevation="2" animated="true">
         <paper-ripple></paper-ripple>
         <iron-image placeholder="../images/image-default.png" preload src="{{post.featured_image}}" fade="true" sizing="cover"></iron-image>
@@ -73,6 +74,7 @@
             <label>{{_getRelativeTime(post.updated_at)}}</label>
         </div>
     </paper-card>
+    </a>
 </template>
 <script>
     Polymer({

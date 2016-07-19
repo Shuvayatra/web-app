@@ -34,17 +34,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         auto
         url="../data.json" 
         last-response="{{data}}"
-        loading="{{isLoading}}">
+        loading="{{isLoading}}"
+        on-response="_didRespond">
     </iron-ajax>
 
     <div class="loadingIndicator">
         <paper-spinner active="{{isLoading}}"></paper-spinner>
     </div>
 
-    <template id="list" is="dom-repeat" items="{{data}}">
-        <div><a href="{{_generateUrl(item)}}">
+    <template id="list" is="dom-repeat" items="{{data.destination}}">
+        <div>
             <shuvayatra-destination-card category="{{item}}"></shuvayatra-destination-card>
-        </a></div>
+        </div>
     </template>
 
   </template>
@@ -58,10 +59,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         properties: {
         },
 
-        _generateUrl: function(category){
-            if(category != null){
-                return "/category/" + category.id;
-            }
+        _didRespond: function(e) {
+            console.log(e.detail.response);
         },
 
     });

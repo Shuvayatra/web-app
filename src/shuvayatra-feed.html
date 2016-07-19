@@ -50,7 +50,7 @@
     <!-- <iron-list id="list" items="[]" as="item"> -->
     <template id="list" is="dom-repeat" items="[]">
         <!-- <template> -->
-            <div><a href="{{_generateUrl(item)}}">
+            <div>
                 <template is="dom-if" if="{{_checkIfTypeAudio(item.type)}}">
                     <shuvayatra-audio-card class="post-card" post="{{item}}"></shuvayatra-audio-card>
                 </template>
@@ -62,7 +62,7 @@
                 <template is="dom-if" if="{{_checkIfTypeText(item.type)}}">
                     <shuvayatra-text-card class="post-card" post="{{item}}"></shuvayatra-text-card>
                 </template>
-            </a></div>
+            </div>
         </template>
     <!-- </iron-list> -->
 
@@ -144,12 +144,6 @@
         _filterChanged: function(value, oldValue) {
             if(value != null){
                 console.log('filter value changed to: ' + value.value);
-            }
-        },
-
-        _generateUrl: function(post){
-            if(post != null){
-                return "/post/" + post.id;
             }
         },
 
