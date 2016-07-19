@@ -98,29 +98,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <app-drawer-layout fullbleed>
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
-        <template is="dom-if" if="{{showMainHeader}}">
         <app-header condenses condenses effects="waterfall" fixed>
-          <app-toolbar>
-            <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
-              <a id="logo-title" name="home" href="/">
-                <iron-image id="logo-icon" src="../images/logo-square.png" preload sizing="cover" height="32" width="32"></iron-image>
-              </a>
-              <a name="profile" href="/profile"><iron-icon icon="icons:account-circle"></iron-icon></a>
-              <a name="question" href="/question"><iron-icon icon="icons:question-answer"></iron-icon></a>
-              <a name="journey" href="/journey"><iron-icon icon="maps:flight"></iron-icon></a>
-              <a name="destination" href="/destination"><iron-icon icon="maps:place"></iron-icon></a>
-            </iron-selector>
-          </app-toolbar>
+          <template is="dom-if" if="{{showMainHeader}}">
+            <app-toolbar>
+              <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
+                <a id="logo-title" name="home" href="/">
+                  <iron-image id="logo-icon" src="../images/logo-square.png" preload sizing="cover" height="32" width="32"></iron-image>
+                </a>
+                <a name="profile" href="/profile"><iron-icon icon="icons:account-circle"></iron-icon></a>
+                <a name="question" href="/question"><iron-icon icon="icons:question-answer"></iron-icon></a>
+                <a name="journey" href="/journey"><iron-icon icon="maps:flight"></iron-icon></a>
+                <a name="destination" href="/destination"><iron-icon icon="maps:place"></iron-icon></a>
+              </iron-selector>
+            </app-toolbar>
+          </template>
+          <template is="dom-if" if="{{!showMainHeader}}">
+            <app-toolbar>
+                <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button></a>
+                <label></label>
+            </app-toolbar>
+          </template>
         </app-header>
-        </template>
-        <template is="dom-if" if="{{!showMainHeader}}">
-          <app-header role="navigation" id="header" effects="waterfall" condenses fixed>
-              <app-toolbar>
-                  <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button></a>
-                  <label></label>
-              </app-toolbar>
-          </app-header>
-        </template>
 
         <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
           <shuvayatra-home name="home" scroll-target="{{scrollTarget}}"></shuvayatra-home>
@@ -183,7 +181,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _routePageChanged: function(page) {
         this.page = page || 'home';
         
-        this.showMainHeader = !(this.page === 'audio' || this.page === 'video' || this.page === 'text');
+        this.showMainHeader = !(this.page === 'post' || this.page === 'category');
       },
 
       _pageChanged: function(page) {
