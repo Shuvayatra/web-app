@@ -22,7 +22,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
-        padding: 10px;
       }
 
       .loadingIndicator{
@@ -31,24 +30,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
-    <template is="dom-bind">
-        <iron-ajax auto
-            url="../data.json" 
-            last-response="{{data}}"
-            loading="{{isLoading}}">
-        </iron-ajax>
+    <iron-ajax id="ajax"
+        auto
+        url="../data.json" 
+        last-response="{{data}}"
+        loading="{{isLoading}}">
+    </iron-ajax>
 
-        <div class="loadingIndicator">
-            <paper-spinner active="{{isLoading}}"></paper-spinner>
-        </div>
+    <div class="loadingIndicator">
+        <paper-spinner active="{{isLoading}}"></paper-spinner>
+    </div>
 
-        <iron-list items="[[data]]" as="item">
-            <template>
-                <div>
-                    <shuvayatra-destination-card category="{{item}}"></shuvayatra-destination-card>
-                </div>
-            </template>
-        </iron-list>
+    <template id="list" is="dom-repeat" items="{{data}}">
+        <div><a href="{{_generateUrl(item)}}">
+            <shuvayatra-destination-card category="{{item}}"></shuvayatra-destination-card>
+        </a></div>
     </template>
 
   </template>
@@ -57,7 +53,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
 
-      is: 'shuvayatra-destination'
+        is: 'shuvayatra-destination',
+
+        properties: {
+        },
+
+        _generateUrl: function(category){
+            if(category != null){
+                return "/category/" + category.id;
+            }
+        },
 
     });
 
