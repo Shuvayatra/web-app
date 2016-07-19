@@ -24,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <!-- "http://api.shuvayatra.org/api/posts" -->
-    <shuvayatra-feed scroll-target="{{scrollTarget}}" filters="{{filters}}" feed-url="http://192.168.1.59:8081/api/posts"></shuvayatra-feed>
+    <shuvayatra-feed scroll-target="{{scrollTarget}}" filter="{{filter}}" feed-url="http://192.168.1.59:8081/api/posts"></shuvayatra-feed>
 
   </template>
 
@@ -36,21 +36,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       behaviors:[Polymer.IronScrollTargetBehavior],
 
       properties:{
-        filters:{
-          type: Array,
-          value: []
+        filter:{
+          type: Object
         },
 
       },
 
       ready: function(){
-        this.filters = [
-            {title: "All", value: "all"},
-            {title: "My Favourites", value: "favourites"},
-            {title: "Articles", value: "article"},
-            {title: "Audio", value: "audio"},
-            {title: "Video", value: "video"}
-          ];
+        this.filter = {
+            "filterBy": "type",
+            "data": [
+              {title: "All", value: -1},
+              {title: "Articles", value: "text"},
+              {title: "Audio", value: "audio"},
+              {title: "Video", value: "video"}
+            ]
+          };
       },
 
     });

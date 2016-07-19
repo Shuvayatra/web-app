@@ -31,7 +31,7 @@
 
     <paper-dropdown-menu horizontal-align="left" noink no-label-float="true" selected-item="{{selectedFilter}}">
         <paper-listbox class="dropdown-content" selected="0">
-            <template is="dom-repeat" items="{{filters}}" as="item">
+            <template is="dom-repeat" items="{{filter.data}}">
                 <paper-item value="{{item.value}}">{{item.title}}</paper-item>
             </template>
         </paper-listbox>
@@ -91,7 +91,7 @@
             },
 
             filters:{
-                type: Array
+                type: Object
             },
 
             selectedFilter:{
@@ -143,7 +143,16 @@
 
         _filterChanged: function(value, oldValue) {
             if(value != null){
-                console.log('filter value changed to: ' + value.value);
+                this.currentPage = this.queryParams.page = 1;
+                if(this.filter.filterBy === "type"){
+                    this.queryParams.post_type = value.value;
+                    if(value.value == -1){
+                        delete this.queryParams.post_type;
+                    }
+                }
+                console.log(this.queryParams);
+                this.$.list.items = [];
+                this.$.ajax.generateRequest();
             }
         },
 
