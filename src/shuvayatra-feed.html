@@ -27,7 +27,7 @@
 
     </style>
 
-    <!-- <paper-input placeholder="Search" is="iron-input" type="search" bind-value="{{searchText}}"></paper-input>
+    <paper-input placeholder="Search" is="iron-input" type="search" bind-value="{{searchText}}"></paper-input>
 
     <paper-dropdown-menu horizontal-align="left" noink no-label-float="true" selected-item="{{selectedFilter}}">
         <paper-listbox class="dropdown-content" selected="0">
@@ -35,7 +35,7 @@
                 <paper-item value="{{item.value}}">{{item.title}}</paper-item>
             </template>
         </paper-listbox>
-    </paper-dropdown-menu> -->
+    </paper-dropdown-menu>
 
     <iron-ajax id="ajax"
         auto
@@ -64,7 +64,7 @@
                 </template>
             </a></div>
         </template>
-    </iron-list>
+    <!-- </iron-list> -->
 
     <div class="loadingIndicator">
         <paper-spinner active="{{isLoading}}"></paper-spinner>
