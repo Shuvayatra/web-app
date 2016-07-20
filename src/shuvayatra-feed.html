@@ -1,7 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/iron-list/iron-list.html">
-<link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
 <link rel="import" href="../bower_components/iron-input/iron-input.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
@@ -42,7 +41,6 @@
     </paper-dropdown-menu>
 
     <iron-ajax id="ajax"
-        auto
         url="{{feedUrl}}" 
         method="GET"
         params="{{queryParams}}"
@@ -76,12 +74,6 @@
         <label on-click="_loadMoreData">Load More</label>
     </template>
     </div>
-
-    <iron-scroll-threshold id="scrollThreshold"
-        lower-threshold="500"
-        on-lower-threshold="_loadMoreData"
-        scroll-target="{{scrollTarget}}">
-    </iron-scroll-threshold>
 </template>
 <script>
 
