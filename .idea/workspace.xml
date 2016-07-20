@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b71ea6f3-1932-40f0-be21-fd112fc1192a" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/main.css" afterPath="$PROJECT_DIR$/css/main.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/shuvayatra-feed.html" afterPath="$PROJECT_DIR$/src/shuvayatra-feed.html" />
+    </list>
+    <ignored path="web-app.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <ignored path=".idea/dataSources.local.xml" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="web-app" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="shuvayatra-feed.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/shuvayatra-feed.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="529">
+              <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/shuvayatra-home.html" />
+        <option value="$PROJECT_DIR$/src/shuvayatra-video-card.html" />
+        <option value="$PROJECT_DIR$/src/shuvayatra-audio-card.html" />
+        <option value="$PROJECT_DIR$/css/main.css" />
+        <option value="$PROJECT_DIR$/src/shuvayatra-feed.html" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
+  <component name="ProjectFrameBounds">
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web-app" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.CoffeeScript" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="FullScreen" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b71ea6f3-1932-40f0-be21-fd112fc1192a" name="Default" comment="" />
+      <created>1468489430295</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1468489430295</updated>
+      <workItem from="1468489432202" duration="410000" />
+      <workItem from="1468834580406" duration="725000" />
+      <workItem from="1468918091675" duration="1170000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="2305000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28645834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+          <folding>
+            <marker date="1468918107000" expanded="true" signature="5:133" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shuvayatra-feed.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shuvayatra-app.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="118" column="10" selection-start-line="118" selection-start-column="10" selection-end-line="118" selection-end-column="10" />
+          <folding>
+            <marker date="1468841916000" expanded="true" signature="4:509" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="5374:6523" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="1795:2032" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="1808:2032" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="1823:1932" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="1951:2032" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="2069:2124" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="2146:2316" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="2345:2397" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="2417:2471" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="2489:2570" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="2593:2633" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="2650:2719" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="2771:2884" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="2805:2876" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="2965:3085" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="3120:5030" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="3195:5004" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="3250:4145" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="3317:4125" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="3341:4103" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="3432:4078" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="3487:3641" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="4201:4534" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="4290:4514" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="4318:4490" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="4613:4976" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="6026:6508" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="6026:6494" placeholder="{&quot;is&quot;: 'shuvayatra-app'...}" />
+            <marker date="1468841916000" expanded="true" signature="5122:5315" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="5139:5245" placeholder="{&quot;reflectToAttribute&quot;: true...}" />
+            <marker date="1468841916000" expanded="true" signature="5272:5307" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="5335:5388" placeholder="[...]" />
+            <marker date="1468841916000" expanded="true" signature="6056:6096" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="6139:6298" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="6336:6487" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shuvayatra-video-card.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+          <folding>
+            <marker date="1468834797000" expanded="true" signature="534:2517" placeholder="..." />
+            <marker date="1468834797000" expanded="true" signature="545:2349" placeholder="..." />
+            <marker date="1468834797000" expanded="true" signature="575:1827" placeholder="..." />
+            <marker date="1468834797000" expanded="true" signature="595:684" placeholder="{...}" />
+            <marker date="1468834797000" expanded="true" signature="708:854" placeholder="{...}" />
+            <marker date="1468834797000" expanded="true" signature="899:990" placeholder="{...}" />
+            <marker date="1468834797000" expanded="true" signature="1020:1129" placeholder="{...}" />
+            <marker date="1468834797000" expanded="true" signature="1149:1244" placeholder="{...}" />
+            <marker date="1468834797000" expanded="true" signature="1264:1470" placeholder="{...}" />
+            <marker date="1468834797000" expanded="true" signature="1521:1813" placeholder="{...}" />
+            <marker date="1468834797000" expanded="true" signature="1545:1621" placeholder="{...}" />
+            <marker date="1468834797000" expanded="true" signature="1649:1707" placeholder="{...}" />
+            <marker date="1468834797000" expanded="true" signature="1757:1802" placeholder="{...}" />
+            <marker date="1468834797000" expanded="true" signature="1875:2337" placeholder="..." />
+            <marker date="1468834797000" expanded="true" signature="2090:2319" placeholder="..." />
+            <marker date="1468834797000" expanded="true" signature="2358:2503" placeholder="..." />
+            <marker date="1468834797000" expanded="true" signature="2372:2492" placeholder="{&quot;is&quot;: 'shuvayatra-video-card'...}" />
+            <marker date="1468834797000" expanded="true" signature="2475:2486" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shuvayatra-audio-card.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="25" column="8" selection-start-line="25" selection-start-column="8" selection-end-line="36" selection-end-column="9" />
+          <folding>
+            <marker date="1468834891000" expanded="true" signature="534:2537" placeholder="..." />
+            <marker date="1468834891000" expanded="true" signature="545:2369" placeholder="..." />
+            <marker date="1468834891000" expanded="true" signature="575:1826" placeholder="..." />
+            <marker date="1468834891000" expanded="true" signature="595:684" placeholder="{...}" />
+            <marker date="1468834891000" expanded="true" signature="708:854" placeholder="{...}" />
+            <marker date="1468834891000" expanded="true" signature="899:990" placeholder="{...}" />
+            <marker date="1468834891000" expanded="true" signature="1020:1129" placeholder="{...}" />
+            <marker date="1468834891000" expanded="true" signature="1149:1244" placeholder="{...}" />
+            <marker date="1468834891000" expanded="true" signature="1264:1470" placeholder="{...}" />
+            <marker date="1468834891000" expanded="true" signature="1521:1813" placeholder="{...}" />
+            <marker date="1468834891000" expanded="true" signature="1545:1621" placeholder="{...}" />
+            <marker date="1468834891000" expanded="true" signature="1649:1707" placeholder="{...}" />
+            <marker date="1468834891000" expanded="true" signature="1757:1802" placeholder="{...}" />
+            <marker date="1468834891000" expanded="true" signature="1889:2357" placeholder="..." />
+            <marker date="1468834891000" expanded="true" signature="2104:2339" placeholder="..." />
+            <marker date="1468834891000" expanded="true" signature="2378:2523" placeholder="..." />
+            <marker date="1468834891000" expanded="true" signature="2392:2512" placeholder="{&quot;is&quot;: 'shuvayatra-audio-card'...}" />
+            <marker date="1468834891000" expanded="true" signature="2495:2506" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="732">
+          <caret line="90" column="6" selection-start-line="90" selection-start-column="6" selection-end-line="90" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="174">
+          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
+          <folding>
+            <marker date="1468918107000" expanded="true" signature="5:133" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shuvayatra-home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding>
+            <marker date="1468841916000" expanded="true" signature="4:509" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="772:1657" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="786:1093" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="799:886" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="813:874" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="1105:1642" placeholder="..." />
+            <marker date="1468841916000" expanded="true" signature="1120:1628" placeholder="{&quot;is&quot;: 'shuvayatra-home'...}" />
+            <marker date="1468841916000" expanded="true" signature="1222:1304" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="1240:1294" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="1330:1620" placeholder="{...}" />
+            <marker date="1468841916000" expanded="true" signature="1355:1611" placeholder="[...]" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/shuvayatra-feed.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="529">
+          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

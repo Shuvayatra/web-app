@@ -24,6 +24,25 @@
             text-align: center;
         }
 
+        .loadingIndicator label{
+            border: 2px solid #00bbd5;
+            padding: 5px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s linear;
+            color: #4a4a4a;
+        }
+
+        .loadingIndicator label:hover{
+            background: #00bbd5;
+            color: #fff;
+        }
+
+        paper-dropdown-menu {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
     </style>
 
     <paper-input placeholder="Search" is="iron-input" type="search" bind-value="{{searchText}}" no-label-float="true"></paper-input>
