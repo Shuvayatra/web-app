@@ -1,0 +1,27 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="shuvayatra-feed.html">
+
+<dom-module id="shuvayatra-category">
+<template>
+    <style is="custom-style">
+    </style>
+
+    <!-- "http://api.shuvayatra.org/api/posts" -->
+    <shuvayatra-feed feed-url="http://192.168.1.59:8081/api/posts" category-id="{{categoryId}}"></shuvayatra-feed>
+</template>
+<script>
+	Polymer({
+        is: 'shuvayatra-category',
+        
+        properties: {
+        	categoryId:{
+        		type: Number
+        	}
+        },
+
+        ready: function(){
+        }
+    });
+</script>
+</dom-module>

@@ -95,6 +95,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
+    <app-route
+      route="{{subroute}}"
+      pattern="/:id"
+      data="{{subrouteData}}">
+    </app-route>
+
     <app-drawer-layout fullbleed>
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
@@ -126,6 +132,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <shuvayatra-destination name="destination"></shuvayatra-destination>
           <shuvayatra-question name="question"></shuvayatra-question>
           <shuvayatra-profile name="profile"></shuvayatra-profile>
+          <shuvayatra-category name="category" category-id="{{subrouteData.id}}"></shuvayatra-category>
         </iron-pages>
 
       </app-header-layout>

@@ -29,10 +29,14 @@
 
     <paper-input placeholder="Search" is="iron-input" type="search" bind-value="{{searchText}}"></paper-input>
 
+    <iron-ajax id="filterAjax"
+        method="GET"
+        on-response="_didRespondFilter"></iron-ajax>
+
     <paper-dropdown-menu horizontal-align="left" noink no-label-float="true" selected-item="{{selectedFilter}}">
         <paper-listbox class="dropdown-content" selected="0">
-            <template is="dom-repeat" items="{{filter.data}}">
-                <paper-item value="{{item.value}}">{{item.title}}</paper-item>
+            <template id="filterList" is="dom-repeat" items="{{filter.data}}">
+                <paper-item value="{{item.id}}">{{item.title}}</paper-item>
             </template>
         </paper-listbox>
     </paper-dropdown-menu>
@@ -90,8 +94,10 @@
                 type: String
             },
 
-            filters:{
-                type: Object
+            filter:{
+                type: Object,
+
+                value: {}
             },
 
             selectedFilter:{
@@ -114,11 +120,18 @@
             searchText:{
                 type: String
             },
+
+            categoryId:{
+                type: Number,
+                value: -1
+            }
         },
 
         ready: function(){
-            console.log(this.scrollTarget);
-            //this.$.scrollThreshold.scrollTarget = this.scrollTarget;
+            if(this.categoryId !== -1){
+                this.$.filterAjax.url = "http://192.168.1.59:8081/api/category/" + this.categoryId;
+                this.$.filterAjax.generateRequest();
+            }
         },
 
         _loadMoreData: function() {
@@ -126,7 +139,6 @@
                 this.queryParams.page = this.currentPage + 1;
                 this.$.ajax.generateRequest();
             }
-            console.log('page: ' + this.queryParams.page);
         },
 
         _didRespond: function(e) {
@@ -141,6 +153,13 @@
             parent.scrollThreshold.clearTriggers();
         },
 
+        _didRespondFilter: function(e) {
+            var temp = {};
+            temp.filterBy = "category";
+            temp.data = [{title: "All", id: this.categoryId}].concat(e.detail.response.sub_categories);
+            this.filter = temp;
+        },
+
         _filterChanged: function(value, oldValue) {
             if(value != null){
                 this.currentPage = this.queryParams.page = 1;
@@ -148,6 +167,11 @@
                     this.queryParams.post_type = value.value;
                     if(value.value == -1){
                         delete this.queryParams.post_type;
+                    }
+                }else if(this.filter.filterBy === "category"){
+                    this.queryParams.category = value.value;
+                    if(value.value == -1){
+                        delete this.queryParams.category;
                     }
                 }
                 console.log(this.queryParams);

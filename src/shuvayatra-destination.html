@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-ajax id="ajax"
         auto
-        url="../data.json" 
+        url="http://192.168.1.59:8081/api/destinations" 
         last-response="{{data}}"
         loading="{{isLoading}}"
         on-response="_didRespond">
@@ -42,7 +42,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-spinner active="{{isLoading}}"></paper-spinner>
     </div>
 
-    <template id="list" is="dom-repeat" items="{{data.destination}}">
+    <template id="list" is="dom-repeat" items="{{data}}">
         <div>
             <shuvayatra-destination-card category="{{item}}"></shuvayatra-destination-card>
         </div>

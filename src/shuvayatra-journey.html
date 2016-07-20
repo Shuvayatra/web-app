@@ -25,7 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-ajax id="ajax"
         auto
-        url="../data.json" 
+        url="http://192.168.1.59:8081/api/journey" 
         last-response="{{data}}"
         loading="{{isLoading}}">
     </iron-ajax>
@@ -33,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="loadingIndicator">
         <paper-spinner active="{{isLoading}}"></paper-spinner>
     </div>
-    <template is="dom-repeat" items="{{data.journey}}">
+    <template is="dom-repeat" items="{{data}}">
         <div>
             <shuvayatra-journey-card category="{{item}}"></shuvayatra-journey-card>
         </div>
