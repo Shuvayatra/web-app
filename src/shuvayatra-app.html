@@ -12,18 +12,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
-<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
-<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
-<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-<link rel="import" href="../bower_components/iron-icons/maps-icons.html">
-<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
-<link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html">
 
+<link rel="import" href="shuvayatra-header.html">
 
 <dom-module id="shuvayatra-app">
 
@@ -33,55 +26,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       :host {
         display: block;
+        padding-top: 64px;
         --app-primary-color: #00BBD5;
         --app-secondary-color: black;
-      }
-
-      app-header {
-        background-color: var(--app-primary-color);
-        color: #fff;
-        display: block;
-      }
-      
-      app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
-      }
-
-      app-toolbar a {
-        display: inline-block;
-        margin-left:16px;
-        line-height: 40px;
-        text-decoration: none;
-        color: #FFFFFF;
-        float: right;
-      }
-
-      app-toolbar iron-icon{
-        width: 32px;
-        height: 32px;
-      }
-      iron-selector{
-        display: block;
-        width: 100%;
-      }
-      #logo-title{
-        float: left;
-        line-height: 40px;
-        margin-left: 0;
-      }
-      #logo-title span{
-        display: inline-block;
-      }
-      #logo-icon{
-        margin-right: 0.5em;
-        vertical-align:middle;
       }
 
       iron-pages{
         height: 100%;
       }
+
       @media only screen  and (min-width : 1024px) {
-          app-toolbar,iron-pages{
+          .content{
             max-width: 800px;
             margin: 0 auto;
           }
@@ -101,43 +56,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       data="{{subrouteData}}">
     </app-route>
 
-    <app-drawer-layout fullbleed>
       <!-- Main content -->
-      <app-header-layout has-scrolling-region>
-        <app-header condenses condenses effects="waterfall" fixed>
-          <template is="dom-if" if="{{showMainHeader}}">
-            <app-toolbar>
-              <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
-                <a id="logo-title" name="home" href="/">
-                  <iron-image id="logo-icon" src="../images/logo-square.png" preload sizing="cover" height="32" width="32"></iron-image>
-                </a>
-                <a name="profile" href="/profile"><iron-icon icon="icons:account-circle"></iron-icon></a>
-                <a name="question" href="/question"><iron-icon icon="icons:question-answer"></iron-icon></a>
-                <a name="journey" href="/journey"><iron-icon icon="maps:flight"></iron-icon></a>
-                <a name="destination" href="/destination"><iron-icon icon="maps:place"></iron-icon></a>
-              </iron-selector>
-            </app-toolbar>
-          </template>
-          <template is="dom-if" if="{{!showMainHeader}}">
-            <app-toolbar>
-                <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button></a>
-                <label></label>
-            </app-toolbar>
-          </template>
-        </app-header>
-
-        <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
-          <shuvayatra-home name="home" scroll-target="{{scrollTarget}}"></shuvayatra-home>
-          <shuvayatra-journey name="journey"></shuvayatra-journey>
-          <shuvayatra-destination name="destination"></shuvayatra-destination>
-          <shuvayatra-question name="question"></shuvayatra-question>
-          <shuvayatra-profile name="profile"></shuvayatra-profile>
-          <shuvayatra-category name="category" category-id="{{subrouteData.id}}"></shuvayatra-category>
-        </iron-pages>
-
-      </app-header-layout>
-
-    </app-drawer-layout>
+      <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+        <shuvayatra-home class="content" name="home" scroll-target="{{scrollTarget}}"></shuvayatra-home>
+        <shuvayatra-journey class="content" name="journey"></shuvayatra-journey>
+        <shuvayatra-destination class="content" name="destination"></shuvayatra-destination>
+        <shuvayatra-question class="content" name="question"></shuvayatra-question>
+        <shuvayatra-profile class="content" name="profile"></shuvayatra-profile>
+        <shuvayatra-category class="content" name="category" category-id="{{subrouteData.id}}"></shuvayatra-category>
+      </iron-pages>
 
   </template>
 
@@ -155,10 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           reflectToAttribute: true,
           observer: '_pageChanged'
         },
-
-        showMainHeader: {
-          type: Boolean
-        }
+        
       },
 
       observers: [
@@ -179,10 +103,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             return "invisible";
           }
         }
-      },
-
-      _goBack: function () {
-        window.history.back();
       },
 
       _routePageChanged: function(page) {

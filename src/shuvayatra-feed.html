@@ -26,7 +26,7 @@
 
     </style>
 
-    <paper-input placeholder="Search" is="iron-input" type="search" bind-value="{{searchText}}"></paper-input>
+    <paper-input placeholder="Search" is="iron-input" type="search" bind-value="{{searchText}}" no-label-float="true"></paper-input>
 
     <iron-ajax id="filterAjax"
         method="GET"
@@ -71,8 +71,8 @@
     <div class="loadingIndicator">
         <paper-spinner active="{{isLoading}}"></paper-spinner>
         <template is="dom-if" if="{{!isLoading}}">
-        <label on-click="_loadMoreData">Load More</label>
-    </template>
+            <label on-click="_loadMoreData">Load More</label>
+        </template>
     </div>
 </template>
 <script>
@@ -102,6 +102,11 @@
                 value: 1
             },
 
+            isLastPage:{
+                type: Boolean,
+                value: true
+            },
+
             queryParams: {
                 type: Object,
                 value: {
@@ -116,18 +121,23 @@
             categoryId:{
                 type: Number,
                 value: -1
+            },
+
+            headerData:{
+                type: Object,
+                notify: true
             }
         },
 
         ready: function(){
             if(this.categoryId !== -1){
-                this.$.filterAjax.url = "http://192.168.1.59:8081/api/category/" + this.categoryId;
+                this.$.filterAjax.url = "http://api.shuvayatra.org/api/category/" + this.categoryId;
                 this.$.filterAjax.generateRequest();
             }
         },
 
         _loadMoreData: function() {
-            if(this.queryParams.page){
+            if(this.queryParams.page && !this.isLastPage){
                 this.queryParams.page = this.currentPage + 1;
                 this.$.ajax.generateRequest();
             }
@@ -135,14 +145,13 @@
 
         _didRespond: function(e) {
             var posts = e.detail.response.data;
+            this.isLastPage = e.detail.response.next_page_url == null;
             var parent = this.$;
 
             this.currentPage = e.detail.response.current_page;
             posts.forEach(function(post) {
                 parent.list.push('items', post);
             });
-            // Clear the lower threshold so we can load more data when the user scrolls down again.
-            parent.scrollThreshold.clearTriggers();
         },
 
         _didRespondFilter: function(e) {
@@ -150,6 +159,11 @@
             temp.filterBy = "category";
             temp.data = [{title: "All", id: this.categoryId}].concat(e.detail.response.sub_categories);
             this.filter = temp;
+
+            var temp1 = e.detail.response;
+            delete temp1.sub_categories;
+            this.headerData = temp1;
+
         },
 
         _filterChanged: function(value, oldValue) {
@@ -166,7 +180,6 @@
                         delete this.queryParams.category;
                     }
                 }
-                console.log(this.queryParams);
                 this.$.list.items = [];
                 this.$.ajax.generateRequest();
             }

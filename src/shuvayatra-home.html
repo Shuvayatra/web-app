@@ -20,11 +20,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
+      }
+
+      shuvayatra-feed {
         padding: 20px 10px;
       }
     </style>
+
+    <shuvayatra-header main></shuvayatra-header>
+
     <!-- "http://api.shuvayatra.org/api/posts" -->
-    <shuvayatra-feed scroll-target="{{scrollTarget}}" filter="{{filter}}" feed-url="http://192.168.1.59:8081/api/posts"></shuvayatra-feed>
+    <shuvayatra-feed scroll-target="{{scrollTarget}}" filter="{{filter}}" feed-url="http://api.shuvayatra.org/api/posts"></shuvayatra-feed>
 
   </template>
 

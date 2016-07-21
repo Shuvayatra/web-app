@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
 
 <link rel="import" href="shuvayatra-destination-card.html">
+<link rel="import" href="shuvayatra-header.html">
 
 <dom-module id="shuvayatra-destination">
 
@@ -30,23 +31,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
+    <shuvayatra-header main></shuvayatra-header>
+
     <iron-ajax id="ajax"
         auto
-        url="http://192.168.1.59:8081/api/destinations" 
+        url="http://api.shuvayatra.org/api/destinations" 
         last-response="{{data}}"
         loading="{{isLoading}}"
         on-response="_didRespond">
     </iron-ajax>
-
-    <div class="loadingIndicator">
-        <paper-spinner active="{{isLoading}}"></paper-spinner>
-    </div>
 
     <template id="list" is="dom-repeat" items="{{data}}">
         <div>
             <shuvayatra-destination-card category="{{item}}"></shuvayatra-destination-card>
         </div>
     </template>
+
+    <div class="loadingIndicator">
+        <paper-spinner active="{{isLoading}}"></paper-spinner>
+    </div>
 
   </template>
 

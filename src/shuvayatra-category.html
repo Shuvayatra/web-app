@@ -1,14 +1,19 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 
 <link rel="import" href="shuvayatra-feed.html">
+<link rel="import" href="shuvayatra-header.html">
 
 <dom-module id="shuvayatra-category">
 <template>
     <style is="custom-style">
+        :host{
+            display: block;
+        }
     </style>
 
+    <shuvayatra-header normal-with-image data="{{headerData}}"></shuvayatra-header>
     <!-- "http://api.shuvayatra.org/api/posts" -->
-    <shuvayatra-feed feed-url="http://192.168.1.59:8081/api/posts" category-id="{{categoryId}}"></shuvayatra-feed>
+    <shuvayatra-feed feed-url="http://api.shuvayatra.org/api/posts" category-id="{{categoryId}}" header-data="{{headerData}}"></shuvayatra-feed>
 </template>
 <script>
 	Polymer({
@@ -17,7 +22,12 @@
         properties: {
         	categoryId:{
         		type: Number
-        	}
+        	},
+
+            headerData:{
+                type: Object
+            },
+
         },
 
         ready: function(){
