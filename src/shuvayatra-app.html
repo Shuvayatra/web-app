@@ -40,6 +40,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             max-width: 800px;
             margin: 0 auto;
           }
+
+        .category {
+          padding-top: 210px;
+        }
       }
     </style>
 
@@ -63,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <shuvayatra-destination class="content" name="destination"></shuvayatra-destination>
         <shuvayatra-question class="content" name="question"></shuvayatra-question>
         <shuvayatra-profile class="content" name="profile"></shuvayatra-profile>
-        <shuvayatra-category class="content" name="category" category-id="{{subrouteData.id}}"></shuvayatra-category>
+        <shuvayatra-category class="content category" name="category" category-id="{{subrouteData.id}}"></shuvayatra-category>
         <shuvayatra-post class="content" name="post" post-id="{{subrouteData.id}}"></shuvayatra-post>
       </iron-pages>
 

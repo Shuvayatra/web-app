@@ -9,21 +9,35 @@
 <dom-module id="shuvayatra-destination-card">
 <template>
     <style is="custom-style">
+
+        paper-ripple + div {
+            width: 100%;
+        }
         iron-image{
-            width: 350px;
-            height: 175px;
+            width: 100%;
+            height: 194px;
+            display: block;
         }
 
         paper-card {
             width:100%;
-            margin-bottom: 10px;
-            display: flex;
+            position: relative;
+            display: block;
+        }
+
+        paper-card label {
+            position: absolute;
+            bottom: 40px;
+            left: 20px;
+            color: #fff;
+            font-size: 26px;
+            line-height: 32px;
         }
 
     </style>
 
     <a href="{{_generateUrl(category)}}">
-    <paper-card elevation="2">
+    <paper-card elevation="0">
         <paper-ripple></paper-ripple>
         <div>
             <iron-image placeholder="../images/image-default.png" preload src="{{category.featured_image}}" fade="true" sizing="cover"></iron-image>

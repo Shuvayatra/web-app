@@ -17,13 +17,38 @@
 
         paper-card {
             width:100%;
-            margin-bottom: 10px;
-            display: flex;
+            padding: 30px 10px 20px;
+            border: 1px solid #eee;
+            height: 100%;
+        }
+
+        paper-card label {
+            cursor: pointer;
+            word-break: break-word;
+        }
+
+        paper-ripple + div {
+            width: 100%;
+        }
+
+        iron-image {
+            width: 45px;
+            height: 45px;
+            display: block;
+            margin: 0 auto 30px;
+        }
+
+        .link {
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            color: #000;
+            height: 100%;
         }
 
     </style>
 
-    <a href="{{_generateUrl(category)}}">
+    <a class="link" href="{{_generateUrl(category)}}">
     <paper-card elevation="2">
         <paper-ripple></paper-ripple>
         <div>

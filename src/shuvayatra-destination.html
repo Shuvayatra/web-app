@@ -29,13 +29,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
       }
 
+      shuvayatra-destination-card a {
+          display: block;;
+      }
+
     </style>
 
     <shuvayatra-header main></shuvayatra-header>
 
     <iron-ajax id="ajax"
         auto
-        url="http://api.shuvayatra.org/api/destinations" 
+        url="http://api.shuvayatra.org/api/destinations"
         last-response="{{data}}"
         loading="{{isLoading}}"
         on-response="_didRespond">

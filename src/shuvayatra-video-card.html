@@ -33,7 +33,7 @@
             font-size: 12px;
             display: block;
             color: #868686;
-            
+            cursor: pointer;
         }
 
         paper-card{
@@ -49,6 +49,11 @@
             top: 50%;
             left: -20px;
             transform: translateY(-50%);
+        }
+
+        .link {
+            display: block;
+            text-decoration: none;;
         }
 
         @media only screen and (min-width: 480px){
@@ -70,7 +75,7 @@
 
     </style>
 
-    <a href="{{_generateUrl(post)}}">
+    <a class="link" href="{{_generateUrl(post)}}">
     <paper-card elevation="2" animated="true">
         <paper-ripple></paper-ripple>
         <iron-image placeholder="../images/image-default.png" preload src="{{post.data.thumbnail}}" fade="true" sizing="cover"></iron-image>
