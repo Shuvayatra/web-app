@@ -170,11 +170,13 @@
             if(value != null){
                 this.currentPage = this.queryParams.page = 1;
                 if(this.filter.filterBy === "type"){
+                    delete this.queryParams.category;
                     this.queryParams.post_type = value.value;
                     if(value.value == -1){
                         delete this.queryParams.post_type;
                     }
                 }else if(this.filter.filterBy === "category"){
+                    delete this.queryParams.post_type;
                     this.queryParams.category = value.value;
                     if(value.value == -1){
                         delete this.queryParams.category;

@@ -74,7 +74,7 @@
             vertical-align:middle;
           }
 
-          @media only screen  and (min-width : 1024px) {
+          @media only screen  and (min-width : 900px) {
           app-toolbar {
             max-width: 800px;
             margin: 0 auto;
@@ -104,23 +104,40 @@
     </template>
 
     <!-- normal header for detail pages with back icon and title -->
-    <template is="dom-if" if="{{normal}}">
-      <app-header condenses effects="waterfall" fixed>
+    <template is="dom-if" if="{{post}}">
+      <!-- <template is="dom-if" if="{{!hasFeatureImage}}">
+        <app-header condenses effects="waterfall" fixed>
+          <app-toolbar>
+              <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
+              <label>{{data.title}}</label>
+          </app-toolbar>
+        </app-header>
+      </template> -->
+      <!-- <template is="dom-if" if="{{hasFeatureImage}}"> -->
+        <app-header class="with-image" condenses fixed 
+      effects="waterfall resize-snapped-title fade-background" 
+      effects-config='{"resize-snapped-title": {"startsAt": 0.8, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'
+      style="background-image: url([[data.featured_image]]);">
         <app-toolbar>
-            <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button></a>
-            <label>{{data.title}}</label>
+            <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
+            <label condensed-title>{{data.title}}</label>
+            <div title>
+              <iron-image src="{{data.small_icon}}" sizing="contain" width="25" height="25"></iron-image>
+              <label>{{data.title}}</label>
+            </div>
         </app-toolbar>
       </app-header>
+      <!-- </template> -->
     </template>
 
     <!-- normal header for detail pages with back icon and title and featured-image-->
-    <template is="dom-if" if="{{normalWithImage}}">
+    <template is="dom-if" if="{{category}}">
       <app-header class="with-image" condenses fixed 
       effects="waterfall resize-snapped-title fade-background" 
       effects-config='{"resize-snapped-title": {"startsAt": 0.8, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'
       style="background-image: url([[data.featured_image]]);">
         <app-toolbar>
-            <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button></a>
+            <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
             <label condensed-title>{{data.title}}</label>
             <div title>
               <iron-image src="{{data.small_icon}}" sizing="contain" width="25" height="25"></iron-image>
@@ -146,19 +163,19 @@
                 value: false
             },
 
-            normal: {
+            post: {
                 type: Boolean,
                 value: false
             },
 
-            normalWithImage: {
-                type: Boolean,
-                value: false
-            },
-
-            hasIcon: {
+            hasFeatureImage: {
               type: Boolean,
               value: false
+            },
+
+            category: {
+                type: Boolean,
+                value: false
             },
         },
 

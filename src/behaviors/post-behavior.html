@@ -4,7 +4,8 @@
         properties: {
             post:{
                 type: Object,
-                value: null
+                value: null,
+                notify: true
             }
         },
 
@@ -39,6 +40,22 @@
             if(post != null){
                 return "/post/" + post.id;
             }
+        },
+
+        _getFormattedLikeCount: function(count) {
+        	if(count === 0){
+        		return "--";
+        	}else{
+        		return count + " " + (count == 1 ? "like" : "likes");
+        	}
+        },
+
+        _getFormattedShareCount: function(count) {
+        	if(count === 0){
+        		return "--";
+        	}else{
+        		return count + " " + (count == 1 ? "share" : "shares");
+        	}
         },
 
     };
