@@ -105,29 +105,26 @@
 
     <!-- normal header for detail pages with back icon and title -->
     <template is="dom-if" if="{{post}}">
-      <!-- <template is="dom-if" if="{{!hasFeatureImage}}">
+      <template is="dom-if" if="{{!hasFeatureImage}}">
         <app-header condenses effects="waterfall" fixed>
           <app-toolbar>
               <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
               <label>{{data.title}}</label>
           </app-toolbar>
         </app-header>
-      </template> -->
-      <!-- <template is="dom-if" if="{{hasFeatureImage}}"> -->
+      </template>
+      <template is="dom-if" if="{{hasFeatureImage}}">
         <app-header class="with-image" condenses fixed 
-      effects="waterfall resize-snapped-title fade-background" 
-      effects-config='{"resize-snapped-title": {"startsAt": 0.8, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'
-      style="background-image: url([[data.featured_image]]);">
-        <app-toolbar>
-            <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
-            <label condensed-title>{{data.title}}</label>
-            <div title>
-              <iron-image src="{{data.small_icon}}" sizing="contain" width="25" height="25"></iron-image>
-              <label>{{data.title}}</label>
-            </div>
-        </app-toolbar>
-      </app-header>
-      <!-- </template> -->
+        effects="waterfall resize-snapped-title fade-background" 
+        effects-config='{"resize-snapped-title": {"startsAt": 0.8, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'
+        style="background-image: url([[data.featured_image]]);">
+          <app-toolbar>
+              <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
+              <label condensed-title>{{data.title}}</label>
+          </app-toolbar>
+          <!-- <label title>{{data.title}}</label> -->
+        </app-header>
+      </template>
     </template>
 
     <!-- normal header for detail pages with back icon and title and featured-image-->
