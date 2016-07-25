@@ -10,8 +10,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-route/app-location.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
-<link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html">
@@ -60,6 +58,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       data="{{subrouteData}}">
     </app-route>
 
+    <app-header-layout snaps>
       <!-- Main content -->
       <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
         <shuvayatra-home class="content" name="home" scroll-target="{{scrollTarget}}"></shuvayatra-home>
@@ -70,6 +69,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <shuvayatra-category class="content category" name="category" category-id="{{subrouteData.id}}"></shuvayatra-category>
         <shuvayatra-post class="content" name="post" post-id="{{subrouteData.id}}"></shuvayatra-post>
       </iron-pages>
+    </app-header-layout>
 
   </template>
 

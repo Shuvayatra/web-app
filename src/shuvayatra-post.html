@@ -4,6 +4,7 @@
 <link rel="import" href="shuvayatra-feed.html">
 <link rel="import" href="shuvayatra-header.html">
 
+<link rel="import" href="shuvayatra-audio-detail.html">
 <link rel="import" href="shuvayatra-video-detail.html">
 <link rel="import" href="shuvayatra-text-detail.html">
 
@@ -21,6 +22,10 @@
         shuvayatra-text-detail{
             margin-top: 185px;
         }
+
+        shuvayatra-audio-detail{
+            margin-top: 185px;
+        }
     </style>
 
     <iron-ajax id="ajax" auto
@@ -31,10 +36,16 @@
         loading="{{isLoading}}">
     </iron-ajax>
 
+    <template is="dom-if" if="{{_checkIfTypeAudio(data.type)}}">
+        <shuvayatra-header post data="{{data}}" has-feature-image audio></shuvayatra-header>
+        <shuvayatra-audio-detail class="content" post="{{data}}"></shuvayatra-audio-detail>
+    </template>
+
     <template is="dom-if" if="{{_checkIfTypeVideo(data.type)}}">
         <shuvayatra-header post data="{{data}}"></shuvayatra-header>
         <shuvayatra-video-detail class="content" post="{{data}}"></shuvayatra-video-detail>
     </template>
+
     <template is="dom-if" if="{{_checkIfTypeText(data.type)}}">
         <shuvayatra-header post has-feature-image data="{{data}}"></shuvayatra-header>
         <shuvayatra-text-detail class="content" post="{{data}}"></shuvayatra-text-detail>
@@ -59,8 +70,8 @@
         },
 
         _generateUrl: function() {
-            return "../data_text.json";
-            //return "http://api.shuvayatra.org/api/post/" + postId;
+            return "http://192.168.1.59:8081/api/posts/24";
+            //return "http://api.shuvayatra.org/api/posts/" + postId;
         },
 
         _checkIfTypeAudio: function(type){

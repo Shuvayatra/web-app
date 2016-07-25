@@ -1,8 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="../bower_components/google-youtube/google-youtube.html">
 
 <link rel="import" href="behaviors/post-behavior.html">
 <link rel="import" href="shuvayatra-favourite-section.html">
+<link rel="import" href="shuvayatra-html-placeholder.html">
 
 <dom-module id="shuvayatra-text-detail">
 <template>
@@ -18,7 +18,7 @@
 
     <hr/>
 
-    <div>{{post.description}}</div>
+    <shuvayatra-html-placeholder html="{{post.description}}"></shuvayatra-html-placeholder>
 
 </template>
 <script>

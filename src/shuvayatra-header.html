@@ -32,7 +32,7 @@
 
           app-header.with-image{
             --app-header-background-front-layer: {
-              background: -webkit-linear-gradient(top, transparent 0%, transparent 50%, rgba(0,0,0,0.5) 100%);
+              background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 100%);
             };
 
             --app-header-background-rear-layer: {
@@ -105,6 +105,7 @@
 
     <!-- normal header for detail pages with back icon and title -->
     <template is="dom-if" if="{{post}}">
+      
       <template is="dom-if" if="{{!hasFeatureImage}}">
         <app-header condenses effects="waterfall" fixed>
           <app-toolbar>
@@ -113,18 +114,26 @@
           </app-toolbar>
         </app-header>
       </template>
+
       <template is="dom-if" if="{{hasFeatureImage}}">
         <app-header class="with-image" condenses fixed 
         effects="waterfall resize-snapped-title fade-background" 
-        effects-config='{"resize-snapped-title": {"startsAt": 0.8, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'
+        effects-config='{"resize-snapped-title": {"startsAt": 0.3, "duration": "100ms"}, "fade-background": {"startsAt": 0.3, "endsAt": 0.9}}'
         style="background-image: url([[data.featured_image]]);">
           <app-toolbar>
               <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
               <label condensed-title>{{data.title}}</label>
           </app-toolbar>
-          <!-- <label title>{{data.title}}</label> -->
+
+          <template is="dom-if" if="{{audio}}">
+            <div title style="position: absolute; bottom:0px; width:100%">
+              <shuvayatra-audio-player src="{{data.data.media_url}}" title="{{data.title}}"></shuvayatra-audio-player>
+            </div>
+          </template>
+
         </app-header>
       </template>
+
     </template>
 
     <!-- normal header for detail pages with back icon and title and featured-image-->
@@ -170,6 +179,12 @@
               value: false
             },
 
+            audio: {
+              type: Boolean,
+              value: false,
+              observer: '_isAudio'
+            },
+
             category: {
                 type: Boolean,
                 value: false
@@ -179,6 +194,12 @@
         _goBack: function () {
             window.history.back();
         },
+
+        _isAudio: function(value){
+          if(value){
+            this.importHref(this.resolveUrl('shuvayatra-audio-player.html'), null, null, true);
+          }
+        }
 
     });
 </script>

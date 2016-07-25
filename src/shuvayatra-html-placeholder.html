@@ -1,0 +1,28 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="shuvayatra-html-placeholder">
+<template>
+    <style is="custom-style">
+        :host{
+            display: block;
+        }
+    </style>
+    <div id="html_placeholder"></div>
+</template>
+<script>
+	Polymer({
+        is: 'shuvayatra-html-placeholder',
+        
+        properties: {
+        	html: {
+        		type: String,
+        		observer: '_htmlChanged'
+        	},
+        },
+
+        _htmlChanged: function(value){
+        	this.$.html_placeholder.innerHTML = value;
+        }
+    });
+</script>
+</dom-module>
