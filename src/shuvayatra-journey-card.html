@@ -1,0 +1,70 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+
+<link rel="import" href="behaviors/category-behavior.html">
+
+<dom-module id="shuvayatra-journey-card">
+<template>
+    <style is="custom-style">
+
+        iron-image{
+            width: 175px;
+            height: 190px;
+        }
+
+        paper-card {
+            width:100%;
+            padding: 30px 10px 20px;
+            border: 1px solid #eee;
+            height: 100%;
+        }
+
+        paper-card label {
+            cursor: pointer;
+            word-break: break-word;
+        }
+
+        paper-ripple + div {
+            width: 100%;
+        }
+
+        iron-image {
+            width: 45px;
+            height: 45px;
+            display: block;
+            margin: 0 auto 30px;
+        }
+
+        .link {
+            display: block;
+            text-decoration: none;
+            text-align: center;
+            color: #000;
+            height: 100%;
+        }
+
+    </style>
+
+    <a class="link" href="{{_generateUrl(category)}}">
+    <paper-card elevation="2">
+        <paper-ripple></paper-ripple>
+        <div>
+            <iron-image placeholder="../images/image-default.png" preload src="{{category.icon}}" fade="true" sizing="cover"></iron-image>
+            <label>{{category.title}}</label>
+        </div>
+    </paper-card>
+    </a>
+</template>
+<script>
+    Polymer({
+        is: 'shuvayatra-journey-card',
+        behaviors: [CategoryBehavior],
+        
+        properties: {
+        }
+    });
+</script>
+</dom-module>

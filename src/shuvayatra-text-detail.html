@@ -1,0 +1,37 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/google-youtube/google-youtube.html">
+
+<link rel="import" href="behaviors/post-behavior.html">
+<link rel="import" href="shuvayatra-favourite-section.html">
+
+<dom-module id="shuvayatra-text-detail">
+<template>
+    <style is="custom-style">
+        :host{
+            display: block;
+        }
+    </style>
+
+    <h3>{{post.title}}</h3>
+
+    <shuvayatra-favourite-section post="{{post}}"></shuvayatra-favourite-section>
+
+    <hr/>
+
+    <div>{{post.description}}</div>
+
+</template>
+<script>
+	Polymer({
+        is: 'shuvayatra-text-detail',
+        behaviors: [PostBehavior],
+        
+        properties: {
+
+        },
+
+        ready: function(){
+        }
+    });
+</script>
+</dom-module>

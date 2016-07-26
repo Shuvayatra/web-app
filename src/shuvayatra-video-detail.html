@@ -1,0 +1,47 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/google-youtube/google-youtube.html">
+
+<link rel="import" href="behaviors/post-behavior.html">
+<link rel="import" href="shuvayatra-favourite-section.html">
+
+<dom-module id="shuvayatra-video-detail">
+<template>
+    <style is="custom-style">
+        :host{
+            display: block;
+        }
+    </style>
+
+    <div style="background: lightgray;">
+        <google-youtube
+          video-id="{{post.data.video_id}}"
+          height="250px"
+          width="100%"
+          autoplay="0">
+        </google-youtube>
+    </div>
+
+    <h3>{{post.title}}</h3>
+
+    <shuvayatra-favourite-section post="{{post}}"></shuvayatra-favourite-section> 
+
+    <hr/>
+
+    <div>{{post.description}}</div>
+
+
+</template>
+<script>
+	Polymer({
+        is: 'shuvayatra-video-detail',
+        behaviors: [PostBehavior],
+        
+        properties: {
+
+        },
+
+        ready: function(){
+        }
+    });
+</script>
+</dom-module>

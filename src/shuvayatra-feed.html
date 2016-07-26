@@ -1,0 +1,224 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/iron-input/iron-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<!-- <link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html"> -->
+
+<link rel="import" href="shuvayatra-audio-card.html">
+<link rel="import" href="shuvayatra-video-card.html">
+<link rel="import" href="shuvayatra-text-card.html">
+
+<dom-module id="shuvayatra-feed">
+<template>
+    <style>
+        :host {
+            display: block;
+        }
+
+        .loadingIndicator{
+            text-align: center;
+        }
+
+        .loadingIndicator label{
+            border: 2px solid #00bbd5;
+            padding: 5px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s linear;
+            color: #4a4a4a;
+        }
+
+        .loadingIndicator label:hover{
+            background: #00bbd5;
+            color: #fff;
+        }
+
+        paper-dropdown-menu {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+    </style>
+
+    <paper-input placeholder="Search" is="iron-input" type="search" bind-value="{{searchText}}" no-label-float="true"></paper-input>
+
+    <iron-ajax id="filterAjax"
+        method="GET"
+        on-response="_didRespondFilter"></iron-ajax>
+
+    <paper-dropdown-menu horizontal-align="left" noink no-label-float="true" selected-item="{{selectedFilter}}">
+        <paper-listbox class="dropdown-content" selected="0">
+            <template id="filterList" is="dom-repeat" items="{{filter.data}}">
+                <paper-item value="{{item.id}}">{{item.title}}</paper-item>
+            </template>
+        </paper-listbox>
+    </paper-dropdown-menu>
+
+    <iron-ajax id="ajax"
+        url="{{feedUrl}}" 
+        method="GET"
+        params="{{queryParams}}"
+        last-response="{{data}}"
+        loading="{{isLoading}}"
+        on-response="_didRespond">
+    </iron-ajax>
+
+    <!-- <iron-list id="list" items="[]" as="item"> -->
+    <template id="list" is="dom-repeat" items="[]">
+        <!-- <template> -->
+            <div>
+                <template is="dom-if" if="{{_checkIfTypeAudio(item.type)}}">
+                    <shuvayatra-audio-card class="post-card" post="{{item}}"></shuvayatra-audio-card>
+                </template>
+
+                <template is="dom-if" if="{{_checkIfTypeVideo(item.type)}}">
+                    <shuvayatra-video-card class="post-card" post="{{item}}"></shuvayatra-video-card>
+                </template>
+                
+                <template is="dom-if" if="{{_checkIfTypeText(item.type)}}">
+                    <shuvayatra-text-card class="post-card" post="{{item}}"></shuvayatra-text-card>
+                </template>
+            </div>
+        </template>
+    <!-- </iron-list> -->
+
+    <div class="loadingIndicator">
+        <paper-spinner active="{{isLoading}}"></paper-spinner>
+        <template is="dom-if" if="{{!isLoading}}">
+            <label on-click="_loadMoreData">Load More</label>
+        </template>
+    </div>
+</template>
+<script>
+
+    Polymer({
+        is: 'shuvayatra-feed',
+        behaviors:[Polymer.IronScrollTargetBehavior],
+
+        properties: {
+            feedUrl:{ 
+                type: String
+            },
+
+            filter:{
+                type: Object,
+
+                value: {}
+            },
+
+            selectedFilter:{
+                type:Object,
+                observer: '_filterChanged'
+            },
+
+            currentPage:{
+                type: Number,
+                value: 1
+            },
+
+            isLastPage:{
+                type: Boolean,
+                value: true
+            },
+
+            queryParams: {
+                type: Object,
+                value: {
+                    page: 1
+                }
+            },
+
+            searchText:{
+                type: String
+            },
+
+            categoryId:{
+                type: Number,
+                value: -1
+            },
+
+            headerData:{
+                type: Object,
+                notify: true
+            }
+        },
+
+        ready: function(){
+            if(this.categoryId !== -1){
+                this.$.filterAjax.url = "http://api.shuvayatra.org/api/category/" + this.categoryId;
+                this.$.filterAjax.generateRequest();
+            }
+        },
+
+        _loadMoreData: function() {
+            if(this.queryParams.page && !this.isLastPage){
+                this.queryParams.page = this.currentPage + 1;
+                this.$.ajax.generateRequest();
+            }
+        },
+
+        _didRespond: function(e) {
+            var posts = e.detail.response.data;
+            this.isLastPage = e.detail.response.next_page_url == null;
+            var parent = this.$;
+
+            this.currentPage = e.detail.response.current_page;
+            posts.forEach(function(post) {
+                parent.list.push('items', post);
+            });
+        },
+
+        _didRespondFilter: function(e) {
+            var temp = {};
+            temp.filterBy = "category";
+            temp.data = [{title: "All", id: this.categoryId}].concat(e.detail.response.sub_categories);
+            this.filter = temp;
+
+            var temp1 = e.detail.response;
+            delete temp1.sub_categories;
+            this.headerData = temp1;
+
+        },
+
+        _filterChanged: function(value, oldValue) {
+            if(value != null){
+                this.currentPage = this.queryParams.page = 1;
+                if(this.filter.filterBy === "type"){
+                    delete this.queryParams.category;
+                    this.queryParams.post_type = value.value;
+                    if(value.value == -1){
+                        delete this.queryParams.post_type;
+                    }
+                }else if(this.filter.filterBy === "category"){
+                    delete this.queryParams.post_type;
+                    this.queryParams.category = value.value;
+                    if(value.value == -1){
+                        delete this.queryParams.category;
+                    }
+                }
+                this.$.list.items = [];
+                this.$.ajax.generateRequest();
+            }
+        },
+
+        _checkIfTypeAudio: function(type){
+            return (type === "audio");
+        },
+
+        _checkIfTypeVideo: function(type){
+            return (type === "video");
+        },
+
+        _checkIfTypeText: function(type){
+            return (type === "text");
+        },
+    });
+
+</script>
+</dom-module>
+

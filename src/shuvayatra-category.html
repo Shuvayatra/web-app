@@ -1,0 +1,41 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="shuvayatra-feed.html">
+<link rel="import" href="shuvayatra-header.html">
+
+<dom-module id="shuvayatra-category">
+<template>
+    <style is="custom-style">
+        :host{
+            display: block;
+        }
+
+        shuvayatra-feed{
+            margin-top: 190px;
+        }
+    </style>
+
+    <shuvayatra-header category data="{{headerData}}"></shuvayatra-header>
+    <!-- "http://api.shuvayatra.org/api/posts" -->
+    <shuvayatra-feed feed-url="http://api.shuvayatra.org/api/posts" category-id="{{categoryId}}" header-data="{{headerData}}"></shuvayatra-feed>
+</template>
+<script>
+	Polymer({
+        is: 'shuvayatra-category',
+        
+        properties: {
+        	categoryId:{
+        		type: Number
+        	},
+
+            headerData:{
+                type: Object
+            },
+
+        },
+
+        ready: function(){
+        }
+    });
+</script>
+</dom-module>

@@ -1,0 +1,17 @@
+<script>
+    CategoryBehavior = {
+
+        properties: {
+            category:{
+                type: Object,
+                value: null
+            }
+        },
+
+        _generateUrl: function(category){
+          	if(category != null){
+             	return "/category/" + category.id;
+          	}
+      	},
+    };
+</script>

@@ -1,0 +1,77 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+
+<link rel="import" href="shuvayatra-destination-card.html">
+<link rel="import" href="shuvayatra-header.html">
+
+<dom-module id="shuvayatra-destination">
+
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      .loadingIndicator{
+        text-align: center;
+      }
+
+      shuvayatra-destination-card a {
+          display: block;;
+      }
+
+    </style>
+
+    <shuvayatra-header main></shuvayatra-header>
+
+    <iron-ajax id="ajax"
+        auto
+        url="http://api.shuvayatra.org/api/destinations"
+        last-response="{{data}}"
+        loading="{{isLoading}}"
+        on-response="_didRespond">
+    </iron-ajax>
+
+    <template id="list" is="dom-repeat" items="{{data}}">
+        <div>
+            <shuvayatra-destination-card category="{{item}}"></shuvayatra-destination-card>
+        </div>
+    </template>
+
+    <div class="loadingIndicator">
+        <paper-spinner active="{{isLoading}}"></paper-spinner>
+    </div>
+
+  </template>
+
+  <script>
+
+    Polymer({
+
+        is: 'shuvayatra-destination',
+
+        properties: {
+        },
+
+        _didRespond: function(e) {
+            console.log(e.detail.response);
+        },
+
+    });
+
+  </script>
+
+</dom-module>
