@@ -5,6 +5,7 @@
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../bower_components/iron-icons/social-icons.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 
@@ -123,6 +124,12 @@
           <app-toolbar>
               <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
               <label condensed-title>{{data.title}}</label>
+              <template is="dom-if" if="{{audio}}">
+                <a href="{{data.data.media_url}}" download>
+                  <paper-icon-button id="download" icon="cloud-download"></paper-icon-button>
+                </a>
+              </template>
+              <paper-icon-button id="download" icon="social:share" on-click="{{_share}}"></paper-icon-button>
           </app-toolbar>
 
           <template is="dom-if" if="{{audio}}">
@@ -193,6 +200,10 @@
 
         _goBack: function () {
             window.history.back();
+        },
+
+        _share: function() {
+
         },
 
         _isAudio: function(value){

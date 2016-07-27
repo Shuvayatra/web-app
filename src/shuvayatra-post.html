@@ -37,7 +37,7 @@
     </iron-ajax>
 
     <template is="dom-if" if="{{_checkIfTypeAudio(data.type)}}">
-        <shuvayatra-header post data="{{data}}" has-feature-image audio></shuvayatra-header>
+        <shuvayatra-header post data="{{data}}" has-feature-image audio download></shuvayatra-header>
         <shuvayatra-audio-detail class="content" post="{{data}}"></shuvayatra-audio-detail>
     </template>
 
