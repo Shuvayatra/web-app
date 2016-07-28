@@ -130,6 +130,11 @@
             }
         },
 
+        _stop: function(){
+            this.$.audio.pause();
+            this.$.audio.currentTime = 0;
+        },
+
         _onProgressChanged: function(progress){
             if(!this.$.seekbar.pressed){
                 this.seekbarValue = progress;
@@ -215,7 +220,6 @@
         },
 
         _hidePlayIcon: function(isPlaying, canBePlayed){
-            console.log('test: ' + isPlaying + " / " + canBePlayed + " -> " + (isPlaying ? true : !(canBePlayed || this.preload === 'none')));
             return isPlaying ? true : !(canBePlayed || this.preload === 'none');
         },
 

@@ -30,6 +30,14 @@
 
     <shuvayatra-html-placeholder html="{{post.description}}"></shuvayatra-html-placeholder>
 
+    <p>Similar Videos</p>
+
+    <template is="dom-repeat" items="{{post.similar}}">
+        <div>
+            <shuvayatra-video-card post="{{item}}"></shuvayatra-video-card>
+        </div>
+    </template>
+
 
 </template>
 <script>

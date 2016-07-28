@@ -1,28 +1,90 @@
 {
-"id": 142,
-"type": "audio",
-"title": "भाषा सिक्नु किन जरुरी छ? ",
-"description": "<p>एक पटक भाषा नजानेर म धेरै समस्यामा परें । घरधनीसँग झगडै भो । तर मैले नलजाई सोध्ने आँट गरेर मलाई जोगाए । थाहा नपाएको कुरा सोध्यो भने समस्यामा परिन्छ । त्यसै गरि भन ठानेर काम गर्यो भने काम बिग्रीन सक्छ ।&nbsp;</p> <p>पारु शर्मा&nbsp;</p>",
-"data": {
-	"duration": "",
-	"thumbnail": "http://api.shuvayatra.org/uploads/posts/86c61abe5e1770c27c1e961d96a38ff6f6ef14d5.jpg",
-	"media_url": "https://storage.googleapis.com/audiopod/Why%20learning%20language%20is%20importantt%20if%20you%20are%20a%20domenstic%20worker_Paru%20Sharma.mp3"
-},
-"language": "ne",
-"source": "",
-"status": "published",
-"featured_image": "",
-"share_url": "https://amp.shuvayatra.org/post/142",
-"like_count": 0,
-"view_count": 29,
-"share_count": 0,
-"tags": [
-"भाषा"
-],
-"categories": [
-"वैदेशिक रोजगारमा जानका लागि तपाईंलाई कस्तो कस्तो सिपको ज्ञान चाहिन्छ?"
-],
-"category": "आप्रवासनको सोचमा",
-"created_at": 1463419898,
-"updated_at": 1468415165
+	"id": 142,
+	"type": "audio",
+	"title": "भाषा सिक्नु किन जरुरी छ? ",
+	"description": "<p>एक पटक भाषा नजानेर म धेरै समस्यामा परें । घरधनीसँग झगडै भो । तर मैले नलजाई सोध्ने आँट गरेर मलाई जोगाए । थाहा नपाएको कुरा सोध्यो भने समस्यामा परिन्छ । त्यसै गरि भन ठानेर काम गर्यो भने काम बिग्रीन सक्छ ।&nbsp;</p> <p>पारु शर्मा&nbsp;</p>",
+	"data": {
+		"duration": "",
+		"thumbnail": "http://api.shuvayatra.org/uploads/posts/86c61abe5e1770c27c1e961d96a38ff6f6ef14d5.jpg",
+		"media_url": "https://storage.googleapis.com/audiopod/Why%20learning%20language%20is%20importantt%20if%20you%20are%20a%20domenstic%20worker_Paru%20Sharma.mp3"
+	},
+	"language": "ne",
+	"source": "",
+	"status": "published",
+	"featured_image": "",
+	"share_url": "https://amp.shuvayatra.org/post/142",
+	"like_count": 0,
+	"view_count": 29,
+	"share_count": 0,
+	"tags": [
+		"भाषा"
+	],
+	"categories": [
+		"वैदेशिक रोजगारमा जानका लागि तपाईंलाई कस्तो कस्तो सिपको ज्ञान चाहिन्छ?"
+	],
+	"category": "आप्रवासनको सोचमा",
+	"created_at": 1463419898,
+	"updated_at": 1468415165,
+	"similar":[
+		{
+			"id": 48,
+			"type": "audio",
+			"title": "मलेशियामा कसरी सुरक्षित बस्ने?",
+			"description": "<p>मलेशिया अरु खाडि मुलुक भन्दा खुल्ला देश हो तर सुरक्षित छैन, त्यँहा लुटपाट धेरै हुन्छ, आफै सुरक्षित हुनुपर्दछ । सबै कम्पनि राम्रा पनि छैनन् र नराम्रा पनि छैनन् । कम्पनि चिनेरमात्र जानु पर्दछ । हिड्दा धेरै पैसा तथा बैंक कार्ड साथमा नराख्ने, एक्लै नहिड्ने, हिड्दा जलान कार्ड साथमा लिएर मात्र हिड्डुल गर्ने, कम्पनिको र साथिहरुको सम्पर्क नंबर आफुसँग राख्ने, मादक पदार्थ सेवन गरेर होहल्ला नगर्ने यसो गरेको खण्डमा सुरक्षित हुन सकिन्छ ।</p> <p>जनक वि. क.<br />वैदेशिक रोजगार गरी मलेशियाबाट फर्केका व्यक्ति</p>",
+			"data": {
+				"duration": "",
+				"thumbnail": "http://api.shuvayatra.org/uploads/posts/8eb235cf3a03314ec9d55262bde682d3c5b01b2b.jpg",
+				"media_url": "https://storage.googleapis.com/audiopod/11_How to be safe in Malaysia_JBK.mp3"
+			},
+			"language": "ne",
+			"source": "",
+			"status": "published",
+			"featured_image": "",
+			"share_url": "https://amp.shuvayatra.org/post/48",
+			"like_count": 23,
+			"view_count": 220,
+			"share_count": 0,
+			"tags": [
+			"कागजात",
+			"वैदेशिक रोजगार",
+			"तलब",
+			"खर्च",
+			"सम्झौता पत्र"
+			],
+			"categories": [
+				"मलेशियामा गर्न नहुने कार्यहरु के के हुन?"
+			],
+			"category": "मलेशिया",
+			"created_at": 1463560866,
+			"updated_at": 1468560192
+		},
+		{
+			"id": 142,
+			"type": "audio",
+			"title": "भाषा सिक्नु किन जरुरी छ? ",
+			"description": "<p>एक पटक भाषा नजानेर म धेरै समस्यामा परें । घरधनीसँग झगडै भो । तर मैले नलजाई सोध्ने आँट गरेर मलाई जोगाए । थाहा नपाएको कुरा सोध्यो भने समस्यामा परिन्छ । त्यसै गरि भन ठानेर काम गर्यो भने काम बिग्रीन सक्छ ।&nbsp;</p> <p>पारु शर्मा&nbsp;</p>",
+			"data": {
+				"duration": "",
+				"thumbnail": "http://api.shuvayatra.org/uploads/posts/86c61abe5e1770c27c1e961d96a38ff6f6ef14d5.jpg",
+				"media_url": "https://storage.googleapis.com/audiopod/Why%20learning%20language%20is%20importantt%20if%20you%20are%20a%20domenstic%20worker_Paru%20Sharma.mp3"
+			},
+			"language": "ne",
+			"source": "",
+			"status": "published",
+			"featured_image": "",
+			"share_url": "https://amp.shuvayatra.org/post/142",
+			"like_count": 0,
+			"view_count": 29,
+			"share_count": 0,
+			"tags": [
+				"भाषा"
+			],
+			"categories": [
+			"वैदेशिक रोजगारमा जानका लागि तपाईंलाई कस्तो कस्तो सिपको ज्ञान चाहिन्छ?"
+			],
+			"category": "आप्रवासनको सोचमा",
+			"created_at": 1463419898,
+			"updated_at": 1463419898
+		}
+	]	
 }

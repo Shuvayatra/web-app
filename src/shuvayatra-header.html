@@ -105,7 +105,7 @@
     </template>
 
     <!-- normal header for detail pages with back icon and title -->
-    <template is="dom-if" if="{{post}}">
+    <template id="postIf" is="dom-if" if="{{post}}">
       
       <template is="dom-if" if="{{!hasFeatureImage}}">
         <app-header condenses effects="waterfall" fixed>
@@ -116,7 +116,7 @@
         </app-header>
       </template>
 
-      <template is="dom-if" if="{{hasFeatureImage}}">
+      <template id="featureImageIf" is="dom-if" if="{{hasFeatureImage}}">
         <app-header class="with-image" condenses fixed 
         effects="waterfall resize-snapped-title fade-background" 
         effects-config='{"resize-snapped-title": {"startsAt": 0.3, "duration": "100ms"}, "fade-background": {"startsAt": 0.3, "endsAt": 0.9}}'
@@ -124,17 +124,19 @@
           <app-toolbar>
               <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
               <label condensed-title>{{data.title}}</label>
+
               <template is="dom-if" if="{{audio}}">
                 <a href="{{data.data.media_url}}" download>
                   <paper-icon-button id="download" icon="cloud-download"></paper-icon-button>
                 </a>
               </template>
-              <paper-icon-button id="download" icon="social:share" on-click="{{_share}}"></paper-icon-button>
+              
+              <paper-icon-button id="download" icon="social:share" on-click="_share"></paper-icon-button>
           </app-toolbar>
 
-          <template is="dom-if" if="{{audio}}">
+          <template id="playerIf" is="dom-if" if="{{audio}}">
             <div title style="position: absolute; bottom:0px; width:100%">
-              <shuvayatra-audio-player src="{{data.data.media_url}}" title="{{data.title}}"></shuvayatra-audio-player>
+              <shuvayatra-audio-player id="player" src="{{data.data.media_url}}" title="{{data.title}}"></shuvayatra-audio-player>
             </div>
           </template>
 
@@ -198,7 +200,19 @@
             },
         },
 
+        ready: function() {
+          if(this.audio){
+            this.$.postIf.render();
+            this.$$("#featureImageIf").render();
+            this.$$("#playerIf").render();
+            this.player = this.$$("#player");
+          }
+        },
+
         _goBack: function () {
+            if(this.player){
+              this.player._stop();
+            }
             window.history.back();
         },
 

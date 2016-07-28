@@ -9,14 +9,9 @@
         :host{
             display: block;
         }
-
-        shuvayatra-feed{
-            margin-top: 190px;
-        }
     </style>
 
     <shuvayatra-header category data="{{headerData}}"></shuvayatra-header>
-    <!-- "http://api.shuvayatra.org/api/posts" -->
     <shuvayatra-feed feed-url="http://api.shuvayatra.org/api/posts" category-id="{{categoryId}}" header-data="{{headerData}}"></shuvayatra-feed>
 </template>
 <script>
