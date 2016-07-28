@@ -10,222 +10,275 @@
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 
 <dom-module id="shuvayatra-header">
-<template>
-    <style>
-        :host {
-        }
-         app-header {
-            @apply(--layout-fixed-top);
-            z-index: 2;
-            color: #fff;
-            
-            background-color: var(--app-primary-color);
-            --app-header-shadow: {
-                box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.2);
-                height: 10px;
-                bottom: -10px;
-            };
-          }
-          
-          app-header paper-icon-button {
-            --paper-icon-button-ink-color: white;
-          }
-
-          app-header.with-image{
-            --app-header-background-front-layer: {
-              background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.8) 100%);
-            };
-
-            --app-header-background-rear-layer: {
-              background-color: var(--app-primary-color);
-            };
-            background-position: bottom center;
-            background-size: 100% 100%;
-            background-repeat: no-repeat;
-            height: 250px;
-          }
-
-          app-toolbar a {
-            display: inline-block;
-            margin-left:16px;
-            line-height: 40px;
-            text-decoration: none;
-            color: #FFFFFF;
-            float: right;
-          }
-
-          app-toolbar iron-icon{
-            width: 32px;
-            height: 32px;
-          }
-          iron-selector{
-            display: block;
-            width: 100%;
-          }
-          #logo-title{
-            float: left;
-            line-height: 40px;
-            margin-left: 0;
-          }
-          #logo-title span{
-            display: inline-block;
-          }
-          #logo-icon{
-            margin-right: 0.5em;
-            vertical-align:middle;
-          }
-
-          @media only screen  and (min-width : 900px) {
-          app-toolbar {
-            max-width: 800px;
-            margin: 0 auto;
-          }
-
-          app-header.with-image{
-            background-size: 800px 100%;
-          }
-      }
-    </style>
-
-    <!-- main header for with navigation icons -->
-    <template is="dom-if" if="{{main}}">
-      <app-header condenses effects="waterfall" fixed>
-        <app-toolbar>
-          <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
-            <a id="logo-title" name="home" href="/">
-              <iron-image id="logo-icon" src="../images/logo-square.png" preload sizing="cover" height="32" width="32"></iron-image>
-            </a>
-            <a name="profile" href="/profile"><iron-icon icon="icons:account-circle"></iron-icon></a>
-            <a name="question" href="/question"><iron-icon icon="icons:question-answer"></iron-icon></a>
-            <a name="journey" href="/journey"><iron-icon icon="maps:flight"></iron-icon></a>
-            <a name="destination" href="/destination"><iron-icon icon="maps:place"></iron-icon></a>
-          </iron-selector>
-        </app-toolbar>
-      </app-header>
-    </template>
-
-    <!-- normal header for detail pages with back icon and title -->
-    <template id="postIf" is="dom-if" if="{{post}}">
-      
-      <template is="dom-if" if="{{!hasFeatureImage}}">
-        <app-header condenses effects="waterfall" fixed>
-          <app-toolbar>
-              <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
-              <label>{{data.title}}</label>
-          </app-toolbar>
-        </app-header>
-      </template>
-
-      <template id="featureImageIf" is="dom-if" if="{{hasFeatureImage}}">
-        <app-header class="with-image" condenses fixed 
-        effects="waterfall resize-snapped-title fade-background" 
-        effects-config='{"resize-snapped-title": {"startsAt": 0.3, "duration": "100ms"}, "fade-background": {"startsAt": 0.3, "endsAt": 0.9}}'
-        style="background-image: url([[data.featured_image]]);">
-          <app-toolbar>
-              <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
-              <label condensed-title>{{data.title}}</label>
-
-              <template is="dom-if" if="{{audio}}">
-                <a href="{{data.data.media_url}}" download>
-                  <paper-icon-button id="download" icon="cloud-download"></paper-icon-button>
-                </a>
-              </template>
-              
-              <paper-icon-button id="download" icon="social:share" on-click="_share"></paper-icon-button>
-          </app-toolbar>
-
-          <template id="playerIf" is="dom-if" if="{{audio}}">
-            <div title style="position: absolute; bottom:0px; width:100%">
-              <shuvayatra-audio-player id="player" src="{{data.data.media_url}}" title="{{data.title}}"></shuvayatra-audio-player>
-            </div>
-          </template>
-
-        </app-header>
-      </template>
-
-    </template>
-
-    <!-- normal header for detail pages with back icon and title and featured-image-->
-    <template is="dom-if" if="{{category}}">
-      <app-header class="with-image" condenses fixed 
-      effects="waterfall resize-snapped-title fade-background" 
-      effects-config='{"resize-snapped-title": {"startsAt": 0.8, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'
-      style="background-image: url([[data.featured_image]]);">
-        <app-toolbar>
-            <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
-            <label condensed-title>{{data.title}}</label>
-            <div title>
-              <iron-image src="{{data.small_icon}}" sizing="contain" width="25" height="25"></iron-image>
-              <label>{{data.title}}</label>
-            </div>
-        </app-toolbar>
-      </app-header>
-    </template>
-
-</template>
-<script>
-    Polymer({
-        is: 'shuvayatra-header',
-
-        properties: {
-            data: {
-              type: Object,
-              value: {}
-            }, 
-
-            main: {
-                type: Boolean,
-                value: false
-            },
-
-            post: {
-                type: Boolean,
-                value: false
-            },
-
-            hasFeatureImage: {
-              type: Boolean,
-              value: false
-            },
-
-            audio: {
-              type: Boolean,
-              value: false,
-              observer: '_isAudio'
-            },
-
-            category: {
-                type: Boolean,
-                value: false
-            },
-        },
-
-        ready: function() {
-          if(this.audio){
-            this.$.postIf.render();
-            this.$$("#featureImageIf").render();
-            this.$$("#playerIf").render();
-            this.player = this.$$("#player");
-          }
-        },
-
-        _goBack: function () {
-            if(this.player){
-              this.player._stop();
+    <template>
+        <style>
+            :host {
             }
-            window.history.back();
-        },
 
-        _share: function() {
+            app-header {
+                @apply(--layout-fixed-top);
+                z-index: 2;
+                color: #fff;
 
-        },
+                background-color: var(--app-primary-color);
+                --app-header-shadow: {
+                    box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.2);
+                    height: 10px;
+                    bottom: -10px;
+                };
+            }
 
-        _isAudio: function(value){
-          if(value){
-            this.importHref(this.resolveUrl('shuvayatra-audio-player.html'), null, null, true);
-          }
-        }
+            app-header paper-icon-button {
+                --paper-icon-button-ink-color: white;
+            }
 
-    });
-</script>
+            app-header.with-image {
+                --app-header-background-front-layer: {
+                    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.8) 100%);
+                };
+                --app-header-background-rear-layer: {
+                    background-color: var(--app-primary-color);
+                };
+                background-position: bottom center;
+                background-size: cover;
+                background-repeat: no-repeat;
+                height: 250px;
+            }
+
+            app-toolbar a, span {
+                display: inline-block;
+                margin-left: 16px;
+                line-height: 40px;
+                text-decoration: none;
+                color: #FFFFFF;
+                float: right;
+            }
+
+            app-toolbar iron-icon {
+                width: 32px;
+                height: 32px;
+            }
+
+            iron-selector {
+                display: block;
+                width: 100%;
+            }
+
+            #logo-title {
+                float: left;
+                line-height: 40px;
+                margin-left: 0;
+            }
+
+            #logo-title span {
+                display: inline-block;
+            }
+
+            #logo-icon {
+                margin-right: 0.5em;
+                vertical-align: middle;
+            }
+
+            .audio-player-wrap {
+                position: absolute;
+                bottom:0px;
+                max-width: 800px;
+                margin: 0 auto;
+                left: 0;
+                right: 0;
+                width:100%
+            }
+
+            paper-icon-button[hidden] {
+                display: none;
+            }
+
+            @media only screen  and (min-width: 900px) {
+                app-toolbar {
+                    max-width: 800px;
+                    margin: 0 auto;
+                }
+            }
+
+            @media only screen  and (min-width: 1024px) {
+                app-header.with-image {
+                    height: 350px;
+                }
+            }
+
+            @media only screen  and (min-width: 1600px) {
+                app-header.with-image {
+                    height: 450px;
+                }
+            }
+        </style>
+
+        <!-- main header for with navigation icons -->
+        <template is="dom-if" if="{{main}}">
+            <app-header condenses effects="waterfall" fixed>
+                <app-toolbar>
+                    <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
+                        <a id="logo-title" name="home" href="/">
+                            <iron-image id="logo-icon" src="../images/logo-square.png" preload sizing="cover"
+                                        height="32" width="32"></iron-image>
+                        </a>
+                        <a name="profile" href="/profile">
+                            <iron-icon icon="icons:account-circle"></iron-icon>
+                        </a>
+                        <a name="question" href="/question">
+                            <iron-icon icon="icons:question-answer"></iron-icon>
+                        </a>
+                        <a name="journey" href="/journey">
+                            <iron-icon icon="maps:flight"></iron-icon>
+                        </a>
+                        <a name="destination" href="/destination">
+                            <iron-icon icon="maps:place"></iron-icon>
+                        </a>
+                    </iron-selector>
+                </app-toolbar>
+            </app-header>
+        </template>
+
+        <!-- normal header for detail pages with back icon and title -->
+        <template id="postIf" is="dom-if" if="{{post}}">
+
+            <template is="dom-if" if="{{!hasFeatureImage}}">
+                <app-header condenses effects="waterfall" fixed>
+                    <app-toolbar>
+                        <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
+                        <label>{{data.title}}</label>
+                    </app-toolbar>
+                </app-header>
+            </template>
+
+            <template id="featureImageIf" is="dom-if" if="{{hasFeatureImage}}">
+                <app-header class="with-image" condenses fixed
+                            effects="waterfall resize-snapped-title fade-background"
+                            effects-config='{"resize-snapped-title": {"startsAt": 0.3, "duration": "100ms"}, "fade-background": {"startsAt": 0.3, "endsAt": 0.9}}'
+                            style="background-image: url([[data.featured_image]]);">
+                    <app-toolbar>
+                        <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
+                        <label condensed-title>{{data.title}}</label>
+
+                        <template is="dom-if" if="{{audio}}">
+                            <a href="{{data.data.media_url}}" download>
+                                <paper-icon-button id="download" icon="cloud-download"></paper-icon-button>
+                            </a>
+                        </template>
+
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{data.share_url}}">
+                            <paper-icon-button id="share" icon="social:share"></paper-icon-button>
+                        </a>
+                        <span id="favourite" on-tap="_toggleFavourite">
+                            <paper-icon-button icon="favorite" 
+                                hidden$="{{ _checkIfFavourite() }}"></paper-icon-button>
+                            <paper-icon-button icon="favorite-border" 
+                                hidden$="{{ !_checkIfFavourite() }}"></paper-icon-button>
+                        </span>
+                    </app-toolbar>
+
+                    <template id="playerIf" is="dom-if" if="{{audio}}">
+                        <div class="audio-player-wrap" title>
+                            <shuvayatra-audio-player 
+                                id="player" src="{{data.data.media_url}}" 
+                                title="{{data.title}}">
+                            </shuvayatra-audio-player>
+                        </div>
+                    </template>
+                </app-header>
+            </template>
+
+        </template>
+
+        <!-- normal header for detail pages with back icon and title and featured-image-->
+        <template is="dom-if" if="{{category}}">
+            <app-header class="with-image" condenses fixed
+                        effects="waterfall resize-snapped-title fade-background"
+                        effects-config='{"resize-snapped-title": {"startsAt": 0.8, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'
+                        style="background-image: url([[data.featured_image]]);">
+                <app-toolbar>
+                    <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
+                    <label condensed-title>{{data.title}}</label>
+                    <div title>
+                        <iron-image src="{{data.small_icon}}" sizing="contain" width="25" height="25"></iron-image>
+                        <label>{{data.title}}</label>
+                    </div>
+                </app-toolbar>
+            </app-header>
+        </template>
+
+    </template>
+    <script>
+        Polymer({
+            is: 'shuvayatra-header',
+
+            properties: {
+                data: {
+                    type: Object,
+                    value: {}
+                },
+
+                main: {
+                    type: Boolean,
+                    value: false
+                },
+
+                post: {
+                    type: Boolean,
+                    value: false
+                },
+
+                hasFeatureImage: {
+                    type: Boolean,
+                    value: false
+                },
+
+                audio: {
+                    type: Boolean,
+                    value: false,
+                    observer: '_isAudio'
+                },
+
+                category: {
+                    type: Boolean,
+                    value: false
+                },
+            },
+
+            ready: function () {
+                if (this.audio) {
+                    this.$.postIf.render();
+                    this.$$("#featureImageIf").render();
+                    this.$$("#playerIf").render();
+                    this.player = this.$$("#player");
+                }
+            },
+
+            _goBack: function () {
+                if (this.player) {
+                    this.player._stop();
+                }
+                window.history.back();
+            },
+
+            _isAudio: function (value) {
+                if (value) {
+                    this.importHref(this.resolveUrl('shuvayatra-audio-player.html'), null, null, true);
+                }
+            },
+
+            _toggleFavourite: function() {
+                if(_checkIfFavourite()){
+
+                }else{
+
+                }
+            },
+
+            _checkIfFavourite: function() {
+                return false;
+            }
+
+        });
+    </script>
 </dom-module>

@@ -15,12 +15,30 @@
             display: block;
         }
 
-        .content{
-            padding-top: 20px;
+        shuvayatra-video-detail.content {
+            padding: 0;
+        }
+
+        .content {
+            padding: 20px 15px;
+            text-rendering: optimizeLegibility !important;
+            -webkit-font-smoothing: antialiased !important;
         }
 
         shuvayatra-text-detail, shuvayatra-audio-detail{
-            margin-top: 210px;
+            margin-top: 200px;
+        }
+
+        @media only screen and (min-width: 1024px) {
+            shuvayatra-text-detail, shuvayatra-audio-detail {
+                margin-top: 300px;
+            }
+        }
+
+        @media only screen and (min-width: 1600px) {
+            shuvayatra-text-detail, shuvayatra-audio-detail {
+                margin-top: 400px;
+            }
         }
     </style>
 

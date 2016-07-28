@@ -11,33 +11,56 @@
         :host{
             display: block;
         }
+
+        h3 {
+            margin: 15px 0 10px;
+            font-size: 18px;
+            padding: 0 15px;
+            line-height: 26px;
+            font-weight: normal;
+        }
+
+        shuvayatra-favourite-section,
+        shuvayatra-html-placeholder {
+            padding: 0 15px;
+        }
+
+        .similar-type {
+            box-shadow: 765px 0 0 0 #ededed,-765px 0 0 0 #ededed;
+            background: #ededed;
+            padding: 20px 0;
+        }
+
+        .similar-type p {
+            font-size: 16px;
+            color: #636363;
+            margin: 0 0 10px;
+        }
+        
     </style>
 
     <div style="background: lightgray;">
         <google-youtube
           video-id="{{post.data.video_id}}"
-          height="250px"
-          width="100%"
+          fluid
           autoplay="0">
         </google-youtube>
     </div>
 
     <h3>{{post.title}}</h3>
 
-    <shuvayatra-favourite-section post="{{post}}"></shuvayatra-favourite-section> 
-
-    <hr/>
-
+    <shuvayatra-favourite-section post="{{post}}"></shuvayatra-favourite-section>
     <shuvayatra-html-placeholder html="{{post.description}}"></shuvayatra-html-placeholder>
 
-    <p>Similar Videos</p>
+    <div class="similar-type">
+        <p>Similar Videos</p>
 
-    <template is="dom-repeat" items="{{post.similar}}">
-        <div>
-            <shuvayatra-video-card post="{{item}}"></shuvayatra-video-card>
-        </div>
-    </template>
-
+        <template is="dom-repeat" items="{{post.similar}}">
+            <div>
+                <shuvayatra-video-card post="{{item}}"></shuvayatra-video-card>
+            </div>
+        </template>
+    </div>
 
 </template>
 <script>

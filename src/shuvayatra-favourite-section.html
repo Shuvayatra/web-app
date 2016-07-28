@@ -11,17 +11,37 @@
             display: block;
         }
 
-        iron-icon{
-        	color: #00BBD5;
-        	height: 24px;
-        	width: 24px;
+        iron-icon {
+            color: #00BBD5;
+            height: 14px;
+            width: 14px;
+        }
+
+        label, span {
+            font-size: 13px;
+            color: #717171;
+        }
+
+        .span-block {
+            display: block;
+        }
+
+        .span-block span {
+            display: inline-block;
+            margin-right: 25px;
+        }
+
+        .span-block span:last-child {
+            margin-right: 0;
         }
     </style>
 
     <label>{{post.category}}</label> - <label>{{_getRelativeTime(post.updated_at)}}</label>
 
-    <span><iron-icon icon="favorite"></iron-icon> {{_getFormattedLikeCount(post.like_count)}}</span>
-    <span><iron-icon icon="social:share"></iron-icon> {{_getFormattedShareCount(post.share_count)}}</span>
+    <div class="span-block">
+        <span><iron-icon icon="favorite"></iron-icon> {{_getFormattedLikeCount(post.like_count)}}</span>
+        <span><iron-icon icon="social:share"></iron-icon> {{_getFormattedShareCount(post.share_count)}}</span>
+    </div>
 
 </template>
 <script>

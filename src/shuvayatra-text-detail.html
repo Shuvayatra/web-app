@@ -10,13 +10,18 @@
         :host{
             display: block;
         }
+
+        h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            line-height: 26px;
+            font-weight: normal;
+        }
     </style>
 
     <h3>{{post.title}}</h3>
 
     <shuvayatra-favourite-section post="{{post}}"></shuvayatra-favourite-section>
-
-    <hr/>
 
     <shuvayatra-html-placeholder html="{{post.description}}"></shuvayatra-html-placeholder>
 
