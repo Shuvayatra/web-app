@@ -8,6 +8,7 @@
 <link rel="import" href="../bower_components/iron-icons/social-icons.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
 
 <dom-module id="shuvayatra-header">
     <template>
@@ -171,9 +172,9 @@
                         </a>
                         <span id="favourite" on-tap="_toggleFavourite">
                             <paper-icon-button icon="favorite" 
-                                hidden$="{{ _checkIfFavourite() }}"></paper-icon-button>
+                                hidden$="{{ _checkIfFavourite(favoriteData) }}"></paper-icon-button>
                             <paper-icon-button icon="favorite-border" 
-                                hidden$="{{ !_checkIfFavourite() }}"></paper-icon-button>
+                                hidden$="{{ !_checkIfFavourite(favoriteData) }}"></paper-icon-button>
                         </span>
                     </app-toolbar>
 
@@ -206,6 +207,8 @@
                 </app-toolbar>
             </app-header>
         </template>
+
+        <app-localstorage-document key="favorite" data="{{favoriteData}}"></app-localstorage-document>
 
     </template>
     <script>
@@ -243,6 +246,11 @@
                     type: Boolean,
                     value: false
                 },
+
+                favoriteData: {
+                    type: Array,
+                    value: []
+                },
             },
 
             ready: function () {
@@ -268,15 +276,17 @@
             },
 
             _toggleFavourite: function() {
-                if(_checkIfFavourite()){
-
-                }else{
-
+                var set = new Set(this.favoriteData);
+                if(!set.delete(this.data.id)){
+                    /* make api request here */
+                    set.add(this.data.id);
                 }
+                this.favoriteData = Array.from(set);
             },
 
-            _checkIfFavourite: function() {
-                return false;
+            _checkIfFavourite: function(favoriteData) {
+                var set = new Set(favoriteData);
+                return !set.has(this.data.id);
             }
 
         });
