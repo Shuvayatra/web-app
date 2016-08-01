@@ -39,9 +39,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             margin: 0 auto;
           }
 
-        .category {
-          padding-top: 210px;
-        }
+          .category {
+            padding-top: 190px;
+          }
+      }
+
+      @media only screen  and (min-width: 1024px) {
+          .category {
+              padding-top: 290px;
+          }
+      }
+
+      @media only screen  and (min-width: 1600px) {
+          .category {
+              padding-top: 390px;
+          }
       }
     </style>
 
@@ -67,7 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <shuvayatra-question class="content" name="question"></shuvayatra-question>
         <shuvayatra-profile class="content" name="profile"></shuvayatra-profile>
         <shuvayatra-category class="content category" name="category" category-id="{{subrouteData.id}}"></shuvayatra-category>
-        <shuvayatra-post class="content" name="post" post-id="{{subrouteData.id}}"></shuvayatra-post>
+        <shuvayatra-post id="post" class="content" name="post" post-id="{{subrouteData.id}}"></shuvayatra-post>
       </iron-pages>
     </app-header-layout>
 
@@ -112,15 +124,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _routePageChanged: function(page) {
         this.page = page || 'home';
-        
         this.showMainHeader = !(this.page === 'post' || this.page === 'category');
       },
 
       _pageChanged: function(page) {
         // load page import on demand.
-        this.importHref(
-          this.resolveUrl('shuvayatra-' + page + '.html'), null, null, true);
-      }
+        this.importHref(this.resolveUrl('shuvayatra-' + page + '.html'), null, null, true);
+      },
+
+      _removePreviousPage: function(page){
+        if(page === 'post'){
+          if(this.$.post){
+            console.dir(this.$.post);
+          }
+        }
+      },
 
     });
 

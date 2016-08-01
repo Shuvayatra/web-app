@@ -12,7 +12,7 @@
     </style>
 
     <shuvayatra-header category data="{{headerData}}"></shuvayatra-header>
-    <shuvayatra-feed feed-url="http://api.shuvayatra.org/api/posts" category-id="{{categoryId}}" header-data="{{headerData}}"></shuvayatra-feed>
+    <shuvayatra-feed id="feed" feed-url="http://api.shuvayatra.org/api/posts" category-id="{{categoryId}}" header-data="{{headerData}}"></shuvayatra-feed>
 </template>
 <script>
 	Polymer({
@@ -20,17 +20,23 @@
         
         properties: {
         	categoryId:{
-        		type: Number
+        		type: Number,
+                observer: '_onIdChanged'
         	},
 
             headerData:{
-                type: Object
+                type: Object,
+                observer: '_onHeaderChanged'
             },
 
         },
 
         ready: function(){
-        }
+        },
+
+        _onIdChanged: function(id){
+            this.headerData = {};
+        },
     });
 </script>
 </dom-module>

@@ -43,7 +43,7 @@
     </style>
 
     <iron-ajax id="ajax" auto
-        url="{{_generateUrl()}}" 
+        url="{{postUrl}}" 
         method="GET"
         params="{{queryParams}}"
         last-response="{{data}}"
@@ -55,9 +55,9 @@
         <shuvayatra-audio-detail class="content" post="{{data}}"></shuvayatra-audio-detail>
     </template>
 
-    <template is="dom-if" if="{{_checkIfTypeVideo(data.type)}}">
+    <template id="videoIf" is="dom-if" if="{{_checkIfTypeVideo(data.type)}}">
         <shuvayatra-header post data="{{data}}"></shuvayatra-header>
-        <shuvayatra-video-detail class="content" post="{{data}}"></shuvayatra-video-detail>
+        <shuvayatra-video-detail id="videoDetail" class="content" post="{{data}}"></shuvayatra-video-detail>
     </template>
 
     <template is="dom-if" if="{{_checkIfTypeText(data.type)}}">
@@ -76,16 +76,18 @@
         
         properties: {
         	postId:{
-        		type: Number
+        		type: Number,
+                observer: '_onIdChanged'
         	},
+
+            postUrl:{
+                type: String
+            }
         },
 
-        ready: function(){
-        },
-
-        _generateUrl: function() {
-            return "../data_audio.json";
-            //return "http://api.shuvayatra.org/api/posts/" + postId;
+        _onIdChanged: function(id){
+            this.data = {};
+            this.postUrl = "http://api.shuvayatra.org/api/posts/" + this.postId;
         },
 
         _checkIfTypeAudio: function(type){

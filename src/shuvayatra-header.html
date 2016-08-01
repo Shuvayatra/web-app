@@ -115,7 +115,7 @@
         </style>
 
         <!-- main header for with navigation icons -->
-        <template is="dom-if" if="{{main}}">
+        <template is="dom-if" if="{{main}}" restamp="true">
             <app-header condenses effects="waterfall" fixed>
                 <app-toolbar>
                     <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
@@ -141,9 +141,9 @@
         </template>
 
         <!-- normal header for detail pages with back icon and title -->
-        <template id="postIf" is="dom-if" if="{{post}}">
+        <template id="postIf" is="dom-if" if="{{post}}" restamp="true">
 
-            <template is="dom-if" if="{{!hasFeatureImage}}">
+            <template is="dom-if" if="{{!hasFeatureImage}}" restamp="true">
                 <app-header condenses effects="waterfall" fixed>
                     <app-toolbar>
                         <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
@@ -152,7 +152,7 @@
                 </app-header>
             </template>
 
-            <template id="featureImageIf" is="dom-if" if="{{hasFeatureImage}}">
+            <template id="featureImageIf" is="dom-if" if="{{hasFeatureImage}}" restamp="true">
                 <app-header class="with-image" condenses fixed
                             effects="waterfall resize-snapped-title fade-background"
                             effects-config='{"resize-snapped-title": {"startsAt": 0.3, "duration": "100ms"}, "fade-background": {"startsAt": 0.3, "endsAt": 0.9}}'
@@ -161,7 +161,7 @@
                         <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
                         <label condensed-title>{{data.title}}</label>
 
-                        <template is="dom-if" if="{{audio}}">
+                        <template is="dom-if" if="{{audio}}" restamp="true">
                             <a href="{{data.data.media_url}}" download>
                                 <paper-icon-button id="download" icon="cloud-download"></paper-icon-button>
                             </a>
@@ -178,7 +178,7 @@
                         </span>
                     </app-toolbar>
 
-                    <template id="playerIf" is="dom-if" if="{{audio}}">
+                    <template id="playerIf" is="dom-if" if="{{audio}}" restamp="true">
                         <div class="audio-player-wrap" title>
                             <shuvayatra-audio-player 
                                 id="player" src="{{data.data.media_url}}" 
@@ -192,7 +192,7 @@
         </template>
 
         <!-- normal header for detail pages with back icon and title and featured-image-->
-        <template is="dom-if" if="{{category}}">
+        <template is="dom-if" if="{{category}}" restamp="true">
             <app-header class="with-image" condenses fixed
                         effects="waterfall resize-snapped-title fade-background"
                         effects-config='{"resize-snapped-title": {"startsAt": 0.8, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'

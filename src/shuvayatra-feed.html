@@ -139,19 +139,13 @@
 
             categoryId:{
                 type: Number,
-                value: -1
+                value: -1,
+                observer: '_onCategoryChanged'
             },
 
             headerData:{
                 type: Object,
                 notify: true
-            }
-        },
-
-        ready: function(){
-            if(this.categoryId !== -1){
-                this.$.filterAjax.url = "http://api.shuvayatra.org/api/category/" + this.categoryId;
-                this.$.filterAjax.generateRequest();
             }
         },
 
@@ -203,6 +197,22 @@
                 }
                 this.$.list.items = [];
                 this.$.ajax.generateRequest();
+            }
+        },
+
+        _onCategoryChanged: function(value, oldValue){
+            if(this.categoryId !== -1){
+                this.$.filterAjax.url = "http://api.shuvayatra.org/api/category/" + this.categoryId;
+                this.$.filterAjax.generateRequest();
+
+                if(oldValue){
+                    delete this.queryParams.post_type;
+                    delete this.queryParams.category;
+                    this.queryParams.category = this.categoryId;
+
+                    this.$.list.items = [];
+                    this.$.ajax.generateRequest();
+                }
             }
         },
 
