@@ -7,7 +7,9 @@
 <link rel="import" href="../bower_components/iron-icons/maps-icons.html">
 <link rel="import" href="../bower_components/iron-icons/social-icons.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
+
 <link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
 
 <dom-module id="shuvayatra-header">
@@ -88,6 +90,12 @@
                 left: 0;
                 right: 0;
                 width:100%
+            }
+
+            form, paper-input{
+                width: 100%;
+                --paper-input-container-focus-color: white;
+                --paper-input-container-input-color: white;
             }
 
             paper-icon-button[hidden] {
@@ -208,6 +216,22 @@
             </app-header>
         </template>
 
+        <!-- header with search field -->
+        <template is="dom-if" if="{{search}}" restamp="true">
+            <app-header condenses effects="waterfall" fixed>
+                <app-toolbar>
+                    <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
+                    <!-- <form is="iron-form" id="form"> -->
+                    <paper-input placeholder="Search" 
+                            no-label-float no-ink 
+                            value="{{ searchTerm }}">
+                        <!-- <iron-icon icon="search" prefix></div> -->
+                    </paper-input>
+                    <!-- </form> -->
+                </app-toolbar>
+            </app-header>
+        </template>
+
         <app-localstorage-document key="favorite" data="{{favoriteData}}"></app-localstorage-document>
 
     </template>
@@ -247,10 +271,29 @@
                     value: false
                 },
 
+                search:{
+                    type: Boolean,
+                    value: false
+                },
+
+                searchTerm:{
+                    type: String,
+                    value: "",
+                    notify: true
+                },
+
                 favoriteData: {
                     type: Array,
                     value: []
                 },
+            },
+
+            listeners:{
+                'iron-form-submit': '_submitForm'
+            },
+
+            _submitForm: function(){
+                console.log('test');
             },
 
             ready: function () {

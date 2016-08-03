@@ -6,8 +6,9 @@
 <link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
-<!-- <link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html"> -->
 
 <link rel="import" href="shuvayatra-audio-card.html">
 <link rel="import" href="shuvayatra-video-card.html">
@@ -40,26 +41,43 @@
 
         paper-dropdown-menu {
             width: 100%;
+        }
+
+        paper-card.menu{
+            width: 100%;
+        }
+
+        paper-card.filter-wrapper{
+            margin-top: 10px;
             margin-bottom: 20px;
         }
 
     </style>
+    <template is="dom-if" if="{{ !noFilter }}">
+        <a href="/tags">
+        <paper-card class="menu" elevation="1">
+            <iron-icon icon="search"></iron-icon>
+            <label>What are you looking for ?</label>
+        </paper-card>
+        </a>
 
-    <paper-input placeholder="Search" is="iron-input" type="search" bind-value="{{searchText}}" no-label-float="true"></paper-input>
+        <iron-ajax id="filterAjax"
+            method="GET"
+            on-response="_didRespondFilter"></iron-ajax>
 
-    <iron-ajax id="filterAjax"
-        method="GET"
-        on-response="_didRespondFilter"></iron-ajax>
-
-    <paper-dropdown-menu horizontal-align="left" noink no-label-float="true" selected-item="{{selectedFilter}}">
-        <paper-listbox class="dropdown-content" selected="0">
-            <template id="filterList" is="dom-repeat" items="{{filter.data}}">
-                <paper-item value="{{item.id}}">{{item.title}}</paper-item>
-            </template>
-        </paper-listbox>
-    </paper-dropdown-menu>
+        <paper-card class="menu filter-wrapper" elevation="1">
+        <paper-dropdown-menu horizontal-align="left" noink no-label-float="true" selected-item="{{selectedFilter}}">
+            <paper-listbox class="dropdown-content" selected="0">
+                <template id="filterList" is="dom-repeat" items="{{filter.data}}">
+                    <paper-item value="{{item.id}}">{{item.title}}</paper-item>
+                </template>
+            </paper-listbox>
+        </paper-dropdown-menu>
+        </paper-card>
+    </template>
 
     <iron-ajax id="ajax"
+        auto="{{ noFilter }}"
         url="{{feedUrl}}" 
         method="GET"
         params="{{queryParams}}"
@@ -101,6 +119,11 @@
         behaviors:[Polymer.IronScrollTargetBehavior],
 
         properties: {
+            noFilter:{
+                type: Boolean,
+                value: false
+            },
+
             feedUrl:{ 
                 type: String
             },

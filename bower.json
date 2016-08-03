@@ -35,7 +35,8 @@
     "google-youtube": "GoogleWebComponents/google-youtube#^1.2.1",
     "paper-progress": "PolymerElements/paper-progress#^1.0.9",
     "paper-slider": "PolymerElements/paper-slider#^1.0.11",
-    "app-storage": "PolymerElements/app-storage#^0.9.4"
+    "app-storage": "PolymerElements/app-storage#^0.9.4",
+    "iron-form": "PolymerElements/iron-form#^1.1.1"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

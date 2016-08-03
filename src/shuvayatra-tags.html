@@ -1,0 +1,76 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="shuvayatra-header.html">
+<link rel="import" href="shuvayatra-feed.html">
+
+<dom-module id="shuvayatra-tags">
+
+<template>
+
+    <style>
+        :host {
+            display: block;
+        }
+
+        .tag-wrapper{
+            background-color: lightgray;
+            min-height: 150px;
+            margin-top: 16px;
+            padding: 16px;
+        }
+
+        shuvayatra-feed{
+            margin-top: 16px;
+        }
+    </style>
+
+    <shuvayatra-header search search-term="{{searchTerm}}"></shuvayatra-header>
+
+<!-- url="{{https://192.168.1.59:8081/api/tags}}"  -->
+    <iron-ajax id="ajax"
+        auto
+        url="../data.json"
+        method="GET"
+        last-response="{{data}}"
+        loading="{{isLoading}}">
+    </iron-ajax>
+
+    <div class="tag-wrapper">
+    <template is="dom-repeat" items="{{data}}">
+            <paper-card elevation="1">
+                <label>{{item}}</label>
+            </paper-card >
+    </template>
+    </div>
+</template>
+
+<script>
+
+    Polymer({
+
+        is: 'shuvayatra-tags',
+
+        properties:{
+            searchTerm:{
+                type: String,
+                value: "",
+                observer: '_onSearchTermChanged'
+            }
+        },
+
+        _onSearchTermChanged: function(value) {
+            var oldLength = this.temp ? this.temp.length : 0;
+            var newLength = value.length;
+            console.log(oldLength + " -> " + newLength);
+            if(Math.abs(newLength - oldLength) > 3){
+                this.temp = value;
+                console.log('search: ' + this.temp);
+            }
+        }
+
+    });
+
+</script>
+</dom-module>
