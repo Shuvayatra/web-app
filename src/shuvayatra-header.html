@@ -149,7 +149,7 @@
         </template>
 
         <!-- normal header for detail pages with back icon and title -->
-        <template id="postIf" is="dom-if" if="{{post}}" restamp="true">
+        <template id="postIf" is="dom-if" if="{{regular}}" restamp="true">
 
             <template is="dom-if" if="{{!hasFeatureImage}}" restamp="true">
                 <app-header condenses effects="waterfall" fixed>
@@ -221,13 +221,12 @@
             <app-header condenses effects="waterfall" fixed>
                 <app-toolbar>
                     <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
-                    <!-- <form is="iron-form" id="form"> -->
-                    <paper-input placeholder="Search" 
-                            no-label-float no-ink 
-                            value="{{ searchTerm }}">
-                        <!-- <iron-icon icon="search" prefix></div> -->
-                    </paper-input>
-                    <!-- </form> -->
+                        <paper-input placeholder="Search" 
+                                no-label-float no-ink 
+                                on-keydown="_submitForm"
+                                value="{{ searchTerm }}">
+                            <!-- <iron-icon icon="search" prefix></div> -->
+                        </paper-input>
                 </app-toolbar>
             </app-header>
         </template>
@@ -250,7 +249,7 @@
                     value: false
                 },
 
-                post: {
+                regular: {
                     type: Boolean,
                     value: false
                 },
@@ -288,12 +287,11 @@
                 },
             },
 
-            listeners:{
-                'iron-form-submit': '_submitForm'
-            },
-
-            _submitForm: function(){
-                console.log('test');
+            _submitForm: function(e){
+                if(e.which == 13){
+                    e.preventDefault();
+                    window.location = "/search/query/" + this.searchTerm;
+                }
             },
 
             ready: function () {

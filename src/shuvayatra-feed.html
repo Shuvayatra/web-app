@@ -130,7 +130,6 @@
 
             filter:{
                 type: Object,
-
                 value: {}
             },
 
@@ -156,8 +155,14 @@
                 }
             },
 
-            searchText:{
-                type: String
+            searchQuery: {
+                type: String,
+                observer: '_searchByQuery'
+            },
+
+            searchTag: {
+                type: String,
+                observer: '_searchByTag'
             },
 
             categoryId:{
@@ -237,6 +242,14 @@
                     this.$.ajax.generateRequest();
                 }
             }
+        },
+
+        _searchByTag: function(value){
+            this.queryParams.tag = value;
+        },
+
+        _searchByQuery: function(value){
+            this.queryParams.query = value;
         },
 
         _checkIfTypeAudio: function(type){

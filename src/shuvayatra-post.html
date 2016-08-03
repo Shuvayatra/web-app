@@ -51,17 +51,17 @@
     </iron-ajax>
 
     <template is="dom-if" if="{{_checkIfTypeAudio(data.type)}}">
-        <shuvayatra-header post data="{{data}}" has-feature-image audio download></shuvayatra-header>
+        <shuvayatra-header regular data="{{data}}" has-feature-image audio download></shuvayatra-header>
         <shuvayatra-audio-detail class="content" post="{{data}}"></shuvayatra-audio-detail>
     </template>
 
     <template id="videoIf" is="dom-if" if="{{_checkIfTypeVideo(data.type)}}">
-        <shuvayatra-header post data="{{data}}"></shuvayatra-header>
+        <shuvayatra-header regular data="{{data}}"></shuvayatra-header>
         <shuvayatra-video-detail id="videoDetail" class="content" post="{{data}}"></shuvayatra-video-detail>
     </template>
 
     <template is="dom-if" if="{{_checkIfTypeText(data.type)}}">
-        <shuvayatra-header post has-feature-image data="{{data}}"></shuvayatra-header>
+        <shuvayatra-header regular has-feature-image data="{{data}}"></shuvayatra-header>
         <shuvayatra-text-detail class="content" post="{{data}}"></shuvayatra-text-detail>
     </template>
 

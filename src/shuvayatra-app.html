@@ -70,6 +70,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       data="{{subrouteData}}">
     </app-route>
 
+    <app-route
+      route="{{subroute}}"
+      pattern="/query/:searchQuery"
+      data="{{searchrouteData}}">
+    </app-route>
+
+    <app-route
+      route="{{subroute}}"
+      pattern="/tag/:searchTag"
+      data="{{searchrouteData}}">
+    </app-route>
+
     <app-header-layout snaps>
       <!-- Main content -->
       <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
@@ -80,7 +92,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <shuvayatra-profile class="content" name="profile"></shuvayatra-profile>
         <shuvayatra-category class="content category" name="category" category-id="{{subrouteData.id}}"></shuvayatra-category>
         <shuvayatra-post id="post" class="content" name="post" post-id="{{subrouteData.id}}"></shuvayatra-post>
-        <shuvayatra-search class="content" name="search" ></shuvayatra-search>
+        <shuvayatra-search class="content" name="search" 
+              search-tag="{{searchrouteData.searchTag}}"
+              search-query="{{searchrouteData.searchQuery}}">
+        </shuvayatra-search>
         <shuvayatra-tags class="content" name="tags"></shuvayatra-tags>
       </iron-pages>
     </app-header-layout>

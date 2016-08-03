@@ -1,0 +1,64 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+
+<link rel="import" href="shuvayatra-header.html">
+<link rel="import" href="shuvayatra-feed.html">
+
+<dom-module id="shuvayatra-search">
+
+<template>
+
+    <style>
+        :host {
+            display: block;
+        }
+
+        .tag-wrapper{
+            background-color: lightgray;
+            min-height: 150px;
+            margin-top: 16px;
+            padding: 16px;
+        }
+
+        shuvayatra-feed{
+            margin-top: 16px;
+        }
+
+    </style>
+
+    <shuvayatra-header regular data="{{ headerData }}"></shuvayatra-header>
+
+    <shuvayatra-feed  search-tag="{{searchTag}}" search-query="{{searchQuery}}" no-filter feed-url="http://api.shuvayatra.org/api/posts"></shuvayatra-feed>
+</template>
+
+<script>
+
+    Polymer({
+
+        is: 'shuvayatra-search',
+
+        properties:{
+            searchTag:{
+                type: String,
+                observer: '_searchBy'
+            },
+
+            searchQuery:{
+                type: String,
+                observer: '_searchBy'
+            },
+
+            headerData: {
+                type: Object
+            }
+        },
+
+        _searchBy: function(value){
+            this.headerData = {title: value};
+        }
+
+    });
+
+</script>
+</dom-module>
