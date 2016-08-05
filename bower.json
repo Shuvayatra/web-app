@@ -36,7 +36,8 @@
     "paper-progress": "PolymerElements/paper-progress#^1.0.9",
     "paper-slider": "PolymerElements/paper-slider#^1.0.11",
     "app-storage": "PolymerElements/app-storage#^0.9.4",
-    "iron-form": "PolymerElements/iron-form#^1.1.1"
+    "iron-form": "PolymerElements/iron-form#^1.1.1",
+    "paper-tabs": "PolymerElements/paper-tabs#^1.6.2"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"

@@ -22,14 +22,14 @@
         }
 
         shuvayatra-feed{
-            margin-top: 16px;
+            margin: 16px;
         }
 
     </style>
 
     <shuvayatra-header regular data="{{ headerData }}"></shuvayatra-header>
 
-    <shuvayatra-feed  search-tag="{{searchTag}}" search-query="{{searchQuery}}" no-filter feed-url="http://api.shuvayatra.org/api/posts"></shuvayatra-feed>
+    <shuvayatra-feed  search-tag="{{ searchTag }}" search-query="{{ searchQuery }}" no-filter feed-url="http://api.shuvayatra.org/api/posts"></shuvayatra-feed>
 </template>
 
 <script>
@@ -55,7 +55,7 @@
         },
 
         _searchBy: function(value){
-            this.headerData = {title: value};
+            this.headerData = {title: decodeURIComponent(value)};
         }
 
     });

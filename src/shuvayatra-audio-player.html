@@ -155,7 +155,8 @@
 
             _stop: function () {
                 this.$.audio.pause();
-                this.$.audio.currentTime = 0;
+                this.currentTime = this.$.audio.currentTime = 0;
+                this.$.seekbar.value = 0;
             },
 
             _onProgressChanged: function (progress) {

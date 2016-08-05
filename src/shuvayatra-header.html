@@ -8,6 +8,7 @@
 <link rel="import" href="../bower_components/iron-icons/social-icons.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 
 <link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
@@ -175,15 +176,24 @@
                             </a>
                         </template>
 
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{data.share_url}}">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{data.share_url}}" target="_blank" on-click="_makeShareApiCall">
                             <paper-icon-button id="share" icon="social:share"></paper-icon-button>
                         </a>
                         <span id="favourite" on-tap="_toggleFavourite">
                             <paper-icon-button icon="favorite" 
-                                hidden$="{{ _checkIfFavourite(favoriteData) }}"></paper-icon-button>
+                                hidden$="{{ !_checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
                             <paper-icon-button icon="favorite-border" 
-                                hidden$="{{ !_checkIfFavourite(favoriteData) }}"></paper-icon-button>
+                                hidden$="{{ _checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
                         </span>
+
+                        <iron-ajax id="shareAjax" method="POST" 
+                        loading="{{isSubmittingShare}}"
+                        headers='{"Token": "eeee0c3eaa204f98acac4102c90676abc674f191", "Content-Type": "application/json"}'>
+                        </iron-ajax>
+                        <iron-ajax id="favAjax" method="POST"
+                        loading="{{isSubmittingFav}}"
+                        headers='{"Token": "eeee0c3eaa204f98acac4102c90676abc674f191", "Content-Type": "application/json"}'>
+                        </iron-ajax>
                     </app-toolbar>
 
                     <template id="playerIf" is="dom-if" if="{{audio}}" restamp="true">
@@ -231,7 +241,7 @@
             </app-header>
         </template>
 
-        <app-localstorage-document key="favorite" data="{{favoriteData}}"></app-localstorage-document>
+        <app-localstorage-document key="favorite-data" data="{{favoriteData}}"></app-localstorage-document>
 
     </template>
     <script>
@@ -241,7 +251,8 @@
             properties: {
                 data: {
                     type: Object,
-                    value: {}
+                    value: {},
+                    notify: true
                 },
 
                 main: {
@@ -304,11 +315,15 @@
             },
 
             _goBack: function () {
+                this._stopPlayback();
+                window.history.back();
+            },
+
+            _stopPlayback: function(){
                 if (this.player) {
                     this.player._stop();
                 }
-                window.history.back();
-            },
+            }
 
             _isAudio: function (value) {
                 if (value) {
@@ -317,17 +332,85 @@
             },
 
             _toggleFavourite: function() {
-                var set = new Set(this.favoriteData);
-                if(!set.delete(this.data.id)){
-                    /* make api request here */
-                    set.add(this.data.id);
+                var dataSet = new Set(this.favoriteData);
+                if(this._checkIfFavourite(this.favoriteData)){
+                    dataSet = this._deleteFromSet(dataSet);
+                    this._updateFavCount(false);
+                    this._makeFavApiCall(false);
+                }else{
+                    dataSet.add(this.data);
+                    this._updateFavCount(true);
+                    this._makeFavApiCall(true);
                 }
-                this.favoriteData = Array.from(set);
+                this.favoriteData = Array.from(dataSet);
             },
 
-            _checkIfFavourite: function(favoriteData) {
-                var set = new Set(favoriteData);
-                return !set.has(this.data.id);
+            _updateFavCount: function(flag){
+                console.log('before: ' + this.data.like_count);
+                if(this.data.like_count){
+                    if(flag)
+                        this.data.like_count++;
+                    else
+                        this.data.like_count--;
+                }else{
+                    if(flag)
+                        this.data.like_count = 1;
+                    else
+                        this.data.like_count = 0;
+                }
+                console.log('after: ' + this.data.like_count);
+            },
+
+            _makeFavApiCall: function(flag){
+                if(!this.isSubmittingFav) {
+                    this.$.postIf.render();
+                    this.$$("#featureImageIf").render();
+                    var ajax = this.$$('#favAjax');
+
+                    var baseUrl = "http://api.shuvayatra.org";
+                    ajax.url = baseUrl + "/api/post/" + this.data.id + "/favorite";
+                    if(flag){
+                        ajax.body = {type: "up"};
+                    }else{
+                        ajax.body = {type: "down"};
+                    }
+                    ajax.generateRequest();
+                }
+            },
+
+            _makeShareApiCall: function(){
+                if(!this.isSubmittingShare) {
+                    this.$.postIf.render();
+                    this.$$("#featureImageIf").render();
+                    var ajax = this.$$('#shareAjax');
+                    var baseUrl = "http://api.shuvayatra.org";
+
+                    ajax.url = baseUrl + "/api/post/" + this.data.id + "/share";
+
+                    ajax.generateRequest();
+                }
+            },
+
+            _deleteFromSet: function(source){
+                var set = new Set();
+                var parent = this;
+                source.forEach(function(item, index){
+                    if(item.id !== parent.data.id){
+                        set.add(item);
+                    }
+                });
+                return set;
+            },
+
+            _checkIfFavourite: function(favoriteData, data) {
+                var ids = favoriteData.map(this._getIdFromData);
+                var set = new Set(ids);
+                return set.has(this.data.id);
+                
+            },
+
+            _getIdFromData: function(data){
+                return data.id;
             }
 
         });

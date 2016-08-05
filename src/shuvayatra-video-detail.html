@@ -53,7 +53,7 @@
     <shuvayatra-html-placeholder html="{{post.description}}"></shuvayatra-html-placeholder>
 
     <div class="similar-type">
-        <p>Similar Videos</p>
+        <p>मिल्दोजुल्दो भिडियोहरु </p>
 
         <template is="dom-repeat" items="{{post.similar}}">
             <div>
@@ -70,6 +70,10 @@
         
         properties: {
 
+        },
+
+        _stopPlayback: function() {
+            this.$.video.pause();
         },
 
         _getVideoId: function(url){

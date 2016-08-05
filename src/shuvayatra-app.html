@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html">
 
 <link rel="import" href="shuvayatra-header.html">
@@ -144,7 +145,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.showMainHeader = !(this.page === 'post' || this.page === 'category');
       },
 
-      _pageChanged: function(page) {
+      _pageChanged: function(page, old) {
+        if(old === 'post'){
+          this.$.post._stopVideoPlayback();
+        }
         // load page import on demand.
         this.importHref(this.resolveUrl('shuvayatra-' + page + '.html'), null, null, true);
       },

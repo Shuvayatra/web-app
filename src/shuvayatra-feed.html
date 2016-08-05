@@ -53,11 +53,11 @@
         }
 
     </style>
-    <template is="dom-if" if="{{ !noFilter }}">
+    <template id="filterIf" is="dom-if" if="{{ !noFilter }}">
         <a href="/tags">
         <paper-card class="menu" elevation="1">
             <iron-icon icon="search"></iron-icon>
-            <label>What are you looking for ?</label>
+            <label>तपाईं के हेर्न चाहनुहुन्छ ? </label>
         </paper-card>
         </a>
 
@@ -130,7 +130,8 @@
 
             filter:{
                 type: Object,
-                value: {}
+                value: {},
+                observer: '_filterDataChanged'
             },
 
             selectedFilter:{
@@ -207,9 +208,12 @@
 
         },
 
+        _filterDataChanged: function(value){
+            //this.selectedFilter = 1;
+        },
+
         _filterChanged: function(value, oldValue) {
             if(value != null){
-                this.currentPage = this.queryParams.page = 1;
                 if(this.filter.filterBy === "type"){
                     delete this.queryParams.category;
                     this.queryParams.post_type = value.value;
@@ -230,12 +234,14 @@
 
         _onCategoryChanged: function(value, oldValue){
             if(this.categoryId !== -1){
-                this.$.filterAjax.url = "http://api.shuvayatra.org/api/category/" + this.categoryId;
-                this.$.filterAjax.generateRequest();
+                this.$.filterIf.render();
+                this.$$("#filterAjax").url = "http://api.shuvayatra.org/api/category/" + this.categoryId;
+                this.$$("#filterAjax").generateRequest();
 
                 if(oldValue){
                     delete this.queryParams.post_type;
                     delete this.queryParams.category;
+                    delete this.queryParams.page;
                     this.queryParams.category = this.categoryId;
 
                     this.$.list.items = [];
@@ -245,11 +251,11 @@
         },
 
         _searchByTag: function(value){
-            this.queryParams.tag = value;
+            this.queryParams.tag = decodeURIComponent(value);
         },
 
         _searchByQuery: function(value){
-            this.queryParams.query = value;
+            this.queryParams.query = decodeURIComponent(value);
         },
 
         _checkIfTypeAudio: function(type){

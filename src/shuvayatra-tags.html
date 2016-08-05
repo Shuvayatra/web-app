@@ -27,11 +27,10 @@
     </style>
 
     <shuvayatra-header search search-term="{{searchTerm}}"></shuvayatra-header>
-
-<!-- url="{{https://192.168.1.59:8081/api/tags}}"  -->
+    
     <iron-ajax id="ajax"
         auto
-        url="../data.json"
+        url="http://api.shuvayatra.org/api/tags"
         method="GET"
         last-response="{{data}}"
         loading="{{isLoading}}">

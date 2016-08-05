@@ -51,8 +51,8 @@
     </iron-ajax>
 
     <template is="dom-if" if="{{_checkIfTypeAudio(data.type)}}">
-        <shuvayatra-header regular data="{{data}}" has-feature-image audio download></shuvayatra-header>
-        <shuvayatra-audio-detail class="content" post="{{data}}"></shuvayatra-audio-detail>
+        <shuvayatra-header regular data="{{ data }}" has-feature-image audio download></shuvayatra-header>
+        <shuvayatra-audio-detail class="content" post="{{ data }}"></shuvayatra-audio-detail>
     </template>
 
     <template id="videoIf" is="dom-if" if="{{_checkIfTypeVideo(data.type)}}">
@@ -82,7 +82,7 @@
 
             postUrl:{
                 type: String
-            }
+            },
         },
 
         _onIdChanged: function(id){
@@ -101,6 +101,13 @@
         _checkIfTypeText: function(type){
             return (type === "text");
         },
+
+        _stopVideoPlayback: function(){
+            if(this._checkIfTypeVideo(this.data.type)){
+                this.$.videoIf.render();
+                this.$$("#videoDetail")._stopPlayback();
+            }
+        }
     });
 </script>
 </dom-module>
