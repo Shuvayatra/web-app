@@ -85,6 +85,10 @@
             },
         },
 
+        ready: function(){
+            this.postId = window.location.pathname.split("post/")[1];
+        },
+
         _onIdChanged: function(id){
             this.data = {};
             this.postUrl = "http://api.shuvayatra.org/api/posts/" + this.postId;

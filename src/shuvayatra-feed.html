@@ -52,6 +52,22 @@
             margin-bottom: 20px;
         }
 
+        .empty{
+            width: 100%;
+            min-height: 300px;
+            display: table;
+        }
+
+        .empty label{
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 20px;
+        }
+        .empty[hidden] {
+            display: none;
+        }
+
     </style>
     <template id="filterIf" is="dom-if" if="{{ !noFilter }}">
         <a href="/tags">
@@ -108,8 +124,12 @@
     <div class="loadingIndicator">
         <paper-spinner active="{{isLoading}}"></paper-spinner>
         <template is="dom-if" if="{{!isLoading}}">
-            <label on-click="_loadMoreData">Load More</label>
+            <label on-click="_loadMoreData" hidden$="{{!_canLoadMore(isLoading, isLastPage)}}">Load More</label>
         </template>
+    </div>
+
+    <div class="empty" hidden$="{{_isEmpty(totalItems)}}">
+        <label>कुनै सामाग्री उपलब्द छैन</label>
     </div>
 </template>
 <script>
@@ -178,6 +198,19 @@
             }
         },
 
+        ready: function(){
+            this.totalItems = -1;
+        },
+
+        _canLoadMore: function(isLoading, isLastPage){
+            return !isLoading && !this.isLastPage;
+        },
+
+        _isEmpty: function(totalItems){
+            console.log((totalItems !== 0));
+            return (totalItems !== 0);
+        },
+
         _loadMoreData: function() {
             if(this.queryParams.page && !this.isLastPage){
                 this.queryParams.page = this.currentPage + 1;
@@ -190,10 +223,12 @@
             this.isLastPage = e.detail.response.next_page_url == null;
             var parent = this.$;
 
-            this.currentPage = e.detail.response.current_page;
             posts.forEach(function(post) {
                 parent.list.push('items', post);
             });
+
+            this.currentPage = e.detail.response.current_page;
+            this.totalItems = e.detail.response.total;
         },
 
         _didRespondFilter: function(e) {

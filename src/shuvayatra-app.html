@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html">
 
@@ -83,24 +84,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       data="{{searchrouteData}}">
     </app-route>
 
-    <app-header-layout snaps>
-      <!-- Main content -->
-      <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
-        <shuvayatra-home class="content" name="home" scroll-target="{{scrollTarget}}"></shuvayatra-home>
-        <shuvayatra-journey class="content" name="journey"></shuvayatra-journey>
-        <shuvayatra-destination class="content" name="destination"></shuvayatra-destination>
-        <shuvayatra-question class="content" name="question"></shuvayatra-question>
-        <shuvayatra-profile class="content" name="profile"></shuvayatra-profile>
-        <shuvayatra-category class="content category" name="category" category-id="{{subrouteData.id}}"></shuvayatra-category>
-        <shuvayatra-post id="post" class="content" name="post" post-id="{{subrouteData.id}}"></shuvayatra-post>
-        <shuvayatra-search class="content" name="search" 
-              search-tag="{{searchrouteData.searchTag}}"
-              search-query="{{searchrouteData.searchQuery}}">
-        </shuvayatra-search>
-        <shuvayatra-tags class="content" name="tags"></shuvayatra-tags>
-      </iron-pages>
-    </app-header-layout>
+    <div id="main" class="content">
+    </div>
 
+    <iron-ajax id="ajax" url="" handle-as="document"></iron-ajax>
   </template>
 
   <script>
@@ -121,7 +108,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       observers: [
-        '_routePageChanged(routeData.page)'
+        '_routePageChanged(routeData.page)',
+        '_subrouteDataChanged(subrouteData)'
       ],
 
       _getVisibility: function(container){
@@ -140,17 +128,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
+      ready: function(){
+        var self = this;
+        self.$.ajax.addEventListener('response', function (response) {
+            try {
+                self.async(function () {
+
+                    var links = response.detail.response.head.querySelectorAll("link");
+                    for (var i = 0; i <= links.length - 1; i++) {
+                        if (!window.document.head.innerHTML.indexOf(links[i].href.toLowerCase()) != -1) {
+                            var l = document.createElement('link');
+                            l.rel = 'import';
+                            l.href = links[i].href.toLowerCase();
+                            document.head.appendChild(l);
+                        }
+                    }
+
+                    var l = document.createElement('div');
+                    l.innerHTML = response.detail.response.body.innerHTML;
+                    self.$.main.innerHTML = "";
+                    self.$.main.appendChild(l);
+                }, 0);
+            } catch (e) {
+            }
+        });
+      },
+
       _routePageChanged: function(page) {
         this.page = page || 'home';
-        this.showMainHeader = !(this.page === 'post' || this.page === 'category');
       },
 
       _pageChanged: function(page, old) {
-        if(old === 'post'){
-          this.$.post._stopVideoPlayback();
-        }
-        // load page import on demand.
         this.importHref(this.resolveUrl('shuvayatra-' + page + '.html'), null, null, true);
+        this._reloadPage();
+      },
+
+      _subrouteDataChanged: function(data){
+        if(this.page === 'post' || this.page === 'category')
+          this._reloadPage();
+      },
+
+      _reloadPage: function(){
+        this.$.ajax.url = this.resolveUrl('../pages/' + this.page + '.html');
+        this.$.ajax.generateRequest();
       },
 
       _removePreviousPage: function(page){
