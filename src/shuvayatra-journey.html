@@ -37,13 +37,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border: 4px solid #eee;
       }
 
+      .loadingIndicator{
+        text-align: center;
+      }
+
     </style>
 
     <shuvayatra-header main></shuvayatra-header>
 
     <iron-ajax id="ajax"
         auto
-        url="http://api.shuvayatra.org/api/journey" 
+        url="{{baseUrl}}api/journey" 
         last-response="{{data}}"
         loading="{{isLoading}}">
     </iron-ajax>
@@ -67,6 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
 
       is: 'shuvayatra-journey',
+      behaviors: [GlobalBehavior],
 
     });
 

@@ -39,7 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-ajax id="ajax"
         auto
-        url="http://api.shuvayatra.org/api/destinations"
+        url="{{baseUrl}}/api/destinations"
         last-response="{{data}}"
         loading="{{isLoading}}"
         on-response="_didRespond">
@@ -62,6 +62,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
 
         is: 'shuvayatra-destination',
+        behaviors: [GlobalBehavior],
 
         properties: {
         },

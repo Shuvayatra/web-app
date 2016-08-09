@@ -10,7 +10,6 @@
 <link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
-
 <link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
 
 <dom-module id="shuvayatra-header">
@@ -188,11 +187,11 @@
 
                         <iron-ajax id="shareAjax" method="POST" 
                         loading="{{isSubmittingShare}}"
-                        headers='{"Token": "eeee0c3eaa204f98acac4102c90676abc674f191", "Content-Type": "application/json"}'>
+                        headers='{"Token": {{apiKey}}, "Content-Type": "application/json"}'>
                         </iron-ajax>
                         <iron-ajax id="favAjax" method="POST"
                         loading="{{isSubmittingFav}}"
-                        headers='{"Token": "eeee0c3eaa204f98acac4102c90676abc674f191", "Content-Type": "application/json"}'>
+                        headers='{"Token": "{{apiKey}}", "Content-Type": "application/json"}'>
                         </iron-ajax>
                     </app-toolbar>
 
@@ -247,6 +246,7 @@
     <script>
         Polymer({
             is: 'shuvayatra-header',
+            behaviors: [GlobalBehavior],
 
             properties: {
                 data: {
@@ -367,8 +367,7 @@
                     this.$$("#featureImageIf").render();
                     var ajax = this.$$('#favAjax');
 
-                    var baseUrl = "http://api.shuvayatra.org";
-                    ajax.url = baseUrl + "/api/post/" + this.data.id + "/favorite";
+                    ajax.url = this.baseUrl + "/api/post/" + this.data.id + "/favorite";
                     if(flag){
                         ajax.body = {type: "up"};
                     }else{
@@ -383,9 +382,8 @@
                     this.$.postIf.render();
                     this.$$("#featureImageIf").render();
                     var ajax = this.$$('#shareAjax');
-                    var baseUrl = "http://api.shuvayatra.org";
 
-                    ajax.url = baseUrl + "/api/post/" + this.data.id + "/share";
+                    ajax.url = this.baseUrl + "/api/post/" + this.data.id + "/share";
 
                     ajax.generateRequest();
                 }

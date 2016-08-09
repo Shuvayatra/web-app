@@ -94,7 +94,7 @@
 
     <iron-ajax id="ajax"
         auto="{{ noFilter }}"
-        url="{{feedUrl}}" 
+        url="{{baseUrl}}api/posts" 
         method="GET"
         params="{{queryParams}}"
         last-response="{{data}}"
@@ -136,16 +136,12 @@
 
     Polymer({
         is: 'shuvayatra-feed',
-        behaviors:[Polymer.IronScrollTargetBehavior],
+        behaviors:[Polymer.IronScrollTargetBehavior, GlobalBehavior],
 
         properties: {
             noFilter:{
                 type: Boolean,
                 value: false
-            },
-
-            feedUrl:{ 
-                type: String
             },
 
             filter:{
@@ -270,7 +266,7 @@
         _onCategoryChanged: function(value, oldValue){
             if(this.categoryId !== -1){
                 this.$.filterIf.render();
-                this.$$("#filterAjax").url = "http://api.shuvayatra.org/api/category/" + this.categoryId;
+                this.$$("#filterAjax").url = this.baseUrl + "api/category/" + this.categoryId;
                 this.$$("#filterAjax").generateRequest();
 
                 if(oldValue){

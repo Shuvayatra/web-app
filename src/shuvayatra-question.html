@@ -21,7 +21,7 @@
 
     <iron-ajax id="ajax"
         auto
-        url="http://api.shuvayatra.org/api/category"
+        url="{{baseUrl}}api/category"
         last-response="{{data}}"
         loading="{{isLoading}}"
         on-response="_didRespond">
@@ -51,7 +51,7 @@
 
         Polymer({
             is: 'shuvayatra-question',
-            behaviors: [CategoryBehavior],
+            behaviors: [CategoryBehavior, GlobalBehavior],
 
             properties:{
 

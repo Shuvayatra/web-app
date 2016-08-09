@@ -60,9 +60,9 @@
         <shuvayatra-video-detail id="videoDetail" class="content" post="{{data}}"></shuvayatra-video-detail>
     </template>
 
-    <template is="dom-if" if="{{_checkIfTypeText(data.type)}}">
+    <template id="textIf" is="dom-if" if="{{_checkIfTypeText(data.type)}}">
         <shuvayatra-header regular has-feature-image data="{{data}}"></shuvayatra-header>
-        <shuvayatra-text-detail class="content" post="{{data}}"></shuvayatra-text-detail>
+        <shuvayatra-text-detail id="textDetail" class="content" post="{{data}}"></shuvayatra-text-detail>
     </template>
 
     <div style="text-align:center;">
@@ -73,6 +73,7 @@
 <script>
 	Polymer({
         is: 'shuvayatra-post',
+        behaviors: [GlobalBehavior],
         
         properties: {
         	postId:{
@@ -85,13 +86,34 @@
             },
         },
 
+        observers: [
+            '_onLikeCountChanged(data.like_count)',
+            '_onLikeCountChanged(data.share_count)'
+        ],
+
+        _onLikeCountChanged: function(likeCount){
+            this._updateCountData();
+        },
+
+        _onShareCountChanged: function(shareCount){
+            this._updateCountData();
+        },
+
+        _updateCountData: function(){
+            console.log(this.data);
+            if(this._checkIfTypeText(this.data)){
+                this.$.textIf.render();
+                this.$$("#textDetail")._updateCountData(this.data);
+            }
+        },
+
         ready: function(){
             this.postId = window.location.pathname.split("post/")[1];
         },
 
         _onIdChanged: function(id){
             this.data = {};
-            this.postUrl = "http://api.shuvayatra.org/api/posts/" + this.postId;
+            this.postUrl = this.baseUrl + "api/posts/" + this.postId;
         },
 
         _checkIfTypeAudio: function(type){

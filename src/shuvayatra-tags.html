@@ -30,7 +30,7 @@
     
     <iron-ajax id="ajax"
         auto
-        url="http://api.shuvayatra.org/api/tags"
+        url="{{baseUrl}}api/tags"
         method="GET"
         last-response="{{data}}"
         loading="{{isLoading}}">
@@ -52,7 +52,8 @@
     Polymer({
 
         is: 'shuvayatra-tags',
-
+        behaviors: [GlobalBehavior],
+        
         properties:{
             searchTerm:{
                 type: String,
