@@ -41,23 +41,23 @@
 
     <div style="background: lightgray;">
         <google-youtube id="video"
-          video-id="{{_getVideoId(post.data.media_url)}}"
+          video-id="{{ _getVideoId(post.data.media_url) }}"
           fluid
           autoplay="0">
         </google-youtube>
     </div>
 
-    <h3>{{post.title}}</h3>
+    <h3>{{ post.title }}</h3>
 
-    <shuvayatra-favourite-section post="{{post}}"></shuvayatra-favourite-section>
-    <shuvayatra-html-placeholder html="{{post.description}}"></shuvayatra-html-placeholder>
+    <shuvayatra-favourite-section post="{{ post }}"></shuvayatra-favourite-section>
+    <shuvayatra-html-placeholder html="{{ post.description }}"></shuvayatra-html-placeholder>
 
     <div class="similar-type">
         <p>मिल्दोजुल्दो भिडियोहरु </p>
 
-        <template is="dom-repeat" items="{{post.similar}}">
+        <template is="dom-repeat" items="{{ post.similar }}">
             <div>
-                <shuvayatra-video-card post="{{item}}"></shuvayatra-video-card>
+                <shuvayatra-video-card post="{{ item }}"></shuvayatra-video-card>
             </div>
         </template>
     </div>

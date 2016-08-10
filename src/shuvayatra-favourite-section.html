@@ -36,11 +36,11 @@
         }
     </style>
 
-    <label>{{post.category}}</label> - <label>{{_getRelativeTime(post.updated_at)}}</label>
+    <label>{{ post.category }}</label> - <label>{{ _getRelativeTime(post.updated_at) }}</label>
 
     <div class="span-block">
-        <span><iron-icon icon="favorite"></iron-icon> {{_getFormattedLikeCount(post.like_count)}}</span>
-        <span><iron-icon icon="social:share"></iron-icon> {{_getFormattedShareCount(post.share_count)}}</span>
+        <span><iron-icon icon="favorite"></iron-icon> {{ _getFormattedLikeCount(post.like_count) }}</span>
+        <span><iron-icon icon="social:share"></iron-icon> {{ _getFormattedShareCount(post.share_count) }}</span>
     </div>
 
 </template>

@@ -75,15 +75,15 @@
 
     </style>
 
-    <a class="link" href="{{_generateUrl(post)}}">
+    <a class="link" href="{{ _generateUrl(post) }}">
     <paper-card elevation="2" animated="true">
         <paper-ripple></paper-ripple>
-        <iron-image placeholder="../images/image-default.png" preload src="{{post.data.thumbnail}}" fade="true" sizing="cover"></iron-image>
+        <iron-image placeholder="../images/image-default.png" preload src="{{ post.data.thumbnail }}" fade="true" sizing="cover"></iron-image>
         <div class="mytitle__wrap">
             <paper-fab mini icon="av:play-arrow"></paper-fab>
-            <label>{{post.title}}</label>
-            <label>{{post.category}}</label>
-            <label>{{_getRelativeTime(post.updated_at)}}</label>
+            <label>{{ post.title }}</label>
+            <label>{{ post.category }}</label>
+            <label>{{ _getRelativeTime(post.updated_at) }}</label>
         </div>
     </paper-card>
     </a>

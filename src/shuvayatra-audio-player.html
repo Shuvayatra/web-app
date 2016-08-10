@@ -61,14 +61,14 @@
                     <paper-icon-button icon="av:pause-circle-outline" hidden$="{{ !isPlaying }}"></paper-icon-button>
                 </div>
                 <div class="audio-title">
-                    <label>{{title}}</label>
-                    <audio id="audio" src="{{src}}"></audio>
+                    <label>{{ title }}</label>
+                    <audio id="audio" src="{{ src }}"></audio>
                     <div id="duration">
                         <span class="fit">{{ _getProgress(currentTime) }}</span>
                     </div>
                 </div>
             </div>
-            <paper-slider id="seekbar" value="{{seekbarValue}}"></paper-slider>
+            <paper-slider id="seekbar" value="{{ seekbarValue }}"></paper-slider>
         </div>
 
     </template>
@@ -181,7 +181,6 @@
             },
 
             _updateAudioProgress: function (progress) {
-                console.log('test: progress: ' + progress);
                 var audio = this.$.audio;
                 var totalDuration = audio.duration;
                 this.currentTime = audio.currentTime = (progress * totalDuration) / 100;

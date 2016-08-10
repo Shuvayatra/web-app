@@ -43,30 +43,30 @@
     </style>
 
     <iron-ajax id="ajax" auto
-        url="{{postUrl}}" 
+        url="{{ postUrl }}" 
         method="GET"
-        params="{{queryParams}}"
-        last-response="{{data}}"
-        loading="{{isLoading}}">
+        params="{{ queryParams }}"
+        last-response="{{ data }}"
+        loading="{{ isLoading }}">
     </iron-ajax>
 
-    <template is="dom-if" if="{{_checkIfTypeAudio(data.type)}}">
+    <template is="dom-if" if="{{ _checkIfTypeAudio(data.type) }}">
         <shuvayatra-header regular data="{{ data }}" has-feature-image audio download></shuvayatra-header>
         <shuvayatra-audio-detail class="content" post="{{ data }}"></shuvayatra-audio-detail>
     </template>
 
-    <template id="videoIf" is="dom-if" if="{{_checkIfTypeVideo(data.type)}}">
-        <shuvayatra-header regular data="{{data}}"></shuvayatra-header>
-        <shuvayatra-video-detail id="videoDetail" class="content" post="{{data}}"></shuvayatra-video-detail>
+    <template id="videoIf" is="dom-if" if="{{ _checkIfTypeVideo(data.type) }}">
+        <shuvayatra-header regular data="{{ data }}"></shuvayatra-header>
+        <shuvayatra-video-detail id="videoDetail" class="content" post="{{ data }}"></shuvayatra-video-detail>
     </template>
 
-    <template id="textIf" is="dom-if" if="{{_checkIfTypeText(data.type)}}">
-        <shuvayatra-header regular has-feature-image data="{{data}}"></shuvayatra-header>
-        <shuvayatra-text-detail id="textDetail" class="content" post="{{data}}"></shuvayatra-text-detail>
+    <template id="textIf" is="dom-if" if="{{ _checkIfTypeText(data.type) }}">
+        <shuvayatra-header regular has-feature-image data="{{ data }}"></shuvayatra-header>
+        <shuvayatra-text-detail id="textDetail" class="content" post="{{ data }}"></shuvayatra-text-detail>
     </template>
 
     <div style="text-align:center;">
-        <paper-spinner active="{{isLoading}}"></paper-spinner>
+        <paper-spinner active="{{ isLoading }}"></paper-spinner>
     </div>
 
 </template>
@@ -100,7 +100,6 @@
         },
 
         _updateCountData: function(){
-            console.log(this.data);
             if(this._checkIfTypeText(this.data)){
                 this.$.textIf.render();
                 this.$$("#textDetail")._updateCountData(this.data);

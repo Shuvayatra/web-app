@@ -15,34 +15,83 @@
         .loadingIndicator{
             text-align: center;
         }
+
+	:host {
+            display: block;
+        }
+	
+	.list-wrap {
+                padding: 50px 10px;
+            }
+
+            .list-wrap span {
+                font-size: 22px;
+                line-height: 30px;
+            }
+
+            .list-wrap > div {
+                margin-bottom: 40px;
+                color: #00bbd5;
+                font-size: 18px;
+            }
+
+            .list-wrap > div a {
+                display: block;
+                font-size: 14px;
+                line-height: 22px;
+                text-decoration: none;
+                color: #2c3e50;
+                padding: 10px;
+                border-bottom: 1px solid #efefef;
+            }
+
+            .list-wrap > div a:hover {
+                background: #f7f7f7;
+            }
+
+            @media only screen  and (min-width: 480px) {
+                .list-wrap > div {
+                    margin-bottom: 0;
+                    color: #00bbd5;
+                    font-size: 18px;
+                    width: 50%;
+                    float: left;
+                }
+
+                .list-wrap > div a {
+                    font-size: 16px;
+                    line-height: 24px;
+                }
+            }
     </style>
 
     <shuvayatra-header main></shuvayatra-header>
 
     <iron-ajax id="ajax"
         auto
-        url="{{baseUrl}}api/category"
-        last-response="{{data}}"
-        loading="{{isLoading}}"
-        on-response="_didRespond">
+        url="{{ baseUrl }}api/category"
+        last-response="{{ data }}"
+        loading="{{ isLoading }}">
     </iron-ajax>
 
-    <template id="list" is="dom-repeat" items="{{data}}" as="category">
-        <div>
-        {{category.title}}
-        <template id="list" is="dom-repeat" items="{{category.sub_categories}}" as="sub">
-            <a href="{{ _generateUrl(sub) }}">
-            <div style="position:relative; margin: 10px;">
-                <paper-ripple></paper-ripple>
-                {{sub.title}}
-            </div>
-            </a>
-        </template>
+    <div class="list-wrap">
+            <template id="list" is="dom-repeat" items="{{ data }}" as="category">
+                <div>
+                    <span>{{ category.title }}</span>
+                    <template id="list" is="dom-repeat" items="{{ category.sub_categories }}" as="sub">
+                        <a href="{{ _generateUrl(sub) }}">
+                            <div>
+                                <paper-ripple></paper-ripple>
+                                {{ sub.title }}
+                            </div>
+                        </a>
+                    </template>
+                </div>
+            </template>
         </div>
-    </template>
 
     <div class="loadingIndicator">
-        <paper-spinner active="{{isLoading}}"></paper-spinner>
+        <paper-spinner active="{{ isLoading }}"></paper-spinner>
     </div>
 
     </template>

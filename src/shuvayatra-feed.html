@@ -43,14 +43,34 @@
             width: 100%;
         }
 
-        paper-card.menu{
-            width: 100%;
-        }
+            paper-card.menu {
+                width: 100%;
+                padding: 10px;
+            }
 
-        paper-card.filter-wrapper{
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
+        paper-card.menu iron-icon {
+                color: #333;
+            }
+
+            paper-card.filter-wrapper {
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+
+            .search-link {
+                color: #545454;
+            }
+
+            paper-card ::paper-dropdown-menu ::paper-menu-button iron-dropdown {
+                width: 780px;
+                left: 349px !important;
+                top: 145px !important;
+                margin: 0 auto;
+            }
+
+            paper-card ::paper-dropdown-menu > iron-dropdown > .dropdown-content {
+                max-width: 100%;
+            }
 
         .empty{
             width: 100%;
@@ -64,6 +84,7 @@
             text-align: center;
             font-size: 20px;
         }
+
         .empty[hidden] {
             display: none;
         }
@@ -82,10 +103,10 @@
             on-response="_didRespondFilter"></iron-ajax>
 
         <paper-card class="menu filter-wrapper" elevation="1">
-        <paper-dropdown-menu horizontal-align="left" noink no-label-float="true" selected-item="{{selectedFilter}}">
+        <paper-dropdown-menu horizontal-align="left" no-ink no-label-float="true" selected-item="{{ selectedFilter }}">
             <paper-listbox class="dropdown-content" selected="0">
-                <template id="filterList" is="dom-repeat" items="{{filter.data}}">
-                    <paper-item value="{{item.id}}">{{item.title}}</paper-item>
+                <template id="filterList" is="dom-repeat" items="{{ filter.data }}">
+                    <paper-item value="{{ item.id }}">{{ item.title }}</paper-item>
                 </template>
             </paper-listbox>
         </paper-dropdown-menu>
@@ -94,11 +115,11 @@
 
     <iron-ajax id="ajax"
         auto="{{ noFilter }}"
-        url="{{baseUrl}}api/posts" 
+        url="{{ baseUrl }}api/posts" 
         method="GET"
-        params="{{queryParams}}"
-        last-response="{{data}}"
-        loading="{{isLoading}}"
+        params="{{ queryParams }}"
+        last-response="{{ data }}"
+        loading="{{ isLoading }}"
         on-response="_didRespond">
     </iron-ajax>
 
@@ -106,29 +127,29 @@
     <template id="list" is="dom-repeat" items="[]">
         <!-- <template> -->
             <div>
-                <template is="dom-if" if="{{_checkIfTypeAudio(item.type)}}">
-                    <shuvayatra-audio-card class="post-card" post="{{item}}"></shuvayatra-audio-card>
+                <template is="dom-if" if="{{ _checkIfTypeAudio(item.type) }}">
+                    <shuvayatra-audio-card class="post-card" post="{{ item }}"></shuvayatra-audio-card>
                 </template>
 
-                <template is="dom-if" if="{{_checkIfTypeVideo(item.type)}}">
-                    <shuvayatra-video-card class="post-card" post="{{item}}"></shuvayatra-video-card>
+                <template is="dom-if" if="{{ _checkIfTypeVideo(item.type) }}">
+                    <shuvayatra-video-card class="post-card" post="{{ item }}"></shuvayatra-video-card>
                 </template>
                 
-                <template is="dom-if" if="{{_checkIfTypeText(item.type)}}">
-                    <shuvayatra-text-card class="post-card" post="{{item}}"></shuvayatra-text-card>
+                <template is="dom-if" if="{{ _checkIfTypeText(item.type) }}">
+                    <shuvayatra-text-card class="post-card" post="{{ item }}"></shuvayatra-text-card>
                 </template>
             </div>
         </template>
     <!-- </iron-list> -->
 
     <div class="loadingIndicator">
-        <paper-spinner active="{{isLoading}}"></paper-spinner>
-        <template is="dom-if" if="{{!isLoading}}">
-            <label on-click="_loadMoreData" hidden$="{{!_canLoadMore(isLoading, isLastPage)}}">Load More</label>
+        <paper-spinner active="{{ isLoading }}"></paper-spinner>
+        <template is="dom-if" if="{{ !isLoading }}">
+            <label on-click="_loadMoreData" hidden$="{{ !_canLoadMore(isLoading, isLastPage) }}">Load More</label>
         </template>
     </div>
 
-    <div class="empty" hidden$="{{_isEmpty(totalItems)}}">
+    <div class="empty" hidden$="{{ _isEmpty(totalItems) }}">
         <label>कुनै सामाग्री उपलब्द छैन</label>
     </div>
 </template>
@@ -147,7 +168,6 @@
             filter:{
                 type: Object,
                 value: {},
-                observer: '_filterDataChanged'
             },
 
             selectedFilter:{
@@ -203,7 +223,6 @@
         },
 
         _isEmpty: function(totalItems){
-            console.log((totalItems !== 0));
             return (totalItems !== 0);
         },
 
@@ -219,12 +238,12 @@
             this.isLastPage = e.detail.response.next_page_url == null;
             var parent = this.$;
 
+	    this.currentPage = e.detail.response.current_page;
+            this.totalItems = e.detail.response.total;
+
             posts.forEach(function(post) {
                 parent.list.push('items', post);
             });
-
-            this.currentPage = e.detail.response.current_page;
-            this.totalItems = e.detail.response.total;
         },
 
         _didRespondFilter: function(e) {
@@ -237,10 +256,6 @@
             delete temp1.sub_categories;
             this.headerData = temp1;
 
-        },
-
-        _filterDataChanged: function(value){
-            //this.selectedFilter = 1;
         },
 
         _filterChanged: function(value, oldValue) {

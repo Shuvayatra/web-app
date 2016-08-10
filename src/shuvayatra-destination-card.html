@@ -36,12 +36,12 @@
 
     </style>
 
-    <a href="{{_generateUrl(category)}}">
+    <a href="{{ _generateUrl(category) }}">
     <paper-card elevation="0">
         <paper-ripple></paper-ripple>
         <div>
-            <iron-image placeholder="../images/image-default.png" preload src="{{category.featured_image}}" fade="true" sizing="cover"></iron-image>
-            <label>{{category.title}}</label>
+            <iron-image placeholder="../images/image-default.png" preload src="{{ category.featured_image }}" fade="true" sizing="cover"></iron-image>
+            <label>{{ category.title }}</label>
         </div>
     </paper-card>
     </a>

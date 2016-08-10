@@ -30,11 +30,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .shuvayatra-card {
-        width: 50%;
+        width: 49%;
         float: left;
         margin: 10px 0 0;
         box-sizing: border-box;
-        border: 4px solid #eee;
       }
 
       .loadingIndicator{
@@ -47,21 +46,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-ajax id="ajax"
         auto
-        url="{{baseUrl}}api/journey" 
-        last-response="{{data}}"
-        loading="{{isLoading}}">
+        url="{{ baseUrl }}api/journey" 
+        last-response="{{ data }}"
+        loading="{{ isLoading }}">
     </iron-ajax>
 
     <div class="shuvayatra-card-wrapper">
-      <template is="dom-repeat" items="{{data}}">
+      <template is="dom-repeat" items="{{ data }}">
         <div class="shuvayatra-card">
-          <shuvayatra-journey-card category="{{item}}"></shuvayatra-journey-card>
+          <shuvayatra-journey-card category="{{ item }}"></shuvayatra-journey-card>
         </div>
       </template>
     </div>
 
     <div class="loadingIndicator">
-        <paper-spinner active="{{isLoading}}"></paper-spinner>
+        <paper-spinner active="{{ isLoading }}"></paper-spinner>
     </div>
 
   </template>

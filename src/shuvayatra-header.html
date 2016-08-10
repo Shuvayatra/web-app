@@ -84,15 +84,15 @@
 
             .audio-player-wrap {
                 position: absolute;
-                bottom:0px;
+                bottom: 0;
                 max-width: 800px;
                 margin: 0 auto;
                 left: 0;
                 right: 0;
-                width:100%
+                width: 100%
             }
 
-            form, paper-input{
+            form, paper-input {
                 width: 100%;
                 --paper-input-container-focus-color: white;
                 --paper-input-container-input-color: white;
@@ -100,6 +100,33 @@
 
             paper-icon-button[hidden] {
                 display: none;
+            }
+
+            .category-header {
+                display: block;
+            }
+
+            .category-header > div {
+                padding-left: 15px;
+                margin-top: 75px;
+            }
+
+            .category-header > div iron-image {
+                margin-bottom: 10px;
+            }
+
+            .category-header > div iron-image,
+            .category-header > div label {
+                display: block;
+            }
+
+            paper-icon-button + label {
+                position: relative;
+                white-space: nowrap;
+                overflow: hidden;
+                width: 150px;
+                text-overflow: ellipsis;
+                display: block;
             }
 
             @media only screen  and (min-width: 900px) {
@@ -113,20 +140,28 @@
                 app-header.with-image {
                     height: 350px;
                 }
+
+                .category-header > div {
+                    margin-top: 175px;
+                }
             }
 
             @media only screen  and (min-width: 1600px) {
                 app-header.with-image {
                     height: 450px;
                 }
+
+                .category-header > div {
+                    margin-top: 290px;
+                }
             }
         </style>
 
         <!-- main header for with navigation icons -->
-        <template is="dom-if" if="{{main}}" restamp="true">
+        <template is="dom-if" if="{{ main }}" restamp="true">
             <app-header condenses effects="waterfall" fixed>
                 <app-toolbar>
-                    <iron-selector selected="[[page]]" attr-for-selected="name" role="navigation">
+                    <iron-selector selected="[[ page ]]" attr-for-selected="name" role="navigation">
                         <a id="logo-title" name="home" href="/">
                             <iron-image id="logo-icon" src="../images/logo-square.png" preload sizing="cover"
                                         height="32" width="32"></iron-image>
@@ -149,9 +184,9 @@
         </template>
 
         <!-- normal header for detail pages with back icon and title -->
-        <template id="postIf" is="dom-if" if="{{regular}}" restamp="true">
+        <template id="postIf" is="dom-if" if="{{ regular }}" restamp="true">
 
-            <template is="dom-if" if="{{!hasFeatureImage}}" restamp="true">
+            <template is="dom-if" if="{{ !hasFeatureImage }}" restamp="true">
                 <app-header condenses effects="waterfall" fixed>
                     <app-toolbar>
                         <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
@@ -160,22 +195,22 @@
                 </app-header>
             </template>
 
-            <template id="featureImageIf" is="dom-if" if="{{hasFeatureImage}}" restamp="true">
+            <template id="featureImageIf" is="dom-if" if="{{ hasFeatureImage }}" restamp="true">
                 <app-header class="with-image" condenses fixed
                             effects="waterfall resize-snapped-title fade-background"
                             effects-config='{"resize-snapped-title": {"startsAt": 0.3, "duration": "100ms"}, "fade-background": {"startsAt": 0.3, "endsAt": 0.9}}'
-                            style="background-image: url([[data.featured_image]]);">
+                            style="background-image: url([[ data.featured_image ]]);">
                     <app-toolbar>
                         <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
-                        <label condensed-title>{{data.title}}</label>
+                        <label condensed-title>{{ data.title }}</label>
 
-                        <template is="dom-if" if="{{audio}}" restamp="true">
-                            <a href="{{data.data.media_url}}" download>
+                        <template is="dom-if" if="{{ audio }}" restamp="true">
+                            <a href="{{ data.data.media_url }}" download>
                                 <paper-icon-button id="download" icon="cloud-download"></paper-icon-button>
                             </a>
                         </template>
 
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{data.share_url}}" target="_blank" on-click="_makeShareApiCall">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ data.share_url }}" target="_blank" on-click="_makeShareApiCall">
                             <paper-icon-button id="share" icon="social:share"></paper-icon-button>
                         </a>
                         <span id="favourite" on-tap="_toggleFavourite">
@@ -186,20 +221,20 @@
                         </span>
 
                         <iron-ajax id="shareAjax" method="POST" 
-                        loading="{{isSubmittingShare}}"
+                        loading="{{ isSubmittingShare }}"
                         headers='{"Token": {{apiKey}}, "Content-Type": "application/json"}'>
                         </iron-ajax>
                         <iron-ajax id="favAjax" method="POST"
-                        loading="{{isSubmittingFav}}"
-                        headers='{"Token": "{{apiKey}}", "Content-Type": "application/json"}'>
+                        loading="{{ isSubmittingFav }}"
+                        headers='{"Token": "{{ apiKey }}", "Content-Type": "application/json"}'>
                         </iron-ajax>
                     </app-toolbar>
 
-                    <template id="playerIf" is="dom-if" if="{{audio}}" restamp="true">
+                    <template id="playerIf" is="dom-if" if="{{ audio }}" restamp="true">
                         <div class="audio-player-wrap" title>
                             <shuvayatra-audio-player 
-                                id="player" src="{{data.data.media_url}}" 
-                                title="{{data.title}}">
+                                id="player" src="{{ data.data.media_url }}" 
+                                title="{{ data.title }}">
                             </shuvayatra-audio-player>
                         </div>
                     </template>
@@ -209,24 +244,24 @@
         </template>
 
         <!-- normal header for detail pages with back icon and title and featured-image-->
-        <template is="dom-if" if="{{category}}" restamp="true">
+        <template is="dom-if" if="{{ category }}" restamp="true">
             <app-header class="with-image" condenses fixed
                         effects="waterfall resize-snapped-title fade-background"
-                        effects-config='{"resize-snapped-title": {"startsAt": 0.8, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'
-                        style="background-image: url([[data.featured_image]]);">
-                <app-toolbar>
+                        effects-config='{"resize-snapped-title": {"startsAt": 0.2, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'
+                        style="background-image: url([[ data.featured_image ]]);">
+                <app-toolbar class="category-header">
                     <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
-                    <label condensed-title>{{data.title}}</label>
+                    <label condensed-title>{{ data.title }}</label>
                     <div title>
-                        <iron-image src="{{data.small_icon}}" sizing="contain" width="25" height="25"></iron-image>
-                        <label>{{data.title}}</label>
+                        <iron-image src="{{ data.small_icon }}" sizing="contain" width="25" height="25"></iron-image>
+                        <label>{{ data.title }}</label>
                     </div>
                 </app-toolbar>
             </app-header>
         </template>
 
         <!-- header with search field -->
-        <template is="dom-if" if="{{search}}" restamp="true">
+        <template is="dom-if" if="{{ search }}" restamp="true">
             <app-header condenses effects="waterfall" fixed>
                 <app-toolbar>
                     <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
@@ -240,7 +275,7 @@
             </app-header>
         </template>
 
-        <app-localstorage-document key="favorite-data" data="{{favoriteData}}"></app-localstorage-document>
+        <app-localstorage-document key="favorite-data" data="{{ favoriteData }}"></app-localstorage-document>
 
     </template>
     <script>
@@ -281,12 +316,12 @@
                     value: false
                 },
 
-                search:{
+                search: {
                     type: Boolean,
                     value: false
                 },
 
-                searchTerm:{
+                searchTerm: {
                     type: String,
                     value: "",
                     notify: true
@@ -298,8 +333,8 @@
                 },
             },
 
-            _submitForm: function(e){
-                if(e.which == 13){
+            _submitForm: function (e) {
+                if (e.which == 13) {
                     e.preventDefault();
                     window.location = "/search/query/" + this.searchTerm;
                 }
@@ -346,7 +381,6 @@
             },
 
             _updateFavCount: function(flag){
-                console.log('before: ' + this.data.like_count);
                 if(this.data.like_count){
                     if(flag)
                         this.data.like_count++;
@@ -358,7 +392,6 @@
                     else
                         this.data.like_count = 0;
                 }
-                console.log('after: ' + this.data.like_count);
             },
 
             _makeFavApiCall: function(flag){

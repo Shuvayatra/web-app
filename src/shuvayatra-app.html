@@ -36,53 +36,53 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 100%;
       }
 
+      .category{
+        margin-top: 190px;
+      }
+
       @media only screen  and (min-width : 900px) {
           .content{
             max-width: 800px;
             margin: 0 auto;
           }
-
-          .category {
-            padding-top: 190px;
-          }
       }
 
       @media only screen  and (min-width: 1024px) {
           .category {
-              padding-top: 290px;
+              margin-top: 290px;
           }
       }
 
       @media only screen  and (min-width: 1600px) {
           .category {
-              padding-top: 390px;
+              margin-top: 390px;
           }
       }
     </style>
 
-    <app-location route="{{route}}"></app-location>
+    <app-location route="{{ route }}"></app-location>
     <app-route
-        route="{{route}}"
+        route="{{ route }}"
         pattern="/:page"
-        data="{{routeData}}"
-        tail="{{subroute}}"></app-route>
+        data="{{ routeData }}"
+        tail="{{ subroute }}"></app-route>
 
     <app-route
-      route="{{subroute}}"
+      route="{{ subroute }}"
       pattern="/:id"
-      data="{{subrouteData}}">
+      data="{{ subrouteData }}">
     </app-route>
 
     <app-route
-      route="{{subroute}}"
+      route="{{ subroute }}"
       pattern="/query/:searchQuery"
-      data="{{searchrouteData}}">
+      data="{{ searchrouteData }}">
     </app-route>
 
     <app-route
-      route="{{subroute}}"
+      route="{{ subroute }}"
       pattern="/tag/:searchTag"
-      data="{{searchrouteData}}">
+      data="{{ searchrouteData }}">
     </app-route>
 
     <div id="main" class="content">

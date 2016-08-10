@@ -10,41 +10,55 @@
 
     <style>
         :host {
-            display: block;
-        }
+                display: block;
+            }
 
-        .tag-wrapper{
-            background-color: lightgray;
-            min-height: 150px;
-            margin-top: 16px;
-            padding: 16px;
-        }
+            .tag-wrapper {
+                background-color: #f1f1f1;
+                min-height: 150px;
+                margin-top: 16px;
+                padding: 16px;
+            }
 
-        a {
-            text-decoration: none;
-            color: #000;
-        }
+            .tag-link {
+                text-decoration: none;
+                color: #000;
+                display: inline-block;
+                margin: 5px;
+            }
+
+            .tag-link:hover paper-card {
+                background-color: #dedede;
+            }
+
+            .tag-link paper-card {
+                padding: 5px 10px;
+            }
+
+            .tag-link paper-card label {
+                cursor: pointer;
+            }
     </style>
 
-    <shuvayatra-header search search-term="{{searchTerm}}"></shuvayatra-header>
+    <shuvayatra-header search search-term="{{ searchTerm }}"></shuvayatra-header>
     
     <iron-ajax id="ajax"
         auto
-        url="{{baseUrl}}api/tags"
+        url="{{ baseUrl }}api/tags"
         method="GET"
-        last-response="{{data}}"
-        loading="{{isLoading}}">
+        last-response="{{ data }}"
+        loading="{{ isLoading }}">
     </iron-ajax>
 
     <div class="tag-wrapper">
-    <template is="dom-repeat" items="{{data}}">
-        <a href="/search/tag/{{item}}">
-            <paper-card elevation="1">
-                <label>{{item}}</label>
-            </paper-card >
-        </a>
-    </template>
-    </div>
+            <template is="dom-repeat" items="{{ data }}">
+                <a class="tag-link" href="/search/tag/{{item}}">
+                    <paper-card elevation="1">
+                        <label>{{ item }}</label>
+                    </paper-card>
+                </a>
+            </template>
+        </div>
 </template>
 
 <script>
@@ -65,10 +79,8 @@
         _onSearchTermChanged: function(value) {
             var oldLength = this.temp ? this.temp.length : 0;
             var newLength = value.length;
-            console.log(oldLength + " -> " + newLength);
             if(Math.abs(newLength - oldLength) > 3){
                 this.temp = value;
-                console.log('search: ' + this.temp);
             }
         }
 

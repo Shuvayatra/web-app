@@ -28,30 +28,30 @@
     <shuvayatra-header main></shuvayatra-header>
 
     <div class="content">
-        <paper-tabs selected="{{selected}}">
+        <paper-tabs selected="{{ selected }}">
             <paper-tab>सुचना</paper-tab>
             <paper-tab>मलाई मनपर्न</paper-tab>
         </paper-tabs>
 
-        <iron-pages role="main" selected="[[selected]]">
+        <iron-pages role="main" selected="[[ selected ]]">
             <div>
                 Notifications will be shown here...
             </div>
             <div>
-                <app-localstorage-document key="favorite-data" data="{{favoriteData}}"></app-localstorage-document>
+                <app-localstorage-document key="favorite-data" data="{{ favoriteData }}"></app-localstorage-document>
 
-                <template id="list" is="dom-repeat" items="{{favoriteData}}">
+                <template id="list" is="dom-repeat" items="{{ favoriteData }}">
                 <div>
-                    <template is="dom-if" if="{{_checkIfTypeAudio(item.type)}}">
-                        <shuvayatra-audio-card class="post-card" post="{{item}}"></shuvayatra-audio-card>
+                    <template is="dom-if" if="{{ _checkIfTypeAudio(item.type) }}">
+                        <shuvayatra-audio-card class="post-card" post="{{ item }}"></shuvayatra-audio-card>
                     </template>
 
-                    <template is="dom-if" if="{{_checkIfTypeVideo(item.type)}}">
-                        <shuvayatra-video-card class="post-card" post="{{item}}"></shuvayatra-video-card>
+                    <template is="dom-if" if="{{ _checkIfTypeVideo(item.type) }}">
+                        <shuvayatra-video-card class="post-card" post="{{ item }}"></shuvayatra-video-card>
                     </template>
                     
-                    <template is="dom-if" if="{{_checkIfTypeText(item.type)}}">
-                        <shuvayatra-text-card class="post-card" post="{{item}}"></shuvayatra-text-card>
+                    <template is="dom-if" if="{{ _checkIfTypeText(item.type) }}">
+                        <shuvayatra-text-card class="post-card" post="{{ item }}"></shuvayatra-text-card>
                     </template>
                 </div>
                 </template>

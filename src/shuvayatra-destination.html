@@ -39,20 +39,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-ajax id="ajax"
         auto
-        url="{{baseUrl}}/api/destinations"
-        last-response="{{data}}"
-        loading="{{isLoading}}"
-        on-response="_didRespond">
+        url="{{ baseUrl }}/api/destinations"
+        last-response="{{ data }}"
+        loading="{{ isLoading }}">
     </iron-ajax>
 
-    <template id="list" is="dom-repeat" items="{{data}}">
+    <template id="list" is="dom-repeat" items="{{ data }}">
         <div>
-            <shuvayatra-destination-card category="{{item}}"></shuvayatra-destination-card>
+            <shuvayatra-destination-card category="{{ item }}"></shuvayatra-destination-card>
         </div>
     </template>
 
     <div class="loadingIndicator">
-        <paper-spinner active="{{isLoading}}"></paper-spinner>
+        <paper-spinner active="{{ isLoading }}"></paper-spinner>
     </div>
 
   </template>
@@ -65,10 +64,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         behaviors: [GlobalBehavior],
 
         properties: {
-        },
-
-        _didRespond: function(e) {
-            console.log(e.detail.response);
         },
 
     });
