@@ -24,10 +24,10 @@
         }
     </style>
 
-    <shuvayatra-favourite-section post="{{ post }}"></shuvayatra-favourite-section>
+    <shuvayatra-favourite-section id="favSection" category="{{ post.category }}" date="{{ post.created_at }}" likes="{{ post.like_count }}" 
     <shuvayatra-html-placeholder html="{{ post.description }}"></shuvayatra-html-placeholder>
 
-    <div class="similar-type">
+    <div class="similar-type" hidden$="{{ _hasSimilar(post) }}">
         <p>मिल्दोजुल्दो अडियोहरु </p>
 
         <template is="dom-repeat" items="{{ post.similar }}">

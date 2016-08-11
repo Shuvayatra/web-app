@@ -5,6 +5,10 @@
     "src/shuvayatra-home.html",
     "src/shuvayatra-journey.html",
     "src/shuvayatra-question.html",
-    "src/shuvayatra-profile.html"
+    "src/shuvayatra-profile.html",
+    "src/shuvayatra-post.html",
+    "src/shuvayatra-tags.html",
+    "src/shuvayatra-search.html",
+    "src/shuvayatra-category.html"
   ]
 }

@@ -50,19 +50,19 @@
         loading="{{ isLoading }}">
     </iron-ajax>
 
-    <template is="dom-if" if="{{ _checkIfTypeAudio(data.type) }}">
-        <shuvayatra-header regular data="{{ data }}" has-feature-image audio download></shuvayatra-header>
-        <shuvayatra-audio-detail class="content" post="{{ data }}"></shuvayatra-audio-detail>
+    <template id="audioIf" is="dom-if" if="{{ _checkIfTypeAudio(data.type) }}">
+        <shuvayatra-header post data="{{ data }}" has-feature-image audio download change-flag="{{ changeFlag }}"></shuvayatra-header>
+        <shuvayatra-audio-detail id="detail" class="content" post="{{ data }}"></shuvayatra-audio-detail>
     </template>
 
     <template id="videoIf" is="dom-if" if="{{ _checkIfTypeVideo(data.type) }}">
-        <shuvayatra-header regular data="{{ data }}"></shuvayatra-header>
-        <shuvayatra-video-detail id="videoDetail" class="content" post="{{ data }}"></shuvayatra-video-detail>
+        <shuvayatra-header post data="{{ data }}"  change-flag="{{ changeFlag }}"></shuvayatra-header>
+        <shuvayatra-video-detail id="detail" class="content" post="{{ data }}"></shuvayatra-video-detail>
     </template>
 
     <template id="textIf" is="dom-if" if="{{ _checkIfTypeText(data.type) }}">
-        <shuvayatra-header regular has-feature-image data="{{ data }}"></shuvayatra-header>
-        <shuvayatra-text-detail id="textDetail" class="content" post="{{ data }}"></shuvayatra-text-detail>
+        <shuvayatra-header post has-feature-image data="{{ data }}" change-flag="{{ changeFlag }}"></shuvayatra-header>
+        <shuvayatra-text-detail id="detail" class="content" post="{{ data }}"></shuvayatra-text-detail>
     </template>
 
     <div style="text-align:center;">
@@ -84,26 +84,22 @@
             postUrl:{
                 type: String
             },
-        },
 
-        observers: [
-            '_onLikeCountChanged(data.like_count)',
-            '_onLikeCountChanged(data.share_count)'
-        ],
-
-        _onLikeCountChanged: function(likeCount){
-            this._updateCountData();
-        },
-
-        _onShareCountChanged: function(shareCount){
-            this._updateCountData();
-        },
-
-        _updateCountData: function(){
-            if(this._checkIfTypeText(this.data)){
-                this.$.textIf.render();
-                this.$$("#textDetail")._updateCountData(this.data);
+            changeFlag:{
+                type: Boolean,
+                observer: '_onCountsUpdated'
             }
+        },
+
+        _onCountsUpdated: function(){
+            if(this._checkIfTypeText(this.data.type)){
+                this.$.textIf.render();
+            }else if(this._checkIfTypeVideo(this.data.type)){
+                this.$.videoIf.render();
+            } else if(this._checkIfTypeAudio(this.data.type)){
+                this.$.audioIf.render();
+            }
+            this.$$("#detail")._updateCountData(this.data);
         },
 
         ready: function(){
@@ -130,7 +126,7 @@
         _stopVideoPlayback: function(){
             if(this._checkIfTypeVideo(this.data.type)){
                 this.$.videoIf.render();
-                this.$$("#videoDetail")._stopPlayback();
+                this.$$("#detail")._stopPlayback();
             }
         }
     });

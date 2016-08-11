@@ -36,21 +36,32 @@
         }
     </style>
 
-    <label>{{ post.category }}</label> - <label>{{ _getRelativeTime(post.updated_at) }}</label>
+    <label>{{ category }}</label> - <label>{{ _getRelativeTime(date) }}</label>
 
     <div class="span-block">
-        <span><iron-icon icon="favorite"></iron-icon> {{ _getFormattedLikeCount(post.like_count) }}</span>
-        <span><iron-icon icon="social:share"></iron-icon> {{ _getFormattedShareCount(post.share_count) }}</span>
+        <span><iron-icon icon="favorite"></iron-icon> {{ _getFormattedLikeCount(likes) }}</span>
+        <span><iron-icon icon="social:share"></iron-icon> {{ _getFormattedShareCount(shares) }}</span>
     </div>
 
 </template>
 <script>
 	Polymer({
         is: 'shuvayatra-favourite-section',
-        behaviors: [PostBehavior],
+        behaviors: [ PostBehavior ],
         
         properties: {
+            category: String,
+            date: Number,
+            likes: Number,
+            shares: Number
         },
+
+        _updateData: function(data){
+            this.category = data.category;
+            this.likes = data.like_count;
+            this.shares = data.share_count;
+            this.date = data.updated_at;
+        }
 
     });
 </script>

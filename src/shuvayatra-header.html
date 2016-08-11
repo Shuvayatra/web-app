@@ -98,7 +98,8 @@
                 --paper-input-container-input-color: white;
             }
 
-            paper-icon-button[hidden] {
+            paper-icon-button[hidden],
+            .category-header > div iron-image[hidden] {
                 display: none;
             }
 
@@ -185,62 +186,57 @@
 
         <!-- normal header for detail pages with back icon and title -->
         <template id="postIf" is="dom-if" if="{{ regular }}" restamp="true">
-
-            <template is="dom-if" if="{{ !hasFeatureImage }}" restamp="true">
-                <app-header condenses effects="waterfall" fixed>
+            <app-header condenses effects="waterfall" fixed>
                     <app-toolbar>
                         <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
                         <label>{{data.title}}</label>
                     </app-toolbar>
                 </app-header>
-            </template>
+        </template>
 
-            <template id="featureImageIf" is="dom-if" if="{{ hasFeatureImage }}" restamp="true">
-                <app-header class="with-image" condenses fixed
+        <template id="postIf" is="dom-if" if="{{ post }}" restamp="true">
+            <app-header class$="{{ _generateClass(hasFeatureImage) }}" condenses fixed
                             effects="waterfall resize-snapped-title fade-background"
                             effects-config='{"resize-snapped-title": {"startsAt": 0.3, "duration": "100ms"}, "fade-background": {"startsAt": 0.3, "endsAt": 0.9}}'
                             style="background-image: url([[ data.featured_image ]]);">
-                    <app-toolbar>
-                        <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
-                        <label condensed-title>{{ data.title }}</label>
 
-                        <template is="dom-if" if="{{ audio }}" restamp="true">
-                            <a href="{{ data.data.media_url }}" download>
-                                <paper-icon-button id="download" icon="cloud-download"></paper-icon-button>
-                            </a>
-                        </template>
+                <app-toolbar>
+                    <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
+                    <label condensed-title>{{ data.title }}</label>
 
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ data.share_url }}" target="_blank" on-click="_makeShareApiCall">
-                            <paper-icon-button id="share" icon="social:share"></paper-icon-button>
+                    <template is="dom-if" if="{{ audio }}" restamp="true">
+                        <a href="{{ data.data.media_url }}" download>
+                            <paper-icon-button id="download" icon="cloud-download"></paper-icon-button>
                         </a>
-                        <span id="favourite" on-tap="_toggleFavourite">
-                            <paper-icon-button icon="favorite" 
-                                hidden$="{{ !_checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
-                            <paper-icon-button icon="favorite-border" 
-                                hidden$="{{ _checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
-                        </span>
-
-                        <iron-ajax id="shareAjax" method="POST" 
-                        loading="{{ isSubmittingShare }}"
-                        headers='{"Token": {{apiKey}}, "Content-Type": "application/json"}'>
-                        </iron-ajax>
-                        <iron-ajax id="favAjax" method="POST"
-                        loading="{{ isSubmittingFav }}"
-                        headers='{"Token": "{{ apiKey }}", "Content-Type": "application/json"}'>
-                        </iron-ajax>
-                    </app-toolbar>
-
-                    <template id="playerIf" is="dom-if" if="{{ audio }}" restamp="true">
-                        <div class="audio-player-wrap" title>
-                            <shuvayatra-audio-player 
-                                id="player" src="{{ data.data.media_url }}" 
-                                title="{{ data.title }}">
-                            </shuvayatra-audio-player>
-                        </div>
                     </template>
-                </app-header>
-            </template>
 
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ data.share_url }}" target="_blank" on-click="_makeShareApiCall">
+                        <paper-icon-button id="share" icon="social:share"></paper-icon-button>
+                    </a>
+                    <span id="favourite" on-tap="_toggleFavourite">
+                        <paper-icon-button icon="favorite" 
+                            hidden$="{{ !_checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
+                        <paper-icon-button icon="favorite-border" 
+                            hidden$="{{ _checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
+                    </span>
+
+                    <iron-ajax id="shareAjax" method="POST" 
+                    loading="{{ isSubmittingShare }}">
+                    </iron-ajax>
+                    <iron-ajax id="favAjax" method="POST"
+                    loading="{{ isSubmittingFav }}">
+                    </iron-ajax>
+                </app-toolbar>
+
+                <template id="playerIf" is="dom-if" if="{{ audio }}" restamp="true">
+                    <div class="audio-player-wrap" title>
+                        <shuvayatra-audio-player 
+                            id="player" src="{{ data.data.media_url }}" 
+                            title="{{ data.title }}">
+                        </shuvayatra-audio-player>
+                    </div>
+                </template>
+            </app-header>
         </template>
 
         <!-- normal header for detail pages with back icon and title and featured-image-->
@@ -253,7 +249,7 @@
                     <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
                     <label condensed-title>{{ data.title }}</label>
                     <div title>
-                        <iron-image src="{{ data.small_icon }}" sizing="contain" width="25" height="25"></iron-image>
+                        <iron-image src="{{ data.small_icon }}" sizing="contain" width="25" height="25" hidden$="{{ !_hasIcon(data) }}"></iron-image>
                         <label>{{ data.title }}</label>
                     </div>
                 </app-toolbar>
@@ -284,6 +280,12 @@
             behaviors: [GlobalBehavior],
 
             properties: {
+                changeFlag: {
+                    type: Boolean,
+                    value: false,
+                    notify: true
+                },
+
                 data: {
                     type: Object,
                     value: {},
@@ -296,6 +298,11 @@
                 },
 
                 regular: {
+                    type: Boolean,
+                    value: false
+                },
+
+                post:{
                     type: Boolean,
                     value: false
                 },
@@ -333,6 +340,14 @@
                 },
             },
 
+            _hasIcon: function(data){
+                return (data.parent_alias === "journey");
+            },
+
+            _generateClass: function(hasFeatureImage){
+                return hasFeatureImage ? "with-image" : "no-image";
+            },
+
             _submitForm: function (e) {
                 if (e.which == 13) {
                     e.preventDefault();
@@ -343,7 +358,6 @@
             ready: function () {
                 if (this.audio) {
                     this.$.postIf.render();
-                    this.$$("#featureImageIf").render();
                     this.$$("#playerIf").render();
                     this.player = this.$$("#player");
                 }
@@ -392,15 +406,28 @@
                     else
                         this.data.like_count = 0;
                 }
+                this.changeFlag = !this.changeFlag;
+            },
+
+            _updateShareCount: function(){
+                if(this.data.share_count){
+                    this.data.share_count++;
+                }else{
+                    this.data.share_count = 1;
+                }
+                this.changeFlag = !this.changeFlag;
             },
 
             _makeFavApiCall: function(flag){
                 if(!this.isSubmittingFav) {
                     this.$.postIf.render();
-                    this.$$("#featureImageIf").render();
                     var ajax = this.$$('#favAjax');
 
-                    ajax.url = this.baseUrl + "/api/post/" + this.data.id + "/favorite";
+                    ajax.url = this.baseUrl + "api/post/" + this.data.id + "/favorite";
+                    ajax.headers = {
+                        "Token": this.apiKey, 
+                        "Content-Type": "application/json"
+                    };
                     if(flag){
                         ajax.body = {type: "up"};
                     }else{
@@ -412,12 +439,16 @@
 
             _makeShareApiCall: function(){
                 if(!this.isSubmittingShare) {
+                    this._updateShareCount();
+
                     this.$.postIf.render();
-                    this.$$("#featureImageIf").render();
                     var ajax = this.$$('#shareAjax');
 
-                    ajax.url = this.baseUrl + "/api/post/" + this.data.id + "/share";
-
+                    ajax.url = this.baseUrl + "api/post/" + this.data.id + "/share";
+                    ajax.headers = {
+                        "Token": this.apiKey, 
+                        "Content-Type": "application/json"
+                    };
                     ajax.generateRequest();
                 }
             },

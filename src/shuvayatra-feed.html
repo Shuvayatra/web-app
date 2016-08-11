@@ -39,6 +39,11 @@
             color: #fff;
         }
 
+        a{
+            text-decoration: none;
+            color: #000;
+        }
+
         paper-dropdown-menu {
             width: 100%;
         }
@@ -92,7 +97,7 @@
     </style>
     <template id="filterIf" is="dom-if" if="{{ !noFilter }}">
         <a href="/tags">
-        <paper-card class="menu" elevation="1">
+        <paper-card class="menu" elevation="2">
             <iron-icon icon="search"></iron-icon>
             <label>तपाईं के हेर्न चाहनुहुन्छ ? </label>
         </paper-card>
@@ -102,7 +107,7 @@
             method="GET"
             on-response="_didRespondFilter"></iron-ajax>
 
-        <paper-card class="menu filter-wrapper" elevation="1">
+        <paper-card class="menu filter-wrapper" elevation="2">
         <paper-dropdown-menu horizontal-align="left" no-ink no-label-float="true" selected-item="{{ selectedFilter }}">
             <paper-listbox class="dropdown-content" selected="0">
                 <template id="filterList" is="dom-repeat" items="{{ filter.data }}">
@@ -249,7 +254,7 @@
         _didRespondFilter: function(e) {
             var temp = {};
             temp.filterBy = "category";
-            temp.data = [{title: "All", id: this.categoryId}].concat(e.detail.response.sub_categories);
+            temp.data = [{title: "सबै", id: this.categoryId}].concat(e.detail.response.sub_categories);
             this.filter = temp;
 
             var temp1 = e.detail.response;

@@ -21,7 +21,7 @@
 
     <h3>{{ post.title }}</h3>
 
-    <shuvayatra-favourite-section post="{{ post }}"></shuvayatra-favourite-section>
+    <shuvayatra-favourite-section id="favSection" category="{{ post.category }}" date="{{ post.created_at }}" likes="{{ post.like_count }}" shares="{{ post.share_count }}"></shuvayatra-favourite-section>
 
     <shuvayatra-html-placeholder html="{{ post.description }}"></shuvayatra-html-placeholder>
 
@@ -34,10 +34,6 @@
         properties: {
 
         },
-
-        _updateCountData: function(data){
-            this.post = data;
-        }
     });
 </script>
 </dom-module>
