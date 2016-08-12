@@ -24,7 +24,7 @@
         }
     </style>
 
-    <shuvayatra-favourite-section id="favSection" category="{{ post.category }}" date="{{ post.created_at }}" likes="{{ post.like_count }}" 
+    <shuvayatra-favourite-section id="favSection" category="{{ post.category }}" date="{{ post.created_at }}" likes="{{ post.like_count }}"></shuvayatra-favourite-section>
     <shuvayatra-html-placeholder html="{{ post.description }}"></shuvayatra-html-placeholder>
 
     <div class="similar-type" hidden$="{{ _hasSimilar(post) }}">
