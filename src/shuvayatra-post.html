@@ -43,7 +43,7 @@
     </style>
 
     <iron-ajax id="ajax" auto
-        url="{{ postUrl }}" 
+        url="{{ postUrl }}"
         method="GET"
         params="{{ queryParams }}"
         last-response="{{ data }}"
@@ -74,23 +74,29 @@
 	Polymer({
         is: 'shuvayatra-post',
         behaviors: [GlobalBehavior],
-        
+
         properties: {
+          route:{
+            type:Object,
+            observer:'_routeChange'
+          },
         	postId:{
         		type: Number,
-                observer: '_onIdChanged'
+            observer: '_onIdChanged'
         	},
 
-            postUrl:{
-                type: String
-            },
+          postUrl:{
+              type: String
+          },
 
-            changeFlag:{
-                type: Boolean,
-                observer: '_onCountsUpdated'
-            }
+          changeFlag:{
+              type: Boolean,
+              observer: '_onCountsUpdated'
+          }
         },
-
+        _routeChange:function(route){
+            this.postId=route.id;
+        },
         _onCountsUpdated: function(){
             if(this._checkIfTypeText(this.data.type)){
                 this.$.textIf.render();
@@ -99,12 +105,9 @@
             } else if(this._checkIfTypeAudio(this.data.type)){
                 this.$.audioIf.render();
             }
-            this.$$("#detail")._updateCountData(this.data);
+          //  this.$$("#detail")._updateCountData(this.data);
         },
 
-        ready: function(){
-            this.postId = window.location.pathname.split("post/")[1];
-        },
 
         _onIdChanged: function(id){
             this.data = {};

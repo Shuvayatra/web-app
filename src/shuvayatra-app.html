@@ -12,11 +12,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
-<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html">
 <link rel="import" href="shuvayatra-header.html">
-
 <dom-module id="shuvayatra-app">
 
   <template>
@@ -59,6 +57,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <app-location route="{{ route }}"></app-location>
+
     <app-route
         route="{{ route }}"
         pattern="/:page"
@@ -83,10 +82,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       data="{{ searchrouteData }}">
     </app-route>
 
-    <div id="main" class="content">
-    </div>
-
-    <iron-ajax id="ajax" url="" handle-as="document"></iron-ajax>
+    <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
+            <shuvayatra-home name="home"></shuvayatra-home>
+            <shuvayatra-destination name="destination"></shuvayatra-destination>
+            <shuvayatra-journey name="journey"></shuvayatra-journey>
+            <shuvayatra-question route="{{routeData}}" name="question"></shuvayatra-question>
+            <shuvayatra-profile name="profile"></shuvayatra-profile>
+            <shuvayatra-post route="{{subrouteData}}" name="post"></shuvayatra-post>
+            <shuvayatra-search route="{{searchrouteData}}" name="search"></shuvayatra-search>
+            <shuvayatra-tags route="{{searchrouteData}}" name="tags"></shuvayatra-tags>
+    </iron-pages>
   </template>
 
   <script>
@@ -97,7 +102,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       behaviors:[Polymer.IronScrollTargetBehavior],
 
       properties: {
-
         page: {
           type: String,
           reflectToAttribute: true,
@@ -107,8 +111,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       observers: [
-        '_routePageChanged(routeData.page)',
-        '_subrouteDataChanged(subrouteData)'
+        '_routePageChanged(routeData.page)'
       ],
 
       _getVisibility: function(container){
@@ -126,60 +129,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         }
       },
-
-      ready: function(){
-        var self = this;
-        self.$.ajax.addEventListener('response', function (response) {
-            try {
-                self.async(function () {
-
-                    var links = response.detail.response.head.querySelectorAll("link");
-                    for (var i = 0; i <= links.length - 1; i++) {
-                        if (!window.document.head.innerHTML.indexOf(links[i].href.toLowerCase()) != -1) {
-                            var l = document.createElement('link');
-                            l.rel = 'import';
-                            l.href = links[i].href.toLowerCase();
-                            document.head.appendChild(l);
-                        }
-                    }
-
-                    var l = document.createElement('div');
-                    l.innerHTML = response.detail.response.body.innerHTML;
-                    self.$.main.innerHTML = "";
-                    self.$.main.appendChild(l);
-                }, 0);
-            } catch (e) {
-            }
-        });
-      },
-
       _routePageChanged: function(page) {
         this.page = page || 'home';
       },
+      _pageChanged: function(page, oldPage) {
+        if (page != null) {
 
-      _pageChanged: function(page, old) {
-        this.importHref(this.resolveUrl('shuvayatra-' + page + '.html'), null, null, true);
-        this._reloadPage();
-      },
+          this.importHref(
+            this.resolveUrl('shuvayatra-' + page + '.html'),null, null, true);
 
-      _subrouteDataChanged: function(data){
-        if(this.page === 'post' || this.page === 'category')
-          this._reloadPage();
-      },
-
-      _reloadPage: function(){
-        this.$.ajax.url = this.resolveUrl('../pages/' + this.page + '.html');
-        this.$.ajax.generateRequest();
-      },
-
-      _removePreviousPage: function(page){
-        if(page === 'post'){
-          if(this.$.post){
-            console.dir(this.$.post);
-          }
         }
       },
-
     });
 
   </script>
