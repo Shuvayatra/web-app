@@ -11,6 +11,7 @@
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
+<link rel="import" href="behaviors/global-behavior.html">
 
 <dom-module id="shuvayatra-header">
     <template>
@@ -214,13 +215,13 @@
                         <paper-icon-button id="share" icon="social:share"></paper-icon-button>
                     </a>
                     <span id="favourite" on-tap="_toggleFavourite">
-                        <paper-icon-button icon="favorite" 
+                        <paper-icon-button icon="favorite"
                             hidden$="{{ !_checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
-                        <paper-icon-button icon="favorite-border" 
+                        <paper-icon-button icon="favorite-border"
                             hidden$="{{ _checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
                     </span>
 
-                    <iron-ajax id="shareAjax" method="POST" 
+                    <iron-ajax id="shareAjax" method="POST"
                     loading="{{ isSubmittingShare }}">
                     </iron-ajax>
                     <iron-ajax id="favAjax" method="POST"
@@ -230,8 +231,8 @@
 
                 <template id="playerIf" is="dom-if" if="{{ audio }}" restamp="true">
                     <div class="audio-player-wrap" title>
-                        <shuvayatra-audio-player 
-                            id="player" src="{{ data.data.media_url }}" 
+                        <shuvayatra-audio-player
+                            id="player" src="{{ data.data.media_url }}"
                             title="{{ data.title }}">
                         </shuvayatra-audio-player>
                     </div>
@@ -261,8 +262,8 @@
             <app-header condenses effects="waterfall" fixed>
                 <app-toolbar>
                     <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
-                        <paper-input placeholder="Search" 
-                                no-label-float no-ink 
+                        <paper-input placeholder="Search"
+                                no-label-float no-ink
                                 on-keydown="_submitForm"
                                 value="{{ searchTerm }}">
                             <!-- <iron-icon icon="search" prefix></div> -->
@@ -425,7 +426,7 @@
 
                     ajax.url = this.baseUrl + "api/post/" + this.data.id + "/favorite";
                     ajax.headers = {
-                        "Token": this.apiKey, 
+                        "Token": this.apiKey,
                         "Content-Type": "application/json"
                     };
                     if(flag){
@@ -446,7 +447,7 @@
 
                     ajax.url = this.baseUrl + "api/post/" + this.data.id + "/share";
                     ajax.headers = {
-                        "Token": this.apiKey, 
+                        "Token": this.apiKey,
                         "Content-Type": "application/json"
                     };
                     ajax.generateRequest();
@@ -468,7 +469,7 @@
                 var ids = favoriteData.map(this._getIdFromData);
                 var set = new Set(ids);
                 return set.has(this.data.id);
-                
+
             },
 
             _getIdFromData: function(data){
