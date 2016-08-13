@@ -18,6 +18,6 @@
     "pages/profile.html",
     "pages/question.html",
     "pages/search.html",
-    "pages/tags.html",
+    "pages/tags.html"
   ]
 }
