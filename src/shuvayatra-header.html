@@ -12,6 +12,7 @@
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/app-storage/app-localstorage/app-localstorage-document.html">
 <link rel="import" href="behaviors/global-behavior.html">
+<link rel="import" href="shuvayatra-audio-player.html">
 
 <dom-module id="shuvayatra-header">
     <template>
@@ -315,8 +316,7 @@
 
                 audio: {
                     type: Boolean,
-                    value: false,
-                    observer: '_isAudio'
+                    value: false
                 },
 
                 category: {
@@ -372,12 +372,6 @@
             _stopPlayback: function(){
                 if (this.player) {
                     this.player._stop();
-                }
-            },
-
-            _isAudio: function (value) {
-                if (value) {
-                    this.importHref(this.resolveUrl('shuvayatra-audio-player.html'), null, null, true);
                 }
             },
 
