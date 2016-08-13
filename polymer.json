@@ -9,6 +9,15 @@
     "src/shuvayatra-post.html",
     "src/shuvayatra-tags.html",
     "src/shuvayatra-search.html",
-    "src/shuvayatra-category.html"
+    "src/shuvayatra-category.html",
+    "pages/category.html",
+    "pages/destination.html",
+    "pages/home.html",
+    "pages/journey.html",
+    "pages/post.html",
+    "pages/profile.html",
+    "pages/question.html",
+    "pages/search.html",
+    "pages/tags.html",
   ]
 }
