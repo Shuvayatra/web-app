@@ -187,7 +187,7 @@
         </template>
 
         <!-- normal header for detail pages with back icon and title -->
-        <template id="postIf" is="dom-if" if="{{ regular }}" restamp="true">
+        <template is="dom-if" if="{{ regular }}" restamp="true">
             <app-header condenses effects="waterfall" fixed>
                     <app-toolbar>
                         <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
@@ -200,7 +200,7 @@
             <app-header class$="{{ _generateClass(hasFeatureImage) }}" condenses fixed
                             effects="waterfall resize-snapped-title fade-background"
                             effects-config='{"resize-snapped-title": {"startsAt": 0.3, "duration": "100ms"}, "fade-background": {"startsAt": 0.3, "endsAt": 0.9}}'
-                            style="background-image: url([[ data.featured_image ]]);">
+                            style="background-image: url([[ _getFeaturedImage(data) ]]);">
 
                 <app-toolbar>
                     <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
@@ -339,6 +339,10 @@
                     type: Array,
                     value: []
                 },
+            },
+
+            _getFeaturedImage: function(data){
+                return (this.audio) ? data.data.thumbnail : data.featured_image;
             },
 
             _hasIcon: function(data){

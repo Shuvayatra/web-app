@@ -51,7 +51,7 @@
     </iron-ajax>
 
     <template id="audioIf" is="dom-if" if="{{ _checkIfTypeAudio(data.type) }}">
-        <shuvayatra-header post data="{{ data }}" has-feature-image audio download change-flag="{{ changeFlag }}"></shuvayatra-header>
+        <shuvayatra-header id="player" post data="{{ data }}" has-feature-image audio download change-flag="{{ changeFlag }}"></shuvayatra-header>
         <shuvayatra-audio-detail id="detail" class="content" post="{{ data }}"></shuvayatra-audio-detail>
     </template>
 
@@ -76,27 +76,21 @@
         behaviors: [GlobalBehavior],
 
         properties: {
-          route:{
-            type:Object,
-            observer:'_routeChange'
-          },
         	postId:{
         		type: Number,
-            observer: '_onIdChanged'
+                observer: '_onIdChanged'
         	},
 
-          postUrl:{
-              type: String
-          },
+            postUrl:{
+                type: String
+            },
 
-          changeFlag:{
-              type: Boolean,
-              observer: '_onCountsUpdated'
-          }
+            changeFlag:{
+                type: Boolean,
+                observer: '_onCountsUpdated'
+            }
         },
-        _routeChange:function(route){
-            this.postId=route.id;
-        },
+
         _onCountsUpdated: function(){
             if(this._checkIfTypeText(this.data.type)){
                 this.$.textIf.render();
@@ -105,12 +99,15 @@
             } else if(this._checkIfTypeAudio(this.data.type)){
                 this.$.audioIf.render();
             }
-          //  this.$$("#detail")._updateCountData(this.data);
+            if(this.$$("#detail")){
+                this.$$("#detail")._updateCountData(this.data);
+            }
         },
 
 
         _onIdChanged: function(id){
-            this.data = {};
+            this.$.audioIf.render();
+            if(this.$$('#player')) this.$$('#player')._stopPlayback();
             this.postUrl = this.baseUrl + "api/posts/" + this.postId;
         },
 

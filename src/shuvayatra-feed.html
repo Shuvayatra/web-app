@@ -109,7 +109,7 @@
 
         <paper-card class="menu filter-wrapper" elevation="2">
         <paper-dropdown-menu horizontal-align="left" no-ink no-label-float="true" selected-item="{{ selectedFilter }}">
-            <paper-listbox class="dropdown-content" selected="0">
+            <paper-listbox id="filterList" class="dropdown-content" selected="0">
                 <template id="filterList" is="dom-repeat" items="{{ filter.data }}">
                     <paper-item value="{{ item.id }}">{{ item.title }}</paper-item>
                 </template>
@@ -125,7 +125,8 @@
         params="{{ queryParams }}"
         last-response="{{ data }}"
         loading="{{ isLoading }}"
-        on-response="_didRespond">
+        on-response="_didRespond"
+        on-error="_onError">
     </iron-ajax>
 
     <!-- <iron-list id="list" items="[]" as="item"> -->
@@ -243,12 +244,19 @@
             this.isLastPage = e.detail.response.next_page_url == null;
             var parent = this.$;
 
-	    this.currentPage = e.detail.response.current_page;
+	        this.currentPage = e.detail.response.current_page;
             this.totalItems = e.detail.response.total;
 
             posts.forEach(function(post) {
                 parent.list.push('items', post);
             });
+        },
+
+        _onError: function(e){
+            console.log(e);
+            if(this.totalItems === -1){
+                this.totalItems = 0;
+            }
         },
 
         _didRespondFilter: function(e) {
@@ -261,6 +269,8 @@
             delete temp1.sub_categories;
             this.headerData = temp1;
 
+            this.$.filterIf.render();
+            this.$$('#filterList').selected = 0;
         },
 
         _filterChanged: function(value, oldValue) {

@@ -90,7 +90,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <shuvayatra-journey name="journey"></shuvayatra-journey>
             <shuvayatra-question route="{{routeData}}" name="question"></shuvayatra-question>
             <shuvayatra-profile name="profile"></shuvayatra-profile>
-            <shuvayatra-post route="{{subrouteData}}" name="post"></shuvayatra-post>
+            <shuvayatra-post id="post" name="post" post-id="{{ subrouteData.id }}"></shuvayatra-post>
+            <shuvayatra-category class="category" id="category" name="category" category-id="{{ subrouteData.id }}"></shuvayatra-category>
             <shuvayatra-search route="{{searchrouteData}}" name="search"></shuvayatra-search>
             <shuvayatra-tags route="{{searchrouteData}}" name="tags"></shuvayatra-tags>
     </iron-pages>
@@ -116,29 +117,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         '_routePageChanged(routeData.page)'
       ],
 
-      _getVisibility: function(container){
-        if(container === 'main'){
-          if(this.showMainHeader){
-            return "visible";
-          }else{
-            return "invisible";
-          }
-        }else{
-          if(!this.showMainHeader){
-            return "visible";
-          }else{
-            return "invisible";
-          }
-        }
-      },
       _routePageChanged: function(page) {
         this.page = page || 'home';
       },
+
       _pageChanged: function(page, oldPage) {
         if (page != null) {
 
-          this.importHref(
-            this.resolveUrl('shuvayatra-' + page + '.html'),null, null, true);
+          this.importHref(this.resolveUrl('shuvayatra-' + page + '.html'),null, null, true);
+
+          if(oldPage === 'post'){
+            this.$.post._stopVideoPlayback();
+          }
 
         }
       },
