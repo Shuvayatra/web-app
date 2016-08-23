@@ -41,12 +41,12 @@
         properties:{
             searchTag:{
                 type: String,
-                observer: '_searchBy'
+                observer: '_searchByTag'
             },
 
             searchQuery:{
                 type: String,
-                observer: '_searchBy'
+                observer: '_searchByQuery'
             },
 
             headerData: {
@@ -55,19 +55,25 @@
         },
 
         ready: function(){
-            var data = window.location.pathname.split("search/tag/");
-            if(data.length > 1){
-                this.searchTag = data[1];
-            }else{
-                data = window.location.pathname.split("search/query/");
-                if(data.length > 1){
-                    this.searchQuery = data[1];
-                }
-            }
+            // var data = window.location.pathname.split("search/tag/");
+            // if(data.length > 1){
+            //     this.searchTag = data[1];
+            // }else{
+            //     data = window.location.pathname.split("search/query/");
+            //     if(data.length > 1){
+            //         this.searchQuery = data[1];
+            //     }
+            // }
         },
 
-        _searchBy: function(value){
+        _searchByTag: function(value){
             this.headerData = {title: decodeURIComponent(value)};
+            this.searchTag = value;
+        },
+
+        _searchByQuery: function(value){
+            this.headerData = {title: decodeURIComponent(value)};
+            this.searchQuery = value;
         }
 
     });

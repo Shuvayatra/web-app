@@ -222,6 +222,9 @@
 
         ready: function(){
             this.totalItems = -1;
+            this.queryParams = {
+                page: 1
+            };
         },
 
         _canLoadMore: function(isLoading, isLastPage){
@@ -288,6 +291,7 @@
                         delete this.queryParams.category;
                     }
                 }
+                this.queryParams.page = 1;
                 this.$.list.items = [];
                 this.$.ajax.generateRequest();
             }
@@ -312,10 +316,16 @@
         },
 
         _searchByTag: function(value){
+            console.log(decodeURIComponent(value));
             this.queryParams.tag = decodeURIComponent(value);
+            this.$.list.items = [];
+            this.currentPage = 0;
+            this.isLastPage = false;
+            this._loadMoreData();
         },
 
         _searchByQuery: function(value){
+            console.log('asd: '+decodeURIComponent(value));
             this.queryParams.query = decodeURIComponent(value);
         },
 

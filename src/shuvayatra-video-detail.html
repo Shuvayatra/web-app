@@ -10,6 +10,7 @@
     <style is="custom-style">
         :host{
             display: block;
+            background: #fff;
         }
 
         h3 {
@@ -49,13 +50,13 @@
 
     <h3>{{ post.title }}</h3>
 
-    <shuvayatra-favourite-section id="favSection" category="{{ post.category }}" date="{{ post.created_at }}" likes="{{ post.like_count }}"></shuvayatra-favourite-section>
+    <shuvayatra-favourite-section id="favSection" category="{{ post.category }}" date="{{ post.updated_at }}" likes="{{ post.like_count }}"></shuvayatra-favourite-section>
     <shuvayatra-html-placeholder html="{{ post.description }}"></shuvayatra-html-placeholder>
 
     <div class="similar-type" hidden$="{{ _hasSimilar(post) }}">
         <p>मिल्दोजुल्दो भिडियोहरु </p>
 
-        <template is="dom-repeat" items="{{ post.similar }}">
+        <template is="dom-repeat" items="{{ post.similar }}" filter="isVideo" observe="type">
             <div>
                 <shuvayatra-video-card post="{{ item }}"></shuvayatra-video-card>
             </div>
@@ -88,6 +89,10 @@
                 }
             }
             return ID;
+        },
+
+        isVideo: function(item) {
+            return item.type === "video";
         }
 
     });

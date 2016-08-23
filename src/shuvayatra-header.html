@@ -48,6 +48,8 @@
                 background-size: cover;
                 background-repeat: no-repeat;
                 height: 250px;
+                max-width: 800px;
+                margin: 0 auto;
             }
 
             app-toolbar a, span {
@@ -84,7 +86,7 @@
                 vertical-align: middle;
             }
 
-            .audio-player-wrap {
+            /*.audio-player-wrap {
                 position: absolute;
                 bottom: 0;
                 max-width: 800px;
@@ -92,10 +94,11 @@
                 left: 0;
                 right: 0;
                 width: 100%
-            }
+            }*/
 
             form, paper-input {
                 width: 100%;
+                --paper-input-container-color: white;
                 --paper-input-container-focus-color: white;
                 --paper-input-container-input-color: white;
             }
@@ -199,7 +202,7 @@
         <template id="postIf" is="dom-if" if="{{ post }}" restamp="true">
             <app-header class$="{{ _generateClass(hasFeatureImage) }}" condenses fixed
                             effects="waterfall resize-snapped-title fade-background"
-                            effects-config='{"resize-snapped-title": {"startsAt": 0.3, "duration": "100ms"}, "fade-background": {"startsAt": 0.3, "endsAt": 0.9}}'
+                            effects-config='{"resize-snapped-title": {"startsAt": 0.2, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'
                             style="background-image: url([[ _getFeaturedImage(data) ]]);">
 
                 <app-toolbar>
@@ -223,21 +226,21 @@
                     </span>
 
                     <iron-ajax id="shareAjax" method="POST"
-                    loading="{{ isSubmittingShare }}">
+                        loading="{{ isSubmittingShare }}">
                     </iron-ajax>
                     <iron-ajax id="favAjax" method="POST"
-                    loading="{{ isSubmittingFav }}">
+                        loading="{{ isSubmittingFav }}">
                     </iron-ajax>
-                </app-toolbar>
 
-                <template id="playerIf" is="dom-if" if="{{ audio }}" restamp="true">
-                    <div class="audio-player-wrap" title>
-                        <shuvayatra-audio-player
-                            id="player" src="{{ data.data.media_url }}"
-                            title="{{ data.title }}">
-                        </shuvayatra-audio-player>
-                    </div>
-                </template>
+                    <template id="playerIf" is="dom-if" if="{{ audio }}" restamp="true">
+                        <div class="audio-player-wrap" title>
+                            <shuvayatra-audio-player
+                                id="player" src="{{ data.data.media_url }}"
+                                title="{{ data.title }}">
+                            </shuvayatra-audio-player>
+                        </div>
+                    </template>
+                </app-toolbar>
             </app-header>
         </template>
 
@@ -342,7 +345,7 @@
             },
 
             _getFeaturedImage: function(data){
-                return (this.audio) ? data.data.thumbnail : data.featured_image;
+                return (this.audio && data.data) ? data.data.thumbnail : data.featured_image;
             },
 
             _hasIcon: function(data){
@@ -381,14 +384,14 @@
 
             _toggleFavourite: function() {
                 var dataSet = new Set(this.favoriteData);
-                if(this._checkIfFavourite(this.favoriteData)){
+                if(this._checkIfFavourite(this.favoriteData, this.data)){
                     dataSet = this._deleteFromSet(dataSet);
                     this._updateFavCount(false);
-                    this._makeFavApiCall(false);
+                    //this._makeFavApiCall(false);
                 }else{
                     dataSet.add(this.data);
                     this._updateFavCount(true);
-                    this._makeFavApiCall(true);
+                    //this._makeFavApiCall(true);
                 }
                 this.favoriteData = Array.from(dataSet);
             },
@@ -466,7 +469,7 @@
             _checkIfFavourite: function(favoriteData, data) {
                 var ids = favoriteData.map(this._getIdFromData);
                 var set = new Set(ids);
-                return set.has(this.data.id);
+                return set.has(data.id);
 
             },
 

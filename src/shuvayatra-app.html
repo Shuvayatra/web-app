@@ -67,9 +67,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         tail="{{ subroute }}"></app-route>
 
     <app-route
-      route="{{ subroute }}"
-      pattern="/:id"
-      data="{{ subrouteData }}">
+      route="{{ route }}"
+      pattern="/post/:id"
+      data="{{ postRouteData }}">
+    </app-route>
+
+    <app-route
+      route="{{ route }}"
+      pattern="/category/:id"
+      data="{{ categoryRouteData }}">
     </app-route>
 
     <app-route
@@ -90,10 +96,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <shuvayatra-journey name="journey"></shuvayatra-journey>
             <shuvayatra-question route="{{routeData}}" name="question"></shuvayatra-question>
             <shuvayatra-profile name="profile"></shuvayatra-profile>
-            <shuvayatra-post id="post" name="post" post-id="{{ subrouteData.id }}"></shuvayatra-post>
-            <shuvayatra-category class="category" id="category" name="category" category-id="{{ subrouteData.id }}"></shuvayatra-category>
-            <shuvayatra-search route="{{searchrouteData}}" name="search"></shuvayatra-search>
-            <shuvayatra-tags route="{{searchrouteData}}" name="tags"></shuvayatra-tags>
+            <shuvayatra-post id="post" name="post" post-id="{{ postRouteData.id }}"></shuvayatra-post>
+            <shuvayatra-category class="category" id="category" name="category" category-id="{{ categoryRouteData.id }}"></shuvayatra-category>
+            <shuvayatra-search search-tag="{{ searchrouteData.searchTag }}" search-query="{{ searchrouteData.searchQuery }}" name="search"></shuvayatra-search>
+            <shuvayatra-tags name="tags"></shuvayatra-tags>
     </iron-pages>
   </template>
 
