@@ -86,7 +86,7 @@
                 vertical-align: middle;
             }
 
-            /*.audio-player-wrap {
+            .audio-player-wrap {
                 position: absolute;
                 bottom: 0;
                 max-width: 800px;
@@ -94,7 +94,7 @@
                 left: 0;
                 right: 0;
                 width: 100%
-            }*/
+            }
 
             form, paper-input {
                 width: 100%;
@@ -231,16 +231,15 @@
                     <iron-ajax id="favAjax" method="POST"
                         loading="{{ isSubmittingFav }}">
                     </iron-ajax>
-
-                    <template id="playerIf" is="dom-if" if="{{ audio }}" restamp="true">
-                        <div class="audio-player-wrap" title>
-                            <shuvayatra-audio-player
-                                id="player" src="{{ data.data.media_url }}"
-                                title="{{ data.title }}">
-                            </shuvayatra-audio-player>
-                        </div>
-                    </template>
                 </app-toolbar>
+                <template id="playerIf" is="dom-if" if="{{ audio }}" restamp="true">
+                    <div class="audio-player-wrap" title>
+                        <shuvayatra-audio-player
+                            id="player" src="{{ data.data.media_url }}"
+                            title="{{ data.title }}">
+                        </shuvayatra-audio-player>
+                    </div>
+                </template>
             </app-header>
         </template>
 
