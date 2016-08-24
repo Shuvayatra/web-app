@@ -170,7 +170,7 @@
                 background-color: transparent;
             }
 
-            .select-wrapper ul.dropdown-content li.disabled span {
+            .select-wrapper ul.dropdown-content li span {
                 top: 0;
             }
 
@@ -192,33 +192,20 @@
                        on-response="_didRespondFilter"></iron-ajax>
 
             <paper-card class="menu filter-wrapper" elevation="2">
-
                 <div class="select-wrapper">
                     <span class="caret">▼</span>
-                    <input type="text" class="select-dropdown" readonly value="All"/>
-                    <ul class="select-dropdown dropdown-content active">
-                        <li class="disabled">
-                            <span>All</span>
-                            <span class="caret">▼</span>
-                        </li>
-                        <li>
-                            <span>NA - North America</span>
-                        </li>
-                        <li>
-                            <span>EUW - Europe West </span>
-                        </li>
-                        <li>
-                            <span>EUNE - Europe Nordic East</span>
-                        </li>
-                        <li>
-                            <span>OCE - Oceania</span>
-                        </li>
-                        <li>
-                            <span>TUR - Tukrey</span>
-                        </li>
+                    <input id="filterInput" type="text" class="select-dropdown" on-click="_showDropdown" readonly value="{{ _getDefaultFilter(filter) }}"/>
+                    <ul id="myFilterList" class="select-dropdown dropdown-content">
+                        <template id="filterList" is="dom-repeat" items="{{ filter.data }}">
+                            <li on-tap="_selectFilter">
+                                <span>{{ item.title }}</span>
+                                <template is="dom-if" if="{{ _showCaret(index) }}">
+                                    <span class="caret">▼</span>
+                                </template>
+                            </li>
+                        </template>
                     </ul>
                 </div>
-
             </paper-card>
         </template>
 
@@ -278,6 +265,7 @@
                 filter: {
                     type: Object,
                     value: {},
+                    observer: '_filterDataChanged'
                 },
 
                 selectedFilter: {
@@ -331,6 +319,37 @@
                 };
             },
 
+            _showDropdown: function(){
+                this._toggleDropdownState();
+            },
+
+            _toggleDropdownState: function(){
+                this.$.filterIf.render();
+                var list = this.$$('#myFilterList');
+                var className = ' ' + list.className + ' ';
+
+                if (className.indexOf(' active') !== -1) {
+                    className = className.replace(' active', ' ');
+                } else {
+                    className += ' active';
+                }
+                list.className = className;
+            },
+
+            _getDefaultFilter: function(value){
+                if(value.data)
+                    return value.data[0].title;
+            },
+
+            _selectFilter: function(e) {
+                this._toggleDropdownState();
+                var filterId = e.model.item.id;
+                this.$$('#filterInput').value = e.model.item.title;
+                if(this.selectedFilter !== e.model.item){
+                    this.selectedFilter = e.model.item;
+                }
+            },
+
             _canLoadMore: function (isLoading, isLastPage) {
                 return !isLoading && !this.isLastPage;
             },
@@ -344,6 +363,10 @@
                     this.queryParams.page = this.currentPage + 1;
                     this.$.ajax.generateRequest();
                 }
+            },
+
+            _showCaret: function(value){
+                return value === 0;
             },
 
             _didRespond: function (e) {
@@ -360,7 +383,6 @@
             },
 
             _onError: function (e) {
-                console.log(e);
                 if (this.totalItems === -1) {
                     this.totalItems = 0;
                 }
@@ -380,18 +402,24 @@
                 this.$$('#filterList').selected = 0;
             },
 
+            _filterDataChanged: function(value){
+                if(value.data){
+                    this.selectedFilter = value.data[0];
+                }
+            },
+
             _filterChanged: function (value, oldValue) {
                 if (value != null) {
                     if (this.filter.filterBy === "type") {
                         delete this.queryParams.category;
-                        this.queryParams.post_type = value.value;
-                        if (value.value == -1) {
+                        this.queryParams.post_type = value.id;
+                        if (value.id == -1) {
                             delete this.queryParams.post_type;
                         }
                     } else if (this.filter.filterBy === "category") {
                         delete this.queryParams.post_type;
-                        this.queryParams.category = value.value;
-                        if (value.value == -1) {
+                        this.queryParams.category = value.id;
+                        if (value.id == -1) {
                             delete this.queryParams.category;
                         }
                     }
