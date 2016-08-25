@@ -25,14 +25,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding-top: 64px;
         --app-primary-color: #00BBD5;
         --app-secondary-color: black;
+        background-color: var(--shuvayatra-app-bg, #F0F0F0);
       }
 
       iron-pages{
         height: 100%;
-        max-width: 800px;
+        max-width: 1000px;
         margin: 0 auto;
 
       }
+
 
       .category{
         margin-top: 190px;
@@ -128,7 +130,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           if(oldPage === 'post'){
             this.$.post._stopVideoPlayback();
+            this.customStyle['--shuvayatra-app-bg'] = '#F0F0F0';
+            this.updateStyles();
           }
+
+          if(page==='post'){
+            this.customStyle['--shuvayatra-app-bg'] = '#FFFFFF';
+            this.updateStyles();
+          }
+
 
         }
       },

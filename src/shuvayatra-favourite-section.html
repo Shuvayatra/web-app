@@ -9,6 +9,8 @@
     <style is="custom-style">
         :host{
             display: block;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         iron-icon {
@@ -48,7 +50,7 @@
 	Polymer({
         is: 'shuvayatra-favourite-section',
         behaviors: [ PostBehavior ],
-        
+
         properties: {
             category: String,
             date: Number,

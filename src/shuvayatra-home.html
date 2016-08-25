@@ -10,7 +10,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html">
-
+<link rel="import" href="behaviors/global-behavior.html">
+<link rel="import" href="behaviors/category-behavior.html">
 <link rel="import" href="shuvayatra-feed.html">
 
 <dom-module id="shuvayatra-home">
@@ -20,16 +21,70 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
+        position: relative;
       }
 
       shuvayatra-feed {
         padding: 20px 10px;
+        max-width: 660px;
       }
+
+      #sidecol{
+        padding-top:20px;
+        position: absolute;
+        left: 692px;
+        right: 0;
+        top:0;
+      }
+
+      #sidecol ul{
+        list-style: none;
+        margin: 0 0 2em 0;
+        padding: 0;
+      }
+      #sidecol ul li{
+        margin: 0;
+        padding: 0;
+        line-height: 2em;
+      }
+
+      #sidecol a{
+        color: #868686;
+        text-decoration: none;
+      }
+
     </style>
 
     <shuvayatra-header main></shuvayatra-header>
-    
-    <shuvayatra-feed scroll-target="{{ scrollTarget }}" filter="{{ filter }}"></shuvayatra-feed>
+
+
+      <shuvayatra-feed id="maincol" scroll-target="{{ scrollTarget }}" filter="{{ filter }}"></shuvayatra-feed>
+      <div id="sidecol">
+        <iron-ajax id="ajax"
+            auto
+            url="{{ baseUrl }}api/category"
+            last-response="{{ data }}"
+            loading="{{ isLoading }}">
+        </iron-ajax>
+        <div class="list-wrap">
+                <template id="list" is="dom-repeat" items="{{ data }}" as="category">
+                        <h4>{{ category.title }}</h4>
+                        <ul>
+                        <template id="list" is="dom-repeat" items="{{ category.sub_categories }}" as="sub">
+                                <li>
+                                    <a href="{{ _generateUrl(sub) }}">
+                                    {{ sub.title }}
+                                    </a>
+                                </li>
+                        </template>
+                        </ul>
+                </template>
+            </div>
+
+        <div class="loadingIndicator">
+            <paper-spinner active="{{ isLoading }}"></paper-spinner>
+        </div>
+      </div>
 
   </template>
 
@@ -38,8 +93,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
 
       is: 'shuvayatra-home',
-      behaviors:[Polymer.IronScrollTargetBehavior],
-
+      behaviors:[Polymer.IronScrollTargetBehavior, GlobalBehavior, CategoryBehavior],
       properties:{
         filter:{
           type: Object
