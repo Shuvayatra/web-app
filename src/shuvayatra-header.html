@@ -48,6 +48,8 @@
                 background-size: cover;
                 background-repeat: no-repeat;
                 height: 250px;
+                max-width: 800px;
+                margin: 0 auto;
             }
 
             app-toolbar a, span {
@@ -96,6 +98,7 @@
 
             form, paper-input {
                 width: 100%;
+                --paper-input-container-color: white;
                 --paper-input-container-focus-color: white;
                 --paper-input-container-input-color: white;
             }
@@ -123,13 +126,23 @@
                 display: block;
             }
 
-            paper-icon-button + label {
+            .category-header paper-icon-button + label,
+            .post-header paper-icon-button + label {
                 position: relative;
                 white-space: nowrap;
                 overflow: hidden;
                 width: 150px;
                 text-overflow: ellipsis;
-                display: block;
+                display: inline-block;
+                top: 15px;
+            }
+
+            .post-header paper-icon-button + label {
+                top: 0;
+            }
+
+            .post-header {
+                z-index: 99;
             }
 
             @media only screen  and (min-width: 900px) {
@@ -166,20 +179,24 @@
                 <app-toolbar>
                     <iron-selector selected="[[ page ]]" attr-for-selected="name" role="navigation">
                         <a id="logo-title" name="home" href="/">
-                            <iron-image id="logo-icon" src="../images/logo-square.png" preload sizing="cover"
+                            <iron-image id="logo-icon" src="../images/nav_logo.png" preload sizing="cover"
                                         height="32" width="32"></iron-image>
                         </a>
                         <a name="profile" href="/profile">
-                            <iron-icon icon="icons:account-circle"></iron-icon>
+                            <iron-image id="logo-icon" src="../images/nav_profile.png" preload sizing="cover"
+                                        height="24" width="24"></iron-image>
                         </a>
                         <a name="question" href="/question">
-                            <iron-icon icon="icons:question-answer"></iron-icon>
-                        </a>
-                        <a name="journey" href="/journey">
-                            <iron-icon icon="maps:flight"></iron-icon>
+                            <iron-image id="logo-icon" src="../images/nav_info.png" preload sizing="cover"
+                                        height="24" width="24"></iron-image>
                         </a>
                         <a name="destination" href="/destination">
-                            <iron-icon icon="maps:place"></iron-icon>
+                            <iron-image id="logo-icon" src="../images/nav_destination.png" preload sizing="cover"
+                                        height="24" width="24"></iron-image>
+                        </a>
+                        <a name="journey" href="/journey">
+                            <iron-image id="logo-icon" src="../images/nav_journey.png" preload sizing="cover"
+                                        height="24" width="24"></iron-image>
                         </a>
                     </iron-selector>
                 </app-toolbar>
@@ -189,20 +206,20 @@
         <!-- normal header for detail pages with back icon and title -->
         <template is="dom-if" if="{{ regular }}" restamp="true">
             <app-header condenses effects="waterfall" fixed>
-                    <app-toolbar>
-                        <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
-                        <label>{{data.title}}</label>
-                    </app-toolbar>
-                </app-header>
+                <app-toolbar>
+                    <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
+                    <label>{{data.title}}</label>
+                </app-toolbar>
+            </app-header>
         </template>
 
         <template id="postIf" is="dom-if" if="{{ post }}" restamp="true">
             <app-header class$="{{ _generateClass(hasFeatureImage) }}" condenses fixed
-                            effects="waterfall resize-snapped-title fade-background"
-                            effects-config='{"resize-snapped-title": {"startsAt": 0.3, "duration": "100ms"}, "fade-background": {"startsAt": 0.3, "endsAt": 0.9}}'
-                            style="background-image: url([[ _getFeaturedImage(data) ]]);">
+                        effects="waterfall resize-snapped-title fade-background"
+                        effects-config='{"resize-snapped-title": {"startsAt": 0.2, "duration": "100ms"}, "fade-background": {"startsAt": 0.8, "endsAt": 0.9}}'
+                        style="background-image: url([[ _getFeaturedImage(data) ]]);">
 
-                <app-toolbar>
+                <app-toolbar class="post-header">
                     <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
                     <label condensed-title>{{ data.title }}</label>
 
@@ -212,32 +229,32 @@
                         </a>
                     </template>
 
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ data.share_url }}" target="_blank" on-click="_makeShareApiCall">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ data.share_url }}" target="_blank"
+                       on-click="_makeShareApiCall">
                         <paper-icon-button id="share" icon="social:share"></paper-icon-button>
                     </a>
                     <span id="favourite" on-tap="_toggleFavourite">
                         <paper-icon-button icon="favorite"
-                            hidden$="{{ !_checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
+                                           hidden$="{{ !_checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
                         <paper-icon-button icon="favorite-border"
-                            hidden$="{{ _checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
+                                           hidden$="{{ _checkIfFavourite(favoriteData, data) }}"></paper-icon-button>
                     </span>
 
                     <iron-ajax id="shareAjax" method="POST"
-                    loading="{{ isSubmittingShare }}">
+                               loading="{{ isSubmittingShare }}">
                     </iron-ajax>
                     <iron-ajax id="favAjax" method="POST"
-                    loading="{{ isSubmittingFav }}">
+                               loading="{{ isSubmittingFav }}">
                     </iron-ajax>
                 </app-toolbar>
-
-                <template id="playerIf" is="dom-if" if="{{ audio }}" restamp="true">
-                    <div class="audio-player-wrap" title>
+                <div class="audio-player-wrap" title>
+                    <template id="playerIf" is="dom-if" if="{{ audio }}" restamp="true">
                         <shuvayatra-audio-player
-                            id="player" src="{{ data.data.media_url }}"
-                            title="{{ data.title }}">
+                                id="player" src="{{ data.data.media_url }}"
+                                title="{{ data.title }}">
                         </shuvayatra-audio-player>
-                    </div>
-                </template>
+                    </template>
+                </div>
             </app-header>
         </template>
 
@@ -251,7 +268,8 @@
                     <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
                     <label condensed-title>{{ data.title }}</label>
                     <div title>
-                        <iron-image src="{{ data.small_icon }}" sizing="contain" width="25" height="25" hidden$="{{ !_hasIcon(data) }}"></iron-image>
+                        <iron-image src="{{ data.small_icon }}" sizing="contain" width="25" height="25"
+                                    hidden$="{{ !_hasIcon(data) }}"></iron-image>
                         <label>{{ data.title }}</label>
                     </div>
                 </app-toolbar>
@@ -263,12 +281,12 @@
             <app-header condenses effects="waterfall" fixed>
                 <app-toolbar>
                     <paper-icon-button id="back" icon="arrow-back" on-click="_goBack"></paper-icon-button>
-                        <paper-input placeholder="Search"
-                                no-label-float no-ink
-                                on-keydown="_submitForm"
-                                value="{{ searchTerm }}">
-                            <!-- <iron-icon icon="search" prefix></div> -->
-                        </paper-input>
+                    <paper-input placeholder="Search"
+                                 no-label-float no-ink
+                                 on-keydown="_submitForm"
+                                 value="{{ searchTerm }}">
+                        <!-- <iron-icon icon="search" prefix></div> -->
+                    </paper-input>
                 </app-toolbar>
             </app-header>
         </template>
@@ -304,7 +322,7 @@
                     value: false
                 },
 
-                post:{
+                post: {
                     type: Boolean,
                     value: false
                 },
@@ -341,15 +359,15 @@
                 },
             },
 
-            _getFeaturedImage: function(data){
-                return (this.audio) ? data.data.thumbnail : data.featured_image;
+            _getFeaturedImage: function (data) {
+                return (this.audio && data.data) ? data.data.thumbnail : data.featured_image;
             },
 
-            _hasIcon: function(data){
+            _hasIcon: function (data) {
                 return (data.parent_alias === "journey");
             },
 
-            _generateClass: function(hasFeatureImage){
+            _generateClass: function (hasFeatureImage) {
                 return hasFeatureImage ? "with-image" : "no-image";
             },
 
@@ -373,34 +391,34 @@
                 window.history.back();
             },
 
-            _stopPlayback: function(){
+            _stopPlayback: function () {
                 if (this.player) {
                     this.player._stop();
                 }
             },
 
-            _toggleFavourite: function() {
+            _toggleFavourite: function () {
                 var dataSet = new Set(this.favoriteData);
-                if(this._checkIfFavourite(this.favoriteData)){
+                if (this._checkIfFavourite(this.favoriteData, this.data)) {
                     dataSet = this._deleteFromSet(dataSet);
                     this._updateFavCount(false);
-                    this._makeFavApiCall(false);
-                }else{
+                    //this._makeFavApiCall(false);
+                } else {
                     dataSet.add(this.data);
                     this._updateFavCount(true);
-                    this._makeFavApiCall(true);
+                    //this._makeFavApiCall(true);
                 }
                 this.favoriteData = Array.from(dataSet);
             },
 
-            _updateFavCount: function(flag){
-                if(this.data.like_count){
-                    if(flag)
+            _updateFavCount: function (flag) {
+                if (this.data.like_count) {
+                    if (flag)
                         this.data.like_count++;
                     else
                         this.data.like_count--;
-                }else{
-                    if(flag)
+                } else {
+                    if (flag)
                         this.data.like_count = 1;
                     else
                         this.data.like_count = 0;
@@ -408,17 +426,17 @@
                 this.changeFlag = !this.changeFlag;
             },
 
-            _updateShareCount: function(){
-                if(this.data.share_count){
+            _updateShareCount: function () {
+                if (this.data.share_count) {
                     this.data.share_count++;
-                }else{
+                } else {
                     this.data.share_count = 1;
                 }
                 this.changeFlag = !this.changeFlag;
             },
 
-            _makeFavApiCall: function(flag){
-                if(!this.isSubmittingFav) {
+            _makeFavApiCall: function (flag) {
+                if (!this.isSubmittingFav) {
                     this.$.postIf.render();
                     var ajax = this.$$('#favAjax');
 
@@ -427,17 +445,17 @@
                         "Token": this.apiKey,
                         "Content-Type": "application/json"
                     };
-                    if(flag){
+                    if (flag) {
                         ajax.body = {type: "up"};
-                    }else{
+                    } else {
                         ajax.body = {type: "down"};
                     }
                     ajax.generateRequest();
                 }
             },
 
-            _makeShareApiCall: function(){
-                if(!this.isSubmittingShare) {
+            _makeShareApiCall: function () {
+                if (!this.isSubmittingShare) {
                     this._updateShareCount();
 
                     this.$.postIf.render();
@@ -452,25 +470,25 @@
                 }
             },
 
-            _deleteFromSet: function(source){
+            _deleteFromSet: function (source) {
                 var set = new Set();
                 var parent = this;
-                source.forEach(function(item, index){
-                    if(item.id !== parent.data.id){
+                source.forEach(function (item, index) {
+                    if (item.id !== parent.data.id) {
                         set.add(item);
                     }
                 });
                 return set;
             },
 
-            _checkIfFavourite: function(favoriteData, data) {
+            _checkIfFavourite: function (favoriteData, data) {
                 var ids = favoriteData.map(this._getIdFromData);
                 var set = new Set(ids);
-                return set.has(this.data.id);
+                return set.has(data.id);
 
             },
 
-            _getIdFromData: function(data){
+            _getIdFromData: function (data) {
                 return data.id;
             }
 

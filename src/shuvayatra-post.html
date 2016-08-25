@@ -105,10 +105,13 @@
         },
 
 
-        _onIdChanged: function(id){
+        _onIdChanged: function(id) {
+            this.data = {};
             this.$.audioIf.render();
             if(this.$$('#player')) this.$$('#player')._stopPlayback();
             this.postUrl = this.baseUrl + "api/posts/" + this.postId;
+
+            window.scrollTo(0, 0);
         },
 
         _checkIfTypeAudio: function(type){

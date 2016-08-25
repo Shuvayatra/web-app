@@ -20,24 +20,15 @@
         
         properties: {
         	categoryId:{
-        		type: Number,
-                observer: '_onIdChanged'
+        		type: Number
         	},
 
             headerData:{
-                type: Object,
-                observer: '_onHeaderChanged'
+                type: Object
             },
 
         },
 
-        ready: function(){
-            this.categoryId = window.location.pathname.split("category/")[1];
-        },
-
-        _onIdChanged: function(id){
-            this.headerData = {};
-        },
     });
 </script>
 </dom-module>

@@ -22,15 +22,22 @@
             color: #636363;
             margin: 0 0 10px;
         }
+
+        .audio-detail-inner-block {
+            background-color: #fff;
+            padding: 20px;
+        }
     </style>
 
-    <shuvayatra-favourite-section id="favSection" category="{{ post.category }}" date="{{ post.created_at }}" likes="{{ post.like_count }}"></shuvayatra-favourite-section>
-    <shuvayatra-html-placeholder html="{{ post.description }}"></shuvayatra-html-placeholder>
+    <div class="audio-detail-inner-block">
+        <shuvayatra-favourite-section id="favSection" category="{{ post.category }}" date="{{ post.updated_at }}" likes="{{ post.like_count }}"></shuvayatra-favourite-section>
+        <shuvayatra-html-placeholder html="{{ post.description }}"></shuvayatra-html-placeholder>
+    </div>
 
     <div class="similar-type" hidden$="{{ _hasSimilar(post) }}">
         <p>मिल्दोजुल्दो अडियोहरु </p>
 
-        <template is="dom-repeat" items="{{ post.similar }}">
+        <template is="dom-repeat" items="{{ post.similar }}" filter="isAudio" observe="type">
             <div>
                 <shuvayatra-audio-card post="{{ item }}"></shuvayatra-audio-card>
             </div>
@@ -48,6 +55,10 @@
         },
 
         ready: function(){
+        },
+
+        isAudio: function(item) {
+            return item.type == 'audio';
         }
     });
 </script>
