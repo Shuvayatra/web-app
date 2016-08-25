@@ -14,6 +14,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="behaviors/category-behavior.html">
 <link rel="import" href="shuvayatra-feed.html">
 <link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="../bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
 <dom-module id="shuvayatra-home">
 
   <template>
@@ -72,11 +73,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-ajax id="ajax"
               auto
               url="{{ baseUrl }}api/category"
-              last-response="{{ data }}"
+              last-response="{{ categoryData }}"
               loading="{{ isLoading }}">
           </iron-ajax>
+          <app-indexeddb-mirror
+            key="category"
+            data="{{categoryData}}"
+            persisted-data="{{pCategoryData}}">
+        </app-indexeddb-mirror>
           <div class="list-wrap">
-                  <template id="list" is="dom-repeat" items="{{ data }}" as="category">
+                  <template id="list" is="dom-repeat" items="{{ pCategoryData }}" as="category">
                           <h4>{{ category.title }}</h4>
                           <ul>
                           <template id="list" is="dom-repeat" items="{{ category.sub_categories }}" as="sub">
