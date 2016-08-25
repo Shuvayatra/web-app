@@ -13,7 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="behaviors/global-behavior.html">
 <link rel="import" href="behaviors/category-behavior.html">
 <link rel="import" href="shuvayatra-feed.html">
-
+<link rel="import" href="../bower_components/iron-media-query/iron-media-query.html">
 <dom-module id="shuvayatra-home">
 
   <template>
@@ -28,30 +28,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding: 20px 10px;
         max-width: 660px;
       }
-
       #sidecol{
-        padding-top:20px;
-        position: absolute;
-        left: 692px;
-        right: 0;
-        top:0;
+        display: none;
       }
 
-      #sidecol ul{
-        list-style: none;
-        margin: 0 0 2em 0;
-        padding: 0;
-      }
-      #sidecol ul li{
-        margin: 0;
-        padding: 0;
-        line-height: 2em;
+      @media only screen  and (min-width: 1024px) {
+          #sidecol{
+            display: block;
+            padding-top:20px;
+            position: absolute;
+            left: 692px;
+            right: 0;
+            top:0;
+          }
+
+          #sidecol ul{
+            list-style: none;
+            margin: 0 0 2em 0;
+            padding: 0;
+          }
+          #sidecol ul li{
+            margin: 0;
+            padding: 0;
+            line-height: 2em;
+          }
+
+          #sidecol a{
+            color: #868686;
+            text-decoration: none;
+          }
       }
 
-      #sidecol a{
-        color: #868686;
-        text-decoration: none;
-      }
 
     </style>
 
@@ -59,32 +66,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       <shuvayatra-feed id="maincol" scroll-target="{{ scrollTarget }}" filter="{{ filter }}"></shuvayatra-feed>
-      <div id="sidecol">
-        <iron-ajax id="ajax"
-            auto
-            url="{{ baseUrl }}api/category"
-            last-response="{{ data }}"
-            loading="{{ isLoading }}">
-        </iron-ajax>
-        <div class="list-wrap">
-                <template id="list" is="dom-repeat" items="{{ data }}" as="category">
-                        <h4>{{ category.title }}</h4>
-                        <ul>
-                        <template id="list" is="dom-repeat" items="{{ category.sub_categories }}" as="sub">
-                                <li>
-                                    <a href="{{ _generateUrl(sub) }}">
-                                    {{ sub.title }}
-                                    </a>
-                                </li>
-                        </template>
-                        </ul>
-                </template>
-            </div>
+      <iron-media-query query="(min-width: 1024px)" query-matches="{{isDesktop}}"></iron-media-query>
+      <template is="dom-if" if="{{ isDesktop }}">
+        <div id="sidecol">
+          <iron-ajax id="ajax"
+              auto
+              url="{{ baseUrl }}api/category"
+              last-response="{{ data }}"
+              loading="{{ isLoading }}">
+          </iron-ajax>
+          <div class="list-wrap">
+                  <template id="list" is="dom-repeat" items="{{ data }}" as="category">
+                          <h4>{{ category.title }}</h4>
+                          <ul>
+                          <template id="list" is="dom-repeat" items="{{ category.sub_categories }}" as="sub">
+                                  <li>
+                                      <a href="{{ _generateUrl(sub) }}">
+                                      {{ sub.title }}
+                                      </a>
+                                  </li>
+                          </template>
+                          </ul>
+                  </template>
+              </div>
 
-        <div class="loadingIndicator">
-            <paper-spinner active="{{ isLoading }}"></paper-spinner>
+          <div class="loadingIndicator">
+              <paper-spinner active="{{ isLoading }}"></paper-spinner>
+          </div>
         </div>
-      </div>
+      </template>
 
   </template>
 
