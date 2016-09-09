@@ -1,9 +1,10 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
-
+<link rel="import" href="behaviors/post-behavior.html">
+<link rel="import" href="behaviors/global-behavior.html">
 <link rel="import" href="shuvayatra-feed.html">
 <link rel="import" href="shuvayatra-header.html">
-
+<link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-document.html">
 <link rel="import" href="shuvayatra-audio-detail.html">
 <link rel="import" href="shuvayatra-video-detail.html">
 <link rel="import" href="shuvayatra-text-detail.html">
@@ -41,15 +42,21 @@
             }
         }
     </style>
+    <app-pouchdb-document
+      id="pouchdb"
+      db-name="posts">
+  </app-pouchdb-document>
 
-    <iron-ajax id="ajax" auto
-        url="{{ postUrl }}"
-        method="GET"
-        params="{{ queryParams }}"
-        last-response="{{ data }}"
-        loading="{{ isLoading }}">
-    </iron-ajax>
-
+    <template is="dom-if" if={{!data}}>
+      <iron-ajax id="ajax" auto
+          url="{{ postUrl }}"
+          method="GET"
+          params="{{ queryParams }}"
+          last-response="{{ data }}"
+          on-response="_cacheData"
+          loading="{{ isLoading }}">
+      </iron-ajax>
+    </template>
     <template id="audioIf" is="dom-if" if="{{ _checkIfTypeAudio(data.type) }}">
         <shuvayatra-header id="player" post data="{{ data }}" has-feature-image audio download change-flag="{{ changeFlag }}"></shuvayatra-header>
         <shuvayatra-audio-detail id="detail" class="content" post="{{ data }}"></shuvayatra-audio-detail>
@@ -73,24 +80,26 @@
 <script>
 	Polymer({
         is: 'shuvayatra-post',
-        behaviors: [GlobalBehavior],
+        behaviors: [GlobalBehavior,PostBehavior],
 
         properties: {
         	postId:{
         		type: Number,
                 observer: '_onIdChanged'
         	},
+          data:{
+            type:Object,
+            notify:true,
+          },
+          postUrl:{
+              type: String
+          },
 
-            postUrl:{
-                type: String
-            },
-
-            changeFlag:{
-                type: Boolean,
-                observer: '_onCountsUpdated'
-            }
+          changeFlag:{
+              type: Boolean,
+              observer: '_onCountsUpdated'
+          }
         },
-
         _onCountsUpdated: function(){
             if(this._checkIfTypeText(this.data.type)){
                 this.$.textIf.render();
@@ -106,10 +115,22 @@
 
 
         _onIdChanged: function(id) {
-            this.data = {};
             this.$.audioIf.render();
             if(this.$$('#player')) this.$$('#player')._stopPlayback();
-            this.postUrl = this.baseUrl + "api/posts/" + this.postId;
+
+            var el=this;
+            this.$.pouchdb.db.get(id.toString()).then(function(doc){
+              el.data=doc;
+            }).catch(function (err) {
+              if(err.status===404){
+                el.postUrl = el.baseUrl + "api/posts/" + el.postId;
+                el.data=null;
+              }
+            });;
+
+            if(this.$.pouchdb.changes!==null){
+              $.pouchdb.changes.cancel();
+            }
 
             window.scrollTo(0, 0);
         },
@@ -131,6 +152,9 @@
                 this.$.videoIf.render();
                 this.$$("#detail")._stopPlayback();
             }
+        },
+        _generateKey:function(id){
+          return id.toString();
         }
     });
 </script>

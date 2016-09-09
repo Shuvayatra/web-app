@@ -9,11 +9,12 @@
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
-
+<link rel="import" href="../bower_components/app-pouchdb/app-pouchdb-document.html">
 <link rel="import" href="shuvayatra-audio-card.html">
 <link rel="import" href="shuvayatra-video-card.html">
 <link rel="import" href="shuvayatra-text-card.html">
-
+<link rel="import" href="behaviors/global-behavior.html">
+<link rel="import" href="behaviors/post-behavior.html">
 <dom-module id="shuvayatra-feed">
     <template>
         <style>
@@ -219,10 +220,15 @@
                    on-response="_didRespond"
                    on-error="_onError">
         </iron-ajax>
+        <app-pouchdb-document
+          id="postdb"
+          db-name="posts">
+        </app-pouchdb-document>
 
         <!-- <iron-list id="list" items="[]" as="item"> -->
-        <template id="list" is="dom-repeat" items="[]">
+        <template id="list" is="dom-repeat" items="{{data.data}}">
             <!-- <template> -->
+
             <div>
                 <template is="dom-if" if="{{ _checkIfTypeAudio(item.type) }}">
                     <shuvayatra-audio-card class="post-card" post="{{ item }}"></shuvayatra-audio-card>
@@ -254,9 +260,10 @@
 
         Polymer({
             is: 'shuvayatra-feed',
-            behaviors: [Polymer.IronScrollTargetBehavior, GlobalBehavior],
+            behaviors: [Polymer.IronScrollTargetBehavior, GlobalBehavior, PostBehavior],
 
             properties: {
+
                 noFilter: {
                     type: Boolean,
                     value: false
@@ -370,18 +377,41 @@
             },
 
             _didRespond: function (e) {
-                var posts = e.detail.response.data;
                 this.isLastPage = e.detail.response.next_page_url == null;
-                var parent = this.$;
-
+                var parent = this;
                 this.currentPage = e.detail.response.current_page;
                 this.totalItems = e.detail.response.total;
+                this._putPosts(e.detail.response.data);
+            },
+            _putPosts:function(posts){
+              var doc=posts.shift();
+              doc._id=doc.id.toString();
+              var el=this;
+              el.$.postdb.db.put(doc).then(function (result) {
+                  // handle result
+                  if(posts.length!==0){
+                    el._putPosts(posts);
+                  }
+                }).catch(function (err) {
 
-                posts.forEach(function (post) {
-                    parent.list.push('items', post);
+                  if (err.name === 'conflict') {
+                    // conflict!
+                    el.$.postdb.db.get(doc._id).then(function(olddoc){
+                        if(olddoc.updated_at!==doc.updated_at){
+                          doc._rev=olddoc._rev;
+                          el.$.postdb.db.put(doc).catch(function(err){
+                              throw err;
+                          });
+                        }
+                    });
+                  } else {
+                    throw err;
+                  }
+                  if(posts.length!==0){
+                    el._putPosts(posts);
+                  }
                 });
             },
-
             _onError: function (e) {
                 if (this.totalItems === -1) {
                     this.totalItems = 0;
@@ -401,7 +431,9 @@
                 this.$.filterIf.render();
                 this.$$('#filterList').selected = 0;
             },
-
+            _itemsDataChanged:function(value){
+              console.log(value);
+            },
             _filterDataChanged: function(value){
                 if(value.data){
                     this.selectedFilter = value.data[0];
@@ -471,9 +503,8 @@
 
             _checkIfTypeText: function (type) {
                 return (type === "text");
-            },
+            }
         });
 
     </script>
 </dom-module>
-
